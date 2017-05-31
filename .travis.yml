@@ -1,6 +1,6 @@
 sudo: false
 language: java
-script: mvn clean package -f demeter-parent/pom.xml
+script: mvn clean package -f athena-parent/pom.xml
 jdk: oraclejdk8
 after_success:
 - echo "<settings><servers><server><id>nexus-snapshots</id><username>\${env.CI_DEPLOY_USERNAME}</username><password>\${env.CI_DEPLOY_PASSWORD}</password></server></servers></settings>"
