@@ -44,7 +44,7 @@ public final class ResourceBundleManager
 	/**
 	 * Default resource bundle properties filename.
 	 */
-	@SuppressWarnings("nls")
+	@SuppressWarnings({ "nls", "unused" })
 	private static final String DEFAULT_INITIALIZATION_FILE = "base-bundle.properties";
 
 	/**
