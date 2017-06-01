@@ -29,7 +29,7 @@ public enum BundleAthenaBase implements IBundle
 	 * Bundle file name.
 	 * <p>
 	 * This enumerated value should always be created and must point to the name of the resource bundle so that the {@link ResourceBundleManager} can
-	 * load and register and load the resource bundle file of the {@link BundleDemeterBase} class.
+	 * load and register and load the resource bundle file of the {@link BundleAthenaBase} class.
 	 * <p>
 	 * <b>Example</b>:<br>
 	 * If the module's name is {@code foo.module}, then this enumerated value should have the value: {@code bundle.foo.module}
@@ -103,7 +103,7 @@ public enum BundleAthenaBase implements IBundle
 	ResourceBundleNotFound("resource.bundle.notFound"),
 
 	/**
-	 * An error occured with the given resource bundle.
+	 * An error occurred with the given resource bundle.
 	 */
 	ResourceBundleError("resource.bundle.error"),
 
@@ -192,7 +192,7 @@ public enum BundleAthenaBase implements IBundle
 	EncodingSerialVersionUidMismatch("encoding.serialVersionUidMismatch"),
 
 	/**
-	 * Message indicating that a class does not implement the {@code Serializable} interace.
+	 * Message indicating that a class does not implement the {@code Serializable} interface.
 	 */
 	EncodingNotImplementingSerializable("encoding.notImplementingSerializable"),
 
@@ -335,7 +335,7 @@ public enum BundleAthenaBase implements IBundle
 	 * <dt><b>Param 0:</b></dt>
 	 * <dd>Converter class name</dd>
 	 * <dt><b>Param 1:</b></dt>
-	 * <dd>Converter class fullname</dd>
+	 * <dd>Converter class full name</dd>
 	 * </dl>
 	 */
 	CommandConverterRegistered("command.converterRegistered"),
@@ -351,7 +351,7 @@ public enum BundleAthenaBase implements IBundle
 	 * <dt><b>Param 0:</b></dt>
 	 * <dd>Converter class name</dd>
 	 * <dt><b>Param 1:</b></dt>
-	 * <dd>Converter class fullname</dd>
+	 * <dd>Converter class full name</dd>
 	 * </dl>
 	 */
 	CommandConverterUnregistered("command.converterUnregistered"),
@@ -552,12 +552,12 @@ public enum BundleAthenaBase implements IBundle
 	 */
 
 	/**
-	 * An error occured while decoding a message.
+	 * An error occurred while decoding a message.
 	 */
 	MessageDecodingError("message.decodingError"),
 
 	/**
-	 * An error occured while encoding a message.
+	 * An error occurred while encoding a message.
 	 */
 	MessageEncodingError("message.encodingError"),
 
