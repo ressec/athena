@@ -426,7 +426,7 @@ public final class ResourceBundleManager
 	@Synchronized
 	public static final void setLocale(final Locale locale)
 	{
-		if (locale.getLanguage() != ResourceBundleManager.locale.getLanguage())
+		if (!locale.getLanguage().equals(ResourceBundleManager.locale.getLanguage()))
 		{
 			refresh(locale);
 		}
@@ -449,7 +449,7 @@ public final class ResourceBundleManager
 		for (Class<? extends IBundle> bundleClass : NAMES.keySet())
 		{
 			final ResourceBundle bundle = ResourceBundle.getBundle(NAMES.get(bundleClass), locale);
-			if (bundle != null && bundle.getLocale().getLanguage() != locale.getLanguage())
+			if (bundle != null && !bundle.getLocale().getLanguage().equals(locale.getLanguage()))
 			{
 				log.error("Bundle cannot be found [name=" + NAMES.get(bundleClass) + ", locale=" + locale.toString() + "]. Using default one [name=" + NAMES.get(bundleClass) + ", locale=" + getLocale().toString() + "]");
 				ResourceBundleManager.locale = english;
