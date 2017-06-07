@@ -28,6 +28,14 @@ import lombok.NonNull;
 public enum ParameterType implements IParameterType
 {
 	/**
+	 * An internal enumerated value reserved for internal usage only!
+	 * <p>
+	 * DO NOT DELETE THIS VALUE.
+	 */
+	@SuppressWarnings("nls")
+	RESERVED_FOR_INTERNAL_USAGE("reserved"),
+
+	/**
 	 * A parameter type accepting {@code string} value.
 	 */
 	STRING(String.class.getName()),

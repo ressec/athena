@@ -71,7 +71,6 @@ public final class XmlCommandFile extends XmlFile<Header, ICommandMetadata, Foot
 		getEngine().aliasAttribute(AbstractStructuredFile.class, "content", "commands");
 
 		// Aliases the 'commands' tag.
-		//getEngine().alias("commands", List.class);
 		getEngine().alias("command", ICommandMetadata.class, CommandMetadata.class);
 		getEngine().alias("parameter", ICommandParameterMetadata.class, CommandParameterMetadata.class);
 	}

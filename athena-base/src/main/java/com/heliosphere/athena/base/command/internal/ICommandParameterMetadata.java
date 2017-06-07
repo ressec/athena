@@ -13,6 +13,8 @@ package com.heliosphere.athena.base.command.internal;
 
 import java.util.List;
 
+import com.heliosphere.athena.base.command.internal.type.IParameterType;
+
 /**
  * Provides a basic behavior for a command parameter metadata that is containing the definition of a command parameter.
  * <hr>
@@ -50,11 +52,11 @@ public interface ICommandParameterMetadata
 	String getRegExp();
 
 	/**
-	 * Returns the command parameter class type.
+	 * Returns the command parameter type.
 	 * <p>
-	 * @return Command parameter class type.
+	 * @return Command parameter type.
 	 */
-	Class<?> getClassType();
+	Enum<? extends IParameterType> getType();
 
 	/**
 	 * Returns the command parameter examples.
