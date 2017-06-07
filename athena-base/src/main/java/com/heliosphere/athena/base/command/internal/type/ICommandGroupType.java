@@ -9,7 +9,7 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.internal;
+package com.heliosphere.athena.base.command.internal.type;
 
 /**
  * Provides a basic behavior for command group type enumerations.

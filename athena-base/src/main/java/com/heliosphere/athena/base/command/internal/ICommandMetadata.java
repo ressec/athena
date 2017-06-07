@@ -13,6 +13,9 @@ package com.heliosphere.athena.base.command.internal;
 
 import java.util.List;
 
+import com.heliosphere.athena.base.command.internal.type.ICommandCategoryType;
+import com.heliosphere.athena.base.command.internal.type.ICommandGroupType;
+
 /**
  * Provides a basic behavior for a command metadata that is containing the definition of a command.
  * <hr>

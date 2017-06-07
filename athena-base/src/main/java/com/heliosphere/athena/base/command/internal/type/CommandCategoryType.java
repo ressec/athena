@@ -11,7 +11,6 @@
  */
 package com.heliosphere.athena.base.command.internal.type;
 
-import com.heliosphere.athena.base.command.internal.ICommandCategoryType;
 import com.heliosphere.athena.base.exception.InvalidArgumentException;
 import com.heliosphere.athena.base.resource.bundle.BundleAthenaBase;
 import com.heliosphere.athena.base.resource.bundle.ResourceBundleManager;
