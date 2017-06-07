@@ -9,7 +9,7 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.converter;
+package com.heliosphere.athena.base.command.file.xml.converter;
 
 import com.heliosphere.athena.base.command.internal.type.CommandCategoryType;
 import com.heliosphere.athena.base.command.internal.type.CommandGroupType;
