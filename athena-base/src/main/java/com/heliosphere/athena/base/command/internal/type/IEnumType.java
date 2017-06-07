@@ -12,12 +12,18 @@
 package com.heliosphere.athena.base.command.internal.type;
 
 /**
- * Provides a basic behavior for command group type enumerations.
+ * Provides a basic behavior for enumerations.
  * <hr>
  * @author <a href="mailto:christophe.resse@hotmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ICommandGroupType extends IEnumType
+public interface IEnumType
 {
-	// Empty.
+	/**
+	 * Creates an enum from a given value.
+	 * <p>
+	 * @param value String representing the enumerated value.
+	 * @return Enumerated value.
+	 */
+	Enum<? extends IEnumType> from(final String value);
 }
