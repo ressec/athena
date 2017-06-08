@@ -31,6 +31,6 @@ public final class CommandCategoryEnumConverter extends AbstractSingleValueConve
 	@Override
 	public Object fromString(String value)
 	{
-		return CommandCategoryType.values()[0].from(value);
+		return CommandCategoryType.fromString(value);
 	}
 }

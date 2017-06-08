@@ -11,6 +11,8 @@
  */
 package com.heliosphere.athena.base.command.internal;
 
+import java.util.List;
+
 /**
  * Provides a basic behavior for a command parameter.
  * <hr>
@@ -20,11 +22,18 @@ package com.heliosphere.athena.base.command.internal;
 public interface ICommandParameter
 {
 	/**
-	 * Returns the command parameter metadata reference.
+	 * Returns the command parameter metadata (definition).
 	 * <p>
-	 * @return Command parameter metadata reference.
+	 * @return Command parameter metadata.
 	 */
-	ICommandParameterMetadata getCommandParameterReference();
+	ICommandParameterMetadata getMetadata();
+
+	/**
+	 * Sets the command parameter metadata (definition).
+	 * <p>
+	 * @param metadata Command parameter metadata to set.
+	 */
+	void setMetadata(ICommandParameterMetadata metadata);
 
 	/**
 	 * Returns the original text of the command parameter (as entered on the command line).
@@ -34,9 +43,9 @@ public interface ICommandParameter
 	String getText();
 
 	/**
-	 * Returns the command parameter value.
+	 * Returns the command parameter value(s).
 	 * <p>
-	 * @return Command parameter value.
+	 * @return Command parameter value(s).
 	 */
-	Object getValue();
+	List<Object> getValues();
 }

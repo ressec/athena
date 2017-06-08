@@ -31,6 +31,6 @@ public class ParameterEnumConverter extends AbstractSingleValueConverter
 	@Override
 	public Object fromString(String value)
 	{
-		return ParameterType.values()[0].from(value);
+		return ParameterType.fromString(value);
 	}
 }

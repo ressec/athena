@@ -23,8 +23,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.heliosphere.athena.base.command.file.xml.XmlCommandFile;
+import com.heliosphere.athena.base.command.internal.CommandException;
+import com.heliosphere.athena.base.command.internal.ICommand;
 import com.heliosphere.athena.base.command.internal.ICommandMetadata;
 import com.heliosphere.athena.base.command.internal.ICommandParameterMetadata;
+import com.heliosphere.athena.base.command.internal.interpreter.CommandInterpreter;
 import com.heliosphere.athena.base.command.internal.type.CommandCategoryType;
 import com.heliosphere.athena.base.command.internal.type.CommandGroupType;
 
@@ -36,6 +39,12 @@ import com.heliosphere.athena.base.command.internal.type.CommandGroupType;
  */
 public class XmlChatCommandFileTest
 {
+	/**
+	 * XML file containing the chat command definitions.
+	 */
+	@SuppressWarnings("nls")
+	private XmlCommandFile chatCommandfile = new XmlCommandFile("/config/command/chat-commands.xml");
+
 	/**
 	 * Initialization of the test cases.
 	 * <p>
@@ -66,7 +75,7 @@ public class XmlChatCommandFileTest
 	@Before
 	public final void setUp() throws Exception
 	{
-		// Empty
+		chatCommandfile.load();
 	}
 
 	/**
@@ -83,36 +92,31 @@ public class XmlChatCommandFileTest
 	/**
 	 * Creates a resource based on a file with an absolute path name.
 	 */
-	@SuppressWarnings({ "static-method", "nls" })
+	@SuppressWarnings("nls")
 	@Test
 	public final void loadXmlFile()
 	{
 		try
 		{
-			XmlCommandFile file = new XmlCommandFile("/config/command/chat-commands.xml");
+			Assert.assertTrue(chatCommandfile != null);
+			Assert.assertTrue(chatCommandfile.getHeader().getAuthor().equals("Resse Christophe"));
 
-			file.load();
-
-			Assert.assertTrue(file != null);
-
-			Assert.assertTrue(file.getHeader().getAuthor().equals("Resse Christophe"));
-
-			ICommandMetadata afkCommandDefinition = file.getContent().get(0);
+			ICommandMetadata afkCommandDefinition = chatCommandfile.getContent().get(0);
 			Assert.assertTrue(afkCommandDefinition.getName().equals("afk"));
 
-			ICommandMetadata whoCommandDefinition = file.getContent().get(1);
+			ICommandMetadata whoCommandDefinition = chatCommandfile.getContent().get(1);
 			ICommandParameterMetadata parameterDefinition = whoCommandDefinition.getParameters().get(0);
 			Assert.assertTrue(parameterDefinition.getName().equals("name"));
 
-			List<ICommandMetadata> normal = file.findByCategory(CommandCategoryType.NORMAL);
-			List<ICommandMetadata> chat = file.findByGroup(CommandGroupType.CHAT);
+			List<ICommandMetadata> normal = chatCommandfile.findByCategory(CommandCategoryType.NORMAL);
+			List<ICommandMetadata> chat = chatCommandfile.findByGroup(CommandGroupType.CHAT);
 			Assert.assertTrue(normal.size() != 0);
 			Assert.assertTrue(chat.size() != 0);
 
-			ICommandMetadata who = file.getByName("who");
+			ICommandMetadata who = chatCommandfile.getByName("who");
 			Assert.assertTrue(who != null);
 
-			List<ICommandMetadata> commands = file.findByAlias("people");
+			List<ICommandMetadata> commands = chatCommandfile.findByAlias("people");
 			Assert.assertTrue(commands != null && commands.size() == 1);
 
 			ICommandParameterMetadata parameter = who.getByName("server");
@@ -122,5 +126,39 @@ public class XmlChatCommandFileTest
 		{
 			fail(e.getMessage());
 		}
+	}
+
+	/**
+	 */
+	@SuppressWarnings("nls")
+	@Test
+	public final void interpretWhoCommand()
+	{
+		try
+		{
+			CommandInterpreter interpreter = new CommandInterpreter();
+			interpreter.registerCommands(chatCommandfile.getContent());
+
+			ICommand command = interpreter.interpret("    /     who      -n      Candy-sAlbukerque -l 14-18             ");
+			Assert.assertTrue(command != null);
+		}
+		catch (CommandException e)
+		{
+			fail(e.getMessage());
+		}
+	}
+
+	/**
+	 * Test an invalid command interpretation.
+	 * <hr>
+	 * @throws CommandException Thrown in case an error occurred while interpreting or processing a command.
+	 */
+	@SuppressWarnings("nls")
+	@Test(expected = CommandException.class)
+	public final void interpretInvalidCommand() throws CommandException
+	{
+		CommandInterpreter interpreter = new CommandInterpreter();
+		interpreter.registerCommands(chatCommandfile.getContent());
+		interpreter.interpret("    /     clip    clatis    ");
 	}
 }

@@ -71,8 +71,16 @@ public enum CommandCategoryType implements ICommandCategoryType
 		return prefix;
 	}
 
-	@Override
-	public final CommandCategoryType from(final String value)
+	/**
+	 * Creates a command category enumerated value from a given string value.
+	 * <p>
+	 * <b>Example:</b><p> 
+	 * <code>CommandCategoryType.fromString("Administration");</code>
+	 * <hr>
+	 * @param value String representing the enumerated value.
+	 * @return Command category.
+	 */
+	public static final CommandCategoryType fromString(final String value)
 	{
 		if (value == null || value.trim().length() == 0)
 		{
@@ -87,11 +95,19 @@ public enum CommandCategoryType implements ICommandCategoryType
 			}
 		}
 
-		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, this.getClass(), prefix));
+		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, CommandCategoryType.class.getName(), value));
 	}
 
-	@Override
-	public final CommandCategoryType fromPrefix(final String prefix)
+	/**
+	 * Creates a command category enumerated value from a given command prefix.
+	 * <p>
+	 * <b>Example:</b><p> 
+	 * <code>CommandCategoryType.fromPrefix("*");</code>
+	 * <hr>
+	 * @param prefix String representing the command prefix.
+	 * @return Command category.
+	 */
+	public static final CommandCategoryType fromPrefix(final String prefix)
 	{
 		if (prefix == null || prefix.trim().length() == 0)
 		{
@@ -106,6 +122,6 @@ public enum CommandCategoryType implements ICommandCategoryType
 			}
 		}
 
-		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, this.getClass(), prefix));
+		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, CommandCategoryType.class.getName(), prefix));
 	}
 }

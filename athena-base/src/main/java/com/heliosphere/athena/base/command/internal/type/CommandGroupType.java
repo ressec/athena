@@ -78,8 +78,16 @@ public enum CommandGroupType implements ICommandGroupType
 	 */
 	TARGETING;
 
-	@Override
-	public Enum<? extends ICommandGroupType> from(String value)
+	/**
+	 * Creates an command group enumerated value from a given string value.
+	 * <p>
+	 * <b>Example:</b><p> 
+	 * <code>CommandGroupType.fromString("Guild");</code>
+	 * <hr>
+	 * @param value String representing the enumerated value.
+	 * @return Command group type.
+	 */
+	public static Enum<? extends ICommandGroupType> fromString(String value)
 	{
 		if (value == null || value.trim().length() == 0)
 		{
@@ -94,6 +102,6 @@ public enum CommandGroupType implements ICommandGroupType
 			}
 		}
 
-		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, this.getClass(), value));
+		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, CommandGroupType.class.getName(), value));
 	}
 }

@@ -17,15 +17,15 @@ package com.heliosphere.athena.base.command.internal.type;
  * @author <a href="mailto:christophe.resse@hotmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ICommandCategoryType extends IEnumType
+public interface ICommandCategoryType //extends IEnumType
 {
-	/**
-	 * Creates a command category type from a given prefix.
-	 * <p>
-	 * @param prefix String representing the command category prefix.
-	 * @return Command category type.
-	 */
-	Enum<? extends ICommandCategoryType> fromPrefix(final String prefix);
+	//	/**
+	//	 * Creates a command category type from a given prefix.
+	//	 * <p>
+	//	 * @param prefix String representing the command category prefix.
+	//	 * @return Command category type.
+	//	 */
+	//	Enum<? extends ICommandCategoryType> fromPrefix(final String prefix);
 
 	/**
 	 * Returns the prefix for the command category.

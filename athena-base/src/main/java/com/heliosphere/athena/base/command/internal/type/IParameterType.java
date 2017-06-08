@@ -17,7 +17,7 @@ package com.heliosphere.athena.base.command.internal.type;
  * @author <a href="mailto:christophe.resse@hotmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface IParameterType extends IEnumType
+public interface IParameterType //extends IEnumType
 {
 	/**
 	 * Returns the parameter type.

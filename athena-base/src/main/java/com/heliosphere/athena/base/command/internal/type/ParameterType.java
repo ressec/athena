@@ -28,14 +28,6 @@ import lombok.NonNull;
 public enum ParameterType implements IParameterType
 {
 	/**
-	 * An internal enumerated value reserved for internal usage only!
-	 * <p>
-	 * DO NOT DELETE THIS VALUE.
-	 */
-	@SuppressWarnings("nls")
-	RESERVED_FOR_INTERNAL_USAGE("reserved"),
-
-	/**
 	 * A parameter type accepting {@code string} value.
 	 */
 	STRING(String.class.getName()),
@@ -53,12 +45,7 @@ public enum ParameterType implements IParameterType
 	/**
 	 * A parameter type accepting {@code boolean} value.
 	 */
-	BOOLEAN(Boolean.class.getName()),
-
-	/**
-	 * A parameter type accepting {@code object} value.
-	 */
-	OBJECT(Object.class.getName());
+	BOOLEAN(Boolean.class.getName());
 
 	/**
 	 * Parameter type.
@@ -81,8 +68,16 @@ public enum ParameterType implements IParameterType
 		return type;
 	}
 
-	@Override
-	public Enum<? extends IParameterType> from(String value)
+	/**
+	 * Creates a parameter type enumerated value from a given string value.
+	 * <p>
+	 * <b>Example:</b><p> 
+	 * <code>ParameterType.fromString("Integer");</code>
+	 * <hr>
+	 * @param value String representing the enumerated value.
+	 * @return Parameter type.
+	 */
+	public static Enum<? extends IParameterType> fromString(String value)
 	{
 		if (value == null || value.trim().length() == 0)
 		{
@@ -97,6 +92,33 @@ public enum ParameterType implements IParameterType
 			}
 		}
 
-		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, this.getClass(), value));
+		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, ParameterType.class.getName(), value));
+	}
+
+	/**
+	 * Creates a parameter type enumerated value from a given type value.
+	 * <p>
+	 * <b>Example:</b><p> 
+	 * <code>ParameterType.fromType(String.class.getName());</code>
+	 * <hr>
+	 * @param value String representing the type value.
+	 * @return Parameter type.
+	 */
+	public static Enum<? extends IParameterType> fromType(String value)
+	{
+		if (value == null || value.trim().length() == 0)
+		{
+			throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CommandCategoryCannotBeNull));
+		}
+
+		for (ParameterType element : ParameterType.values())
+		{
+			if (element.getType().equals(value))
+			{
+				return element;
+			}
+		}
+
+		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, ParameterType.class.getName(), value));
 	}
 }

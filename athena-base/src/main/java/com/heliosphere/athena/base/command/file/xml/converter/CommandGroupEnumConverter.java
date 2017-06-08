@@ -31,6 +31,6 @@ public final class CommandGroupEnumConverter extends AbstractSingleValueConverte
 	@Override
 	public Object fromString(String value)
 	{
-		return CommandGroupType.values()[0].from(value);
+		return CommandGroupType.fromString(value);
 	}
 }
