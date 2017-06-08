@@ -9,21 +9,29 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.internal;
+package com.heliosphere.athena.base.terminal;
 
-/**
- * Provides a basic behavior for command group type enumerations.
- * <hr>
- * @author <a href="mailto:christophe.resse@hotmail.com">Christophe Resse</a>
- * @version 1.0.0
- */
-public interface ICommandGroupType
+import com.heliosphere.athena.base.file.internal.FileException;
+
+public class TestTerminal
 {
 	/**
-	 * Creates a command group type from a given value.
-	 * <p>
-	 * @param value String representing the command group.
-	 * @return {@code Enum<? extends ICommandGroupType}.
+	 * Main entry point of the application.
+	 * <hr>
+	 * @param arguments Arguments entered on the command line.
 	 */
-	Enum<? extends ICommandGroupType> from(final String value);
+	@SuppressWarnings("nls")
+	public static void main(String[] arguments)
+	{
+		try
+		{
+			Terminal terminal = new Terminal("/config/command/chat-commands.xml");
+			terminal.start();
+		}
+		catch (FileException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
 }

@@ -9,7 +9,7 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.internal;
+package com.heliosphere.athena.base.command.internal.type;
 
 /**
  * Provides a basic behavior for command category type enumerations.
@@ -17,23 +17,15 @@ package com.heliosphere.athena.base.command.internal;
  * @author <a href="mailto:christophe.resse@hotmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ICommandCategoryType
+public interface ICommandCategoryType //extends IEnumType
 {
-	/**
-	 * Creates a command category type from a given value.
-	 * <p>
-	 * @param value String representing the command category.
-	 * @return Command category type.
-	 */
-	Enum<? extends ICommandCategoryType> from(final String value);
-
-	/**
-	 * Creates a command category type from a given prefix.
-	 * <p>
-	 * @param prefix String representing the command category prefix.
-	 * @return Command category type.
-	 */
-	Enum<? extends ICommandCategoryType> fromPrefix(final String prefix);
+	//	/**
+	//	 * Creates a command category type from a given prefix.
+	//	 * <p>
+	//	 * @param prefix String representing the command category prefix.
+	//	 * @return Command category type.
+	//	 */
+	//	Enum<? extends ICommandCategoryType> fromPrefix(final String prefix);
 
 	/**
 	 * Returns the prefix for the command category.

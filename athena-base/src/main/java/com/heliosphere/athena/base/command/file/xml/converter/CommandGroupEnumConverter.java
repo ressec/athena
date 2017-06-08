@@ -9,7 +9,7 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.converter;
+package com.heliosphere.athena.base.command.file.xml.converter;
 
 import com.heliosphere.athena.base.command.internal.type.CommandGroupType;
 import com.thoughtworks.xstream.converters.basic.AbstractSingleValueConverter;
@@ -20,7 +20,7 @@ import com.thoughtworks.xstream.converters.basic.AbstractSingleValueConverter;
  * @author <a href="mailto:christophe.resse@hotmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public class CommandGroupEnumConverter extends AbstractSingleValueConverter
+public final class CommandGroupEnumConverter extends AbstractSingleValueConverter
 {
 	@Override
 	public boolean canConvert(Class clazz)
@@ -31,6 +31,6 @@ public class CommandGroupEnumConverter extends AbstractSingleValueConverter
 	@Override
 	public Object fromString(String value)
 	{
-		return CommandGroupType.CHARACTER.from(value);
+		return CommandGroupType.fromString(value);
 	}
 }

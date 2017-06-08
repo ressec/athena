@@ -63,15 +63,6 @@
 
 	<dependencies>
 
-
-			<dependency>
-				<groupId>log4j</groupId>
-				<artifactId>log4j</artifactId>
-				<version>1.2.14</version>
-				<type>jar</type>
-				<scope>compile</scope>
-			</dependency>
-
 			<dependency>
 				<groupId>joda-time</groupId>
 				<artifactId>joda-time</artifactId>
@@ -79,13 +70,6 @@
 				<type>jar</type>
 				<scope>compile</scope>
 			</dependency>
-
-			<dependency>
-				<groupId>commons-configuration</groupId>
-				<artifactId>commons-configuration</artifactId>
-				<version>1.9</version>
-			</dependency>
-
 
 			<dependency>
 				<groupId>com.h2database</groupId>
@@ -97,24 +81,6 @@
 				<groupId>com.carrotsearch</groupId>
 				<artifactId>junit-benchmarks</artifactId>
 				<version>0.6.0</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.projectlombok</groupId>
-				<artifactId>lombok</artifactId>
-				<version>1.16.10</version>
-			</dependency>
-
-			<dependency>
-				<groupId>commons-lang</groupId>
-				<artifactId>commons-lang</artifactId>
-				<version>2.6</version>
-			</dependency>
-
-			<dependency>
-				<groupId>commons-collections</groupId>
-				<artifactId>commons-collections</artifactId>
-				<version>3.2.1</version>
 			</dependency>
 
 			<dependency>
@@ -147,23 +113,6 @@
 				<version>0.10</version>
 			</dependency>
 
-			<dependency>
-				<groupId>com.google.guava</groupId>
-				<artifactId>guava</artifactId>
-				<version>19.0</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.thoughtworks.xstream</groupId>
-				<artifactId>xstream</artifactId>
-				<version>1.4.9</version>
-			</dependency>
-
-			<dependency>
-				<groupId>commons-io</groupId>
-				<artifactId>commons-io</artifactId>
-				<version>2.4</version>
-			</dependency>
 	</dependencies>
 
 	<build>
@@ -360,16 +309,75 @@
 	</distributionManagement>
 	<dependencyManagement>
 		<dependencies>
+
 			<dependency>
 				<groupId>uk.com.robust-it</groupId>
 				<artifactId>cloning</artifactId>
 				<version>1.9.3</version>
 			</dependency>
+
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>4.12</version>
 			</dependency>
+
+			<dependency>
+				<groupId>com.thoughtworks.xstream</groupId>
+				<artifactId>xstream</artifactId>
+				<version>1.4.9</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>2.4</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.beryx</groupId>
+				<artifactId>text-io</artifactId>
+				<version>2.4.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>1.2.14</version>
+				<type>jar</type>
+				<scope>compile</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-configuration</groupId>
+				<artifactId>commons-configuration</artifactId>
+				<version>1.9</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>1.16.10</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>2.6</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-collections</groupId>
+				<artifactId>commons-collections</artifactId>
+				<version>3.2.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>19.0</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 	<url>https://github.com/ressec/athena</url>

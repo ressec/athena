@@ -22,11 +22,18 @@ import java.util.List;
 public interface ICommand
 {
 	/**
-	 * Returns the command metadata.
+	 * Returns the command metadata (definition).
 	 * <p>
 	 * @return Command metadata.
 	 */
-	ICommandMetadata getCommandReference();
+	ICommandMetadata getMetadata();
+
+	/**
+	 * Sets the command metadata (definition).
+	 * <p>
+	 * @param metadata Command definition.
+	 */
+	void setMetadata(ICommandMetadata metadata);
 
 	/**
 	 * Returns the original text of the command (as entered on the command line).
@@ -34,6 +41,13 @@ public interface ICommand
 	 * @return Command original text.
 	 */
 	String getText();
+
+	/**
+	 * Adds a parameter to the command.
+	 * <hr>
+	 * @param parameter Parameter to add.
+	 */
+	void addParameter(ICommandParameter parameter);
 
 	/**
 	 * Returns the command parameters.

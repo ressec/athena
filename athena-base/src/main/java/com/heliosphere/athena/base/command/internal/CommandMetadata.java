@@ -14,8 +14,10 @@ package com.heliosphere.athena.base.command.internal;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.heliosphere.athena.base.command.converter.CommandCategoryEnumConverter;
-import com.heliosphere.athena.base.command.converter.CommandGroupEnumConverter;
+import com.heliosphere.athena.base.command.file.xml.converter.CommandCategoryEnumConverter;
+import com.heliosphere.athena.base.command.file.xml.converter.CommandGroupEnumConverter;
+import com.heliosphere.athena.base.command.internal.type.ICommandCategoryType;
+import com.heliosphere.athena.base.command.internal.type.ICommandGroupType;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 

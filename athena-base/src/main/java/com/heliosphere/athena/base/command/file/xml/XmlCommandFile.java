@@ -16,10 +16,10 @@ import java.util.List;
 
 import com.heliosphere.athena.base.command.internal.CommandMetadata;
 import com.heliosphere.athena.base.command.internal.CommandParameterMetadata;
-import com.heliosphere.athena.base.command.internal.ICommandCategoryType;
-import com.heliosphere.athena.base.command.internal.ICommandGroupType;
 import com.heliosphere.athena.base.command.internal.ICommandMetadata;
 import com.heliosphere.athena.base.command.internal.ICommandParameterMetadata;
+import com.heliosphere.athena.base.command.internal.type.ICommandCategoryType;
+import com.heliosphere.athena.base.command.internal.type.ICommandGroupType;
 import com.heliosphere.athena.base.file.internal.AbstractStructuredFile;
 import com.heliosphere.athena.base.file.xml.Footer;
 import com.heliosphere.athena.base.file.xml.Header;
@@ -71,7 +71,6 @@ public final class XmlCommandFile extends XmlFile<Header, ICommandMetadata, Foot
 		getEngine().aliasAttribute(AbstractStructuredFile.class, "content", "commands");
 
 		// Aliases the 'commands' tag.
-		//getEngine().alias("commands", List.class);
 		getEngine().alias("command", ICommandMetadata.class, CommandMetadata.class);
 		getEngine().alias("parameter", ICommandParameterMetadata.class, CommandParameterMetadata.class);
 	}

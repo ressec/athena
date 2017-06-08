@@ -14,7 +14,10 @@ package com.heliosphere.athena.base.command.internal;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.heliosphere.athena.base.command.file.xml.converter.ParameterEnumConverter;
+import com.heliosphere.athena.base.command.internal.type.IParameterType;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamConverter;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 import lombok.Getter;
@@ -59,12 +62,13 @@ public class CommandParameterMetadata implements ICommandParameterMetadata
 	private String regExp;
 
 	/**
-	 * Command parameter class type.
+	 * Command parameter type.
 	 */
 	@Getter
 	@Setter
 	@XStreamAlias("type")
-	private Class<?> classType;
+	@XStreamConverter(ParameterEnumConverter.class)
+	private Enum<? extends IParameterType> type;
 
 	/**
 	 * Collection of examples.

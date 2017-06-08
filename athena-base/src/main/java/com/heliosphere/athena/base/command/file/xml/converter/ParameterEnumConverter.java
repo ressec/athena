@@ -9,19 +9,18 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.converter;
+package com.heliosphere.athena.base.command.file.xml.converter;
 
-import com.heliosphere.athena.base.command.internal.type.CommandCategoryType;
-import com.heliosphere.athena.base.command.internal.type.CommandGroupType;
+import com.heliosphere.athena.base.command.internal.type.ParameterType;
 import com.thoughtworks.xstream.converters.basic.AbstractSingleValueConverter;
 
 /**
- * Provides a {@code XStream} converter for the {@link CommandGroupType} enumeration.
+ * Provides a {@code XStream} converter for the {@link ParameterType} enumeration.
  * <hr>
  * @author <a href="mailto:christophe.resse@hotmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public class CommandCategoryEnumConverter extends AbstractSingleValueConverter
+public class ParameterEnumConverter extends AbstractSingleValueConverter
 {
 	@Override
 	public boolean canConvert(Class clazz)
@@ -32,6 +31,6 @@ public class CommandCategoryEnumConverter extends AbstractSingleValueConverter
 	@Override
 	public Object fromString(String value)
 	{
-		return CommandCategoryType.NORMAL.from(value);
+		return ParameterType.fromString(value);
 	}
 }
