@@ -16,6 +16,12 @@ import java.util.List;
 
 import lombok.NonNull;
 
+/**
+ * Represents a command (structured object) resulting of a text entered on a command-line or terminal.
+ * <hr>
+ * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @version 1.0.0
+ */
 public class Command implements ICommand
 {
 	/**

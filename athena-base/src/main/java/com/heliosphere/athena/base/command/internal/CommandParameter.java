@@ -18,6 +18,12 @@ import com.heliosphere.athena.base.command.internal.type.ParameterType;
 
 import lombok.NonNull;
 
+/**
+ * Represents a command parameter.
+ * <hr>
+ * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @version 1.0.0
+ */
 public class CommandParameter implements ICommandParameter
 {
 	/**
