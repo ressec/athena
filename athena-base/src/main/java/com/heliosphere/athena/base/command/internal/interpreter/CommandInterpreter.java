@@ -30,6 +30,12 @@ import com.heliosphere.athena.base.command.internal.type.ICommandCategoryType;
 
 import lombok.NonNull;
 
+/**
+ * Represents a command interpreter that is responsible to interpret a text entered on a command-line or a terminal and transform it to a command.
+ * <hr>
+ * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @version 1.0.0
+ */
 public final class CommandInterpreter implements ICommandInterpreter
 {
 	/**
