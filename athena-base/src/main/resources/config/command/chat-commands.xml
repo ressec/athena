@@ -28,7 +28,7 @@
       <category>Normal</category>
       <name>who</name>
       <description>Performs a query on the server for online players matching your query.</description>
-      <syntax>/who filter</syntax>
+      <syntax>/who 'filters'</syntax>
       <aliases>people</aliases>
 
       <parameters>
@@ -36,7 +36,7 @@
           <name>name</name>
           <description>Used to filter on the player name.</description>
           <tag>-n</tag>
-          <regexp>-n\s++([a-zA-Z]++\*?)</regexp>
+          <regexp>(-n)\s*+([a-zA-Z]++\*?)</regexp>
           <type>String</type>
           <examples>
             <example>/who -n "Candy" (will query for all online players having their name matching 'Candy').</example>
@@ -48,7 +48,7 @@
           <name>guild</name>
           <description>Used to filter on the guild name.</description>
           <tag>-g</tag>
-          <regexp>-g\s++([a-zA-Z]++\*?)</regexp>
+          <regexp>(-g)\s*+([a-zA-Z]++\*?)</regexp>
           <type>String</type>
         </parameter>
 
@@ -56,7 +56,7 @@
           <name>zone</name>
           <description>Used to filter on the zone name.</description>
           <tag>-z</tag>
-          <regexp>-n\s++([a-zA-Z]++\*?)</regexp>
+          <regexp>(-n)\s*+([a-zA-Z]++\*?)</regexp>
           <type>String</type>
         </parameter>
 
@@ -64,7 +64,7 @@
           <name>race</name>
           <description>Used to filter on the race name.</description>
           <tag>-r</tag>
-          <regexp>-r\s++([a-zA-Z\p{Blank}]++\*?)</regexp>
+          <regexp>(-r)\s*+([a-zA-Z\p{Blank}]++\*?)</regexp>
           <type>String</type>
           <examples>
             <example>/who -r Human (will query for all online players being of race 'Human').</example>
@@ -76,7 +76,7 @@
           <name>class</name>
           <description>Used to filter on the class name.</description>
           <tag>-c</tag>
-          <regexp>-c\s++([a-zA-Z]++\*?)</regexp>
+          <regexp>(-c)\s*+([a-zA-Z]++\*?)</regexp>
           <type>String</type>
           <examples>
             <example>/who -c Priest (will query for all online players being of class 'Priest').</example>
@@ -89,7 +89,7 @@
           <description>Used to filter on the server name.</description>
           <tag>-s</tag>
           <type>String</type>
-          <regexp>-s\s++([a-zA-Z]++)</regexp>
+          <regexp>(-s)\s*+([a-zA-Z]++)</regexp>
           <examples>
             <example>/who -s Tenedron (will query for all online players of the Tenedron server).</example>
           </examples>
@@ -99,7 +99,7 @@
           <name>level</name>
           <description>Used to filter on player's level.</description>
           <tag>-l</tag>
-          <regexp>-l\s++(\d++)\s*+-\s*+(\d++)|-l\s++(\d++)</regexp>
+          <regexp>(-l)\s*+(\d++)\s*+-\s*+(\d++)|-l\s++(\d++)</regexp>
           <type>Integer</type>
           <examples>
             <example>/who -l 14-21 (will query for all online players between level 14 and level 21).</example>
