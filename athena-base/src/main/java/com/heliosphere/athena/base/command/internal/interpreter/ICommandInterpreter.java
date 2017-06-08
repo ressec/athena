@@ -11,8 +11,11 @@
  */
 package com.heliosphere.athena.base.command.internal.interpreter;
 
+import java.util.List;
+
 import com.heliosphere.athena.base.command.internal.CommandException;
 import com.heliosphere.athena.base.command.internal.ICommand;
+import com.heliosphere.athena.base.command.internal.ICommandMetadata;
 
 /**
  * Provides a basic behavior for a command interpreter.
@@ -30,4 +33,19 @@ public interface ICommandInterpreter
 	 * @throws CommandException Error thrown in case an error occurred while interpreting the command ; generally no command has been found!
 	 */
 	ICommand interpret(String text) throws CommandException;
+
+	/**
+	 * Registers a new command metadata (definition).
+	 * <hr>
+	 * @param metadata Command metadata.
+	 */
+	void registerCommand(ICommandMetadata metadata);
+
+	/**
+	 * Registers a set of command metadata (definitions).
+	 * <hr>
+	 * @param metadata List of command metadata (definitions) to register.
+	 */
+	void registerCommands(List<ICommandMetadata> metadata);
+
 }

@@ -56,14 +56,10 @@ public final class CommandInterpreter implements ICommandInterpreter
 		commands = new HashMap<>();
 	}
 
-	/**
-	 * Registers a new command definition.
-	 * <hr>
-	 * @param definition Command definition.
-	 */
-	public final void registerCommand(final @NonNull ICommandMetadata definition)
+	@Override
+	public final void registerCommand(final @NonNull ICommandMetadata metadata)
 	{
-		List<ICommandMetadata> list = commands.get(definition.getCategory());
+		List<ICommandMetadata> list = commands.get(metadata.getCategory());
 
 		if (list == null)
 		{
@@ -71,24 +67,20 @@ public final class CommandInterpreter implements ICommandInterpreter
 		}
 		else
 		{
-			if (list.contains(definition))
+			if (list.contains(metadata))
 			{
 				return;
 			}
 		}
 
-		list.add(definition);
-		commands.put(definition.getCategory(), list);
+		list.add(metadata);
+		commands.put(metadata.getCategory(), list);
 	}
 
-	/**
-	 * Registers a set of command definitions.
-	 * <hr>
-	 * @param definitions List of command definitions to register.
-	 */
-	public final void registerCommands(final @NonNull List<ICommandMetadata> definitions)
+	@Override
+	public final void registerCommands(final @NonNull List<ICommandMetadata> metadata)
 	{
-		for (ICommandMetadata definition : definitions)
+		for (ICommandMetadata definition : metadata)
 		{
 			registerCommand(definition);
 		}
@@ -184,10 +176,10 @@ public final class CommandInterpreter implements ICommandInterpreter
 			 * Group 2:'/'
 			 * Group 3:'who      '
 			 */
-			for (int i = 0; i <= matcher.groupCount(); i++)
-			{
-				System.out.println("Group " + i + " : " + matcher.group(i));
-			}
+			//			for (int i = 0; i <= matcher.groupCount(); i++)
+			//			{
+			//				System.out.println("Group " + i + " : " + matcher.group(i));
+			//			}
 
 			category = CommandCategoryType.fromPrefix(matcher.group(2).trim());
 			name = matcher.group(3).trim();
@@ -255,10 +247,10 @@ public final class CommandInterpreter implements ICommandInterpreter
 
 			if (matcher.find())
 			{
-				for (int i = 0; i <= matcher.groupCount(); i++)
-				{
-					System.out.println("Group " + i + " : " + matcher.group(i));
-				}
+				//				for (int i = 0; i <= matcher.groupCount(); i++)
+				//				{
+				//					System.out.println("Group " + i + " : " + matcher.group(i));
+				//				}
 				tag = matcher.group(1);
 				for (int index = 2; index <= matcher.groupCount(); index++)
 				{
