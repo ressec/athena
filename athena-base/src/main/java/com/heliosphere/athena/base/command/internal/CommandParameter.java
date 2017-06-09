@@ -18,6 +18,12 @@ import com.heliosphere.athena.base.command.internal.type.ParameterType;
 
 import lombok.NonNull;
 
+/**
+ * Represents a command parameter.
+ * <hr>
+ * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
+ * @version 1.0.0
+ */
 public class CommandParameter implements ICommandParameter
 {
 	/**
@@ -35,12 +41,25 @@ public class CommandParameter implements ICommandParameter
 	 */
 	private ICommandParameterMetadata metadata;
 
+	/**
+	 * Creates a new command parameter given some values.
+	 * <hr>
+	 * @param text Text representing the parameter as entered on a command-line or a terminal.
+	 * @param metadata Command parameter metadata (definition).
+	 */
 	public CommandParameter(final @NonNull String text, final @NonNull ICommandParameterMetadata metadata)
 	{
 		this.text = text;
 		this.metadata = metadata;
 	}
 
+	/**
+	 * Creates a new command parameter given some values.
+	 * <hr>
+	 * @param text Text representing the parameter as entered on a command-line or a terminal.
+	 * @param metadata Command parameter metadata (definition).
+	 * @param values List of parameter's values.
+	 */
 	public CommandParameter(final @NonNull String text, final @NonNull ICommandParameterMetadata metadata, final @NonNull List<String> values)
 	{
 		this.text = text;
