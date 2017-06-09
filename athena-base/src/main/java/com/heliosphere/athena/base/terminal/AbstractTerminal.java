@@ -20,6 +20,7 @@ import com.heliosphere.athena.base.command.internal.CommandException;
 import com.heliosphere.athena.base.command.internal.ICommand;
 import com.heliosphere.athena.base.command.internal.interpreter.CommandInterpreter;
 import com.heliosphere.athena.base.command.internal.interpreter.ICommandInterpreter;
+import com.heliosphere.athena.base.command.response.CommandResponse;
 import com.heliosphere.athena.base.file.internal.FileException;
 
 import lombok.NonNull;
@@ -112,14 +113,23 @@ public abstract class AbstractTerminal implements Runnable
 	 * Processes a command.
 	 * <hr>
 	 * @param command Command to process.
+	 * @return Command response.
 	 */
-	public abstract void process(ICommand command);
+	public abstract CommandResponse process(ICommand command);
+
+	/**
+	 * Processes a command response.
+	 * <hr>
+	 * @param response Command response to process.
+	 */
+	public abstract void process(CommandResponse response);
 
 	@SuppressWarnings("nls")
 	@Override
 	public final void run()
 	{
 		ICommand command = null;
+		CommandResponse response = null;
 
 		while (RUNNING)
 		{
@@ -131,7 +141,8 @@ public abstract class AbstractTerminal implements Runnable
 				try
 				{
 					command = interpreter.interpret(text);
-					process(command);
+					response = process(command);
+					process(response);
 				}
 				catch (CommandException e)
 				{

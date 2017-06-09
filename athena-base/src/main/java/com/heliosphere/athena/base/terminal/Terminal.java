@@ -13,6 +13,8 @@ package com.heliosphere.athena.base.terminal;
 
 import com.heliosphere.athena.base.command.internal.ICommand;
 import com.heliosphere.athena.base.command.internal.type.CommandCategoryType;
+import com.heliosphere.athena.base.command.response.CommandResponse;
+import com.heliosphere.athena.base.command.response.CommandStatusType;
 import com.heliosphere.athena.base.file.internal.FileException;
 
 import lombok.NonNull;
@@ -38,13 +40,24 @@ public class Terminal extends AbstractTerminal
 		super(pathname);
 	}
 
+	@SuppressWarnings("nls")
 	@Override
-	public final void process(final @NonNull ICommand command)
+	public final CommandResponse process(final @NonNull ICommand command)
 	{
+		CommandResponse response = new CommandResponse(command, CommandStatusType.PROCESSED);
+
 		switch ((CommandCategoryType) command.getMetadata().getCategory())
 		{
 			case NORMAL:
-				getTerminal().println("Command [category=" + command.getMetadata().getCategory() + ", group=" + command.getMetadata().getGroup() + ", name=" + command.getMetadata().getName() + "] has been processed.");
+				if (command.getMetadata().getName().equals("afk"))
+				{
+					response.addMessage("You are now away from the keyboard");
+				}
+				else
+					if (command.getMetadata().getName().equals("who"))
+					{
+						response.addMessage("We are querying the server for your request...");
+					}
 				break;
 
 			case ADMINISTRATION:
@@ -53,6 +66,59 @@ public class Terminal extends AbstractTerminal
 			case SYSTEM:
 
 			default:
+				break;
+		}
+
+		return response;
+	}
+
+	@Override
+	public final void process(CommandResponse response)
+	{
+		switch (response.getStatus())
+		{
+			case UNPROCESSED:
+				getTerminal().println("The command: " + response.getCommand().getMetadata().getName() + " has not been processed!");
+				break;
+
+			case PROCESSED:
+				if (response.getMessages() != null)
+				{
+					for (String message : response.getMessages())
+					{
+						getTerminal().println(message);
+					}
+				}
+				else
+				{
+					getTerminal().println("> command: " + response.getCommand().getMetadata().getName() + " has been processed sucessfully.");
+				}
+				break;
+
+			case FAILED:
+				if (response.getMessages() != null)
+				{
+					for (String message : response.getMessages())
+					{
+						getTerminal().println(message);
+					}
+				}
+
+				if (response.getExceptions() != null)
+				{
+					for (Exception exception : response.getExceptions())
+					{
+						getTerminal().println(exception.getMessage());
+					}
+				}
+				else
+				{
+					getTerminal().println("The command: " + response.getCommand().getMetadata().getName() + " has failed!");
+				}
+				break;
+
+			default:
+				getTerminal().println("Unknown command: " + response.getCommand().getMetadata().getName());
 				break;
 		}
 	}

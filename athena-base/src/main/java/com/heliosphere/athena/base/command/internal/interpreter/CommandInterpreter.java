@@ -27,6 +27,7 @@ import com.heliosphere.athena.base.command.internal.ICommandParameter;
 import com.heliosphere.athena.base.command.internal.ICommandParameterMetadata;
 import com.heliosphere.athena.base.command.internal.type.CommandCategoryType;
 import com.heliosphere.athena.base.command.internal.type.ICommandCategoryType;
+import com.heliosphere.athena.base.exception.InvalidArgumentException;
 
 import lombok.NonNull;
 
@@ -187,9 +188,16 @@ public final class CommandInterpreter implements ICommandInterpreter
 			//				System.out.println("Group " + i + " : " + matcher.group(i));
 			//			}
 
-			category = CommandCategoryType.fromPrefix(matcher.group(2).trim());
-			name = matcher.group(3).trim();
-			definition = getCommand(category, name);
+			try
+			{
+				category = CommandCategoryType.fromPrefix(matcher.group(2).trim());
+				name = matcher.group(3).trim();
+				definition = getCommand(category, name);
+			}
+			catch (InvalidArgumentException e)
+			{
+				return null;
+			}
 
 			// Reduce the original text by removing the found command pattern.
 			copy = copy.replace(matcher.group(1), "");
