@@ -17,7 +17,7 @@ import com.thoughtworks.xstream.converters.basic.AbstractSingleValueConverter;
 /**
  * Provides a {@code XStream} converter for the {@link ParameterType} enumeration.
  * <hr>
- * @author <a href="mailto:christophe.resse@hotmail.com">Christophe Resse</a>
+ * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 public class ParameterEnumConverter extends AbstractSingleValueConverter

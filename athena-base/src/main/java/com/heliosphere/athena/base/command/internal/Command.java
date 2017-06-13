@@ -22,7 +22,7 @@ import lombok.NonNull;
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
-public class Command implements ICommand
+public final class Command implements ICommand
 {
 	/**
 	 * Original text of the command (as entered on a command line or similar).

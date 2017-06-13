@@ -11,16 +11,16 @@
  */
 package com.heliosphere.athena.base.command.file.xml.converter;
 
-import com.heliosphere.athena.base.command.internal.type.CommandCategoryType;
+import com.heliosphere.athena.base.command.internal.type.CommandCodeType;
 import com.thoughtworks.xstream.converters.basic.AbstractSingleValueConverter;
 
 /**
- * Provides a {@code XStream} converter for the {@link CommandCategoryType} enumeration.
+ * Provides an {@code XStream} enumeration converter for {@link CommandCodeType}.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public final class CommandCategoryEnumConverter extends AbstractSingleValueConverter
+public final class CommandCodeEnumConverter extends AbstractSingleValueConverter
 {
 	@Override
 	public boolean canConvert(Class clazz)
@@ -31,6 +31,6 @@ public final class CommandCategoryEnumConverter extends AbstractSingleValueConve
 	@Override
 	public Object fromString(String value)
 	{
-		return CommandCategoryType.fromString(value);
+		return CommandCodeType.fromString(value);
 	}
 }

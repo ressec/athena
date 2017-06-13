@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import com.heliosphere.athena.base.test.command.file.xml.XmlChatCommandFileTest;
 import com.heliosphere.athena.base.test.resource.bundle.ResourceBundleTest;
 
 /**
@@ -24,7 +25,7 @@ import com.heliosphere.athena.base.test.resource.bundle.ResourceBundleTest;
  * @version 1.0.0
  */
 @RunWith(Suite.class)
-@SuiteClasses({ ResourceBundleTest.class })
+@SuiteClasses({ ResourceBundleTest.class, XmlChatCommandFileTest.class })
 public class AthenaBaseTestSuite
 {
 	// Empty.
