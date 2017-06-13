@@ -9,28 +9,17 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.file.xml.converter;
+package com.heliosphere.athena.base.message.internal;
 
-import com.heliosphere.athena.base.command.internal.type.CommandCategoryType;
-import com.thoughtworks.xstream.converters.basic.AbstractSingleValueConverter;
+import java.io.Serializable;
 
 /**
- * Provides a {@code XStream} converter for the {@link CommandCategoryType} enumeration.
+ * Marker interface for all Heliosphere' messages.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public final class CommandCategoryEnumConverter extends AbstractSingleValueConverter
+public interface IMessage extends Serializable
 {
-	@Override
-	public boolean canConvert(Class clazz)
-	{
-		return clazz.equals(Enum.class);
-	}
-
-	@Override
-	public Object fromString(String value)
-	{
-		return CommandCategoryType.fromString(value);
-	}
+	// Empty.
 }

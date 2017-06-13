@@ -25,7 +25,7 @@ public class TestTerminal
 	{
 		try
 		{
-			Terminal terminal = new Terminal("/config/command/chat-commands.xml");
+			CommandTerminal terminal = new CommandTerminal("/config/command/chat-commands.xml");
 			terminal.start();
 		}
 		catch (FileException e)

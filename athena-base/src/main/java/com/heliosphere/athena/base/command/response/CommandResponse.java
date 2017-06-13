@@ -15,37 +15,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.heliosphere.athena.base.command.internal.ICommand;
+import com.heliosphere.athena.base.command.internal.type.CommandCodeType;
+import com.heliosphere.athena.base.command.internal.type.ICommandCodeType;
 
-import lombok.Getter;
 import lombok.NonNull;
-import lombok.Setter;
 
-public final class CommandResponse
+public final class CommandResponse implements ICommandResponse
 {
 	/**
 	 * Command status type.
 	 */
-	@Getter
-	@Setter
-	private CommandStatusType status;
+	private CommandStatusType status = CommandStatusType.UNPROCESSED;
 
 	/**
 	 * Message resulting of the process of the command to be written to the console or terminal.
 	 */
-	@Getter
 	private List<String> messages;
 
 	/**
 	 * List of exceptions raised during the processing of the command.
 	 */
-	@Getter
 	private List<Exception> exceptions;
 
 	/**
 	 * Referenced command.
 	 */
-	@Getter
 	private ICommand command;
+
+	/**
+	 * Order to execute in response to the command processing.
+	 */
+	private Enum<? extends ICommandCodeType> order;
 
 	/**
 	 * Creates a new command response given some values.
@@ -56,14 +56,25 @@ public final class CommandResponse
 	public CommandResponse(final @NonNull ICommand command, final @NonNull CommandStatusType status)
 	{
 		this.command = command;
+		this.order = CommandCodeType.DISPLAY_TERMINAL;
 		this.status = status;
 	}
 
 	/**
-	 * Adds a message to display on the console.
+	 * Creates a new command response given some values.
 	 * <hr>
-	 * @param message Message to add.
+	 * @param command Referenced command.
+	 * @param order Order type.
+	 * @param status Command processing status.
 	 */
+	public CommandResponse(final @NonNull ICommand command, final @NonNull Enum<? extends ICommandCodeType> order, final @NonNull CommandStatusType status)
+	{
+		this.command = command;
+		this.order = order;
+		this.status = status;
+	}
+
+	@Override
 	public final void addMessage(final @NonNull String message)
 	{
 		if (messages == null)
@@ -74,11 +85,7 @@ public final class CommandResponse
 		messages.add(message);
 	}
 
-	/**
-	 * Adds an exception.
-	 * <hr>
-	 * @param exception Exception to add.
-	 */
+	@Override
 	public final void addException(final @NonNull Exception exception)
 	{
 		if (exceptions == null)
@@ -87,5 +94,41 @@ public final class CommandResponse
 		}
 
 		exceptions.add(exception);
+	}
+
+	@Override
+	public final List<String> getMessages()
+	{
+		return messages;
+	}
+
+	@Override
+	public final List<Exception> getExceptions()
+	{
+		return exceptions;
+	}
+
+	@Override
+	public final void setOrder(Enum<? extends ICommandCodeType> order)
+	{
+		this.order = order;
+	}
+
+	@Override
+	public final Enum<? extends ICommandCodeType> getOrder()
+	{
+		return order;
+	}
+
+	@Override
+	public final ICommand getCommand()
+	{
+		return command;
+	}
+
+	@Override
+	public final CommandStatusType getStatus()
+	{
+		return status;
 	}
 }

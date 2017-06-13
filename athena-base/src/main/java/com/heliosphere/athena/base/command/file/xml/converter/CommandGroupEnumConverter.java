@@ -17,7 +17,7 @@ import com.thoughtworks.xstream.converters.basic.AbstractSingleValueConverter;
 /**
  * Provides an {@code XStream} enumeration converter for {@link CommandGroupType}.
  * <hr>
- * @author <a href="mailto:christophe.resse@hotmail.com">Christophe Resse</a>
+ * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 public final class CommandGroupEnumConverter extends AbstractSingleValueConverter

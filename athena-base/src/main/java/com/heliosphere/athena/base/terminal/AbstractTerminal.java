@@ -11,6 +11,9 @@
  */
 package com.heliosphere.athena.base.terminal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextIoFactory;
 import org.beryx.textio.TextTerminal;
@@ -18,9 +21,9 @@ import org.beryx.textio.TextTerminal;
 import com.heliosphere.athena.base.command.file.xml.XmlCommandFile;
 import com.heliosphere.athena.base.command.internal.CommandException;
 import com.heliosphere.athena.base.command.internal.ICommand;
+import com.heliosphere.athena.base.command.internal.ICommandListener;
 import com.heliosphere.athena.base.command.internal.interpreter.CommandInterpreter;
 import com.heliosphere.athena.base.command.internal.interpreter.ICommandInterpreter;
-import com.heliosphere.athena.base.command.response.CommandResponse;
 import com.heliosphere.athena.base.file.internal.FileException;
 
 import lombok.NonNull;
@@ -34,9 +37,9 @@ import lombok.NonNull;
 public abstract class AbstractTerminal implements Runnable
 {
 	/**
-	 * Running state.
+	 * Terminal state.
 	 */
-	private static volatile boolean RUNNING = false;
+	private static TerminalStatusType status = TerminalStatusType.UNKNOWN;
 
 	/**
 	 * Wait interval.
@@ -44,10 +47,20 @@ public abstract class AbstractTerminal implements Runnable
 	private static volatile int WAIT_INTERVAL = 100;
 
 	/**
+	 * Terminal thread.
+	 */
+	private static volatile Thread thread = null;
+
+	/**
 	 * Prompt.
 	 */
 	@SuppressWarnings("nls")
 	private final static String PROMPT = "Command:";
+
+	/**
+	 * Command listeners.
+	 */
+	private List<ICommandListener> listeners = new ArrayList<>();
 
 	/**
 	 * Text IO entry point.
@@ -91,9 +104,19 @@ public abstract class AbstractTerminal implements Runnable
 	 * @return Text terminal.
 	 */
 	@SuppressWarnings("rawtypes")
-	protected final TextTerminal getTerminal()
+	public final TextTerminal getTerminal()
 	{
 		return io.getTextTerminal();
+	}
+
+	/**
+	 * Adds a command listener.
+	 * <hr>
+	 * @param listener Command listener to add.
+	 */
+	public final void registerListener(final @NonNull ICommandListener listener)
+	{
+		listeners.add(listener);
 	}
 
 	/**
@@ -113,41 +136,41 @@ public abstract class AbstractTerminal implements Runnable
 	 * Processes a command.
 	 * <hr>
 	 * @param command Command to process.
-	 * @return Command response.
 	 */
-	public abstract CommandResponse process(ICommand command);
-
-	/**
-	 * Processes a command response.
-	 * <hr>
-	 * @param response Command response to process.
-	 */
-	public abstract void process(CommandResponse response);
+	public final void process(final ICommand command)
+	{
+		for (ICommandListener listener : listeners)
+		{
+			listener.onCommand(command);
+		}
+	}
 
 	@SuppressWarnings("nls")
 	@Override
 	public final void run()
 	{
 		ICommand command = null;
-		CommandResponse response = null;
 
-		while (RUNNING)
+		while (status != TerminalStatusType.STOPPED)
 		{
-			try
+			if (status == TerminalStatusType.RUNNING)
 			{
-				Thread.sleep(WAIT_INTERVAL); // Value is expressed in milliseconds.
 				text = io.newStringInputReader().read(PROMPT);
 
 				try
 				{
 					command = interpreter.interpret(text);
-					response = process(command);
-					process(response);
+					process(command);
 				}
 				catch (CommandException e)
 				{
 					getTerminal().println(e.getMessage());
 				}
+			}
+
+			try
+			{
+				Thread.sleep(WAIT_INTERVAL); // Value is expressed in milliseconds.
 			}
 			catch (InterruptedException e)
 			{
@@ -156,13 +179,49 @@ public abstract class AbstractTerminal implements Runnable
 		}
 	}
 
+	/**
+	 * Starts the terminal.
+	 */
 	public final void start()
 	{
-		if (!RUNNING)
+		if (status == TerminalStatusType.UNKNOWN || status == TerminalStatusType.STOPPED)
 		{
-			Thread thread = new Thread(this);
-			RUNNING = true;
+			thread = new Thread(this);
+			status = TerminalStatusType.RUNNING;
 			thread.start();
+		}
+	}
+
+	/**
+	 * Stops the terminal.
+	 */
+	public final void stop()
+	{
+		if (status == TerminalStatusType.RUNNING)
+		{
+			status = TerminalStatusType.STOPPED;
+		}
+	}
+
+	/**
+	 * resumes the terminal.
+	 */
+	public final void resume()
+	{
+		if (status == TerminalStatusType.PAUSED)
+		{
+			status = TerminalStatusType.RUNNING;
+		}
+	}
+
+	/**
+	 * Pauses the terminal.
+	 */
+	public final void pause()
+	{
+		if (status == TerminalStatusType.RUNNING)
+		{
+			status = TerminalStatusType.PAUSED;
 		}
 	}
 }

@@ -14,12 +14,13 @@ package com.heliosphere.athena.base.command.internal;
 import java.util.List;
 
 import com.heliosphere.athena.base.command.internal.type.ICommandCategoryType;
+import com.heliosphere.athena.base.command.internal.type.ICommandCodeType;
 import com.heliosphere.athena.base.command.internal.type.ICommandGroupType;
 
 /**
  * Provides a basic behavior for a command metadata that is containing the definition of a command.
  * <hr>
- * @author <a href="mailto:christophe.resse@hotmail.com">Christophe Resse</a>
+ * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 public interface ICommandMetadata
@@ -37,6 +38,13 @@ public interface ICommandMetadata
 	 * @return Command group type.
 	 */
 	Enum<? extends ICommandGroupType> getGroup();
+
+	/**
+	 * Returns the command code type.
+	 * <p>
+	 * @return Command code type.
+	 */
+	Enum<? extends ICommandCodeType> getCode();
 
 	/**
 	 * Returns the command name.

@@ -15,8 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.heliosphere.athena.base.command.file.xml.converter.CommandCategoryEnumConverter;
+import com.heliosphere.athena.base.command.file.xml.converter.CommandCodeEnumConverter;
 import com.heliosphere.athena.base.command.file.xml.converter.CommandGroupEnumConverter;
 import com.heliosphere.athena.base.command.internal.type.ICommandCategoryType;
+import com.heliosphere.athena.base.command.internal.type.ICommandCodeType;
 import com.heliosphere.athena.base.command.internal.type.ICommandGroupType;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
@@ -64,6 +66,14 @@ public class CommandMetadata implements ICommandMetadata
 	private Enum<? extends ICommandGroupType> group;
 
 	/**
+	 * Command code.
+	 */
+	@Getter
+	@Setter
+	@XStreamConverter(CommandCodeEnumConverter.class)
+	private Enum<? extends ICommandCodeType> code;
+
+	/**
 	 * Command syntax.
 	 */
 	@Getter
@@ -89,12 +99,14 @@ public class CommandMetadata implements ICommandMetadata
 	 * <hr>
 	 * @param category Command category type.
 	 * @param group Command group type.
+	 * @param code Command code type.
 	 * @param name Command name.
 	 */
-	public CommandMetadata(final @NonNull Enum<? extends ICommandCategoryType> category, final @NonNull Enum<? extends ICommandGroupType> group, final @NonNull String name)
+	public CommandMetadata(final @NonNull Enum<? extends ICommandCategoryType> category, final @NonNull Enum<? extends ICommandGroupType> group, final @NonNull Enum<? extends ICommandCodeType> code, final @NonNull String name)
 	{
 		this.category = category;
 		this.group = group;
+		this.code = code;
 		this.name = name;
 	}
 
