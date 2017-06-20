@@ -13,42 +13,27 @@ package com.heliosphere.athena.base.message.internal;
 
 import java.io.Serializable;
 
-import com.heliosphere.athena.base.message.internal.type.MessageCategoryType;
-import com.heliosphere.athena.base.message.internal.type.MessageResponseType;
+import com.heliosphere.athena.base.message.internal.type.MessageUsageType;
 
 /**
- * Interface providing a basic behavior for Heliosphere' messages.
+ * Interface providing a basic behavior for Heliosphere' messages type (protocol).
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface IMessage extends Serializable
+public interface IMessageType extends Serializable
 {
 	/**
-	 * Returns the message type.
-	 * <hr>
-	 * @return Message type.
+	 * Returns the message content expected type class.
+	 * <p>
+	 * @return Message content type class.
 	 */
-	Enum<? extends IMessageType> getType();
+	Class<? extends IMessageContent> getContentClass();
 
 	/**
-	 * Returns the message category type.
-	 * <hr>
-	 * @return Message category type.
+	 * Returns the message usage type (restriction).
+	 * <p>
+	 * @return Message usage type.
 	 */
-	MessageCategoryType getCategoryType();
-
-	/**
-	 * Message response type.
-	 * <hr>
-	 * @return Message response type.
-	 */
-	MessageResponseType getResponseType();
-
-	/**
-	 * Message content.
-	 * <hr>
-	 * @return Message content.
-	 */
-	IMessageContent getContent();
+	MessageUsageType getUsageType();
 }
