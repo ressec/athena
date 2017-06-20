@@ -51,4 +51,11 @@ public interface IMessage extends Serializable
 	 * @return Message content.
 	 */
 	IMessageContent getContent();
+
+	/**
+	 * Validates the message.
+	 * <hr>
+	 * @throws MessageException Thrown in case an error occurred during {@link IMessage} validation.
+	 */
+	void validate() throws MessageException;
 }

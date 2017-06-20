@@ -20,6 +20,7 @@ import com.heliosphere.athena.base.message.internal.type.MessageResponseType;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
+@SuppressWarnings("serial")
 public abstract class AbstractMessage implements IMessage
 {
 	/**
@@ -70,6 +71,21 @@ public abstract class AbstractMessage implements IMessage
 		this.category = category;
 		this.response = response;
 		this.content = content;
+	}
+
+	@Override
+	@SuppressWarnings("nls")
+	public final void validate() throws MessageException
+	{
+		// Validate message content.
+		Class<? extends IMessageContent> contentClass = ((IMessageType) type).getContentClass();
+		if (content != null)
+		{
+			if (!contentClass.isInstance(content))
+			{
+				throw new MessageContentException("Expected message content class should be: " + contentClass.getName() + " but is: " + content.getClass().getName());
+			}
+		}
 	}
 
 	@Override
