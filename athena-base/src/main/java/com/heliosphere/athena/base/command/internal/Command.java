@@ -83,4 +83,21 @@ public final class Command implements ICommand
 
 		parameters.add(parameter);
 	}
+
+	@Override
+	public final ICommandParameter getParameter(String name)
+	{
+		if (parameters != null)
+		{
+			for (ICommandParameter parameter : parameters)
+			{
+				if (parameter.getMetadata().getName().equals(name))
+				{
+					return parameter;
+				}
+			}
+		}
+
+		return null;
+	}
 }

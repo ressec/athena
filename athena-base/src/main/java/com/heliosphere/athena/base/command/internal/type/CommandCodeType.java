@@ -42,7 +42,8 @@ public enum CommandCodeType implements ICommandCodeType
 	 * @param value String representing the enumerated value.
 	 * @return Command code type.
 	 */
-	public static Enum<? extends ICommandCodeType> fromString(String value)
+	@Override
+	public Enum<? extends ICommandCodeType> fromString(String value)
 	{
 		if (value == null || value.trim().length() == 0)
 		{

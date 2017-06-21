@@ -89,6 +89,29 @@ public class Message extends AbstractMessage
 	}
 
 	/**
+	 * Creates a confirmed reply message given a request message.
+	 * <hr>
+	 * @param original Original request message.
+	 * @return Newly created message.
+	 */
+	public final static IMessage createReplyConfirmed(final IMessage original)
+	{
+		return new Message(original.getType(), MessageCategoryType.REPLY, MessageResponseType.CONFIRMED, null);
+	}
+
+	/**
+	 * Creates a confirmed reply message given a request message.
+	 * <hr>
+	 * @param original Original request message.
+	 * @param content Message content.
+	 * @return Newly created message.
+	 */
+	public final static IMessage createReplyConfirmed(final IMessage original, final IMessageContent content)
+	{
+		return new Message(original.getType(), MessageCategoryType.REPLY, MessageResponseType.CONFIRMED, content);
+	}
+
+	/**
 	 * Creates a new rejected reply message.
 	 * <hr>
 	 * @param type Message type.

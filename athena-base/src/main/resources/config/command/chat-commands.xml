@@ -15,6 +15,7 @@
       <category>Normal</category>
       <name>afk</name>
       <description>Marks you as "Away from keyboard".</description>
+      <protocol>com.heliosphere.athena.base.test.message.protocol.FakeMessageProtocol:STATUS_AFK</protocol>
       <aliases>
         <alias>away</alias>
       </aliases>
@@ -29,9 +30,12 @@
       <name>who</name>
       <description>Performs a query on the server for online players matching your query.</description>
       <syntax>/who 'filters'</syntax>
-      <aliases>people</aliases>
-
+      <protocol>com.heliosphere.athena.base.test.message.protocol.FakeMessageProtocol:QUERY_WHO</protocol>
+      <aliases>
+        <alias>people</alias>
+      </aliases>
       <parameters>
+
         <parameter>
           <name>name</name>
           <description>Used to filter on the player name.</description>

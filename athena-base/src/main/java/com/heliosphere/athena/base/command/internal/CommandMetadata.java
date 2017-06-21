@@ -20,8 +20,10 @@ import com.heliosphere.athena.base.command.file.xml.converter.CommandGroupEnumCo
 import com.heliosphere.athena.base.command.internal.type.ICommandCategoryType;
 import com.heliosphere.athena.base.command.internal.type.ICommandCodeType;
 import com.heliosphere.athena.base.command.internal.type.ICommandGroupType;
+import com.heliosphere.athena.base.message.internal.IMessageType;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 import lombok.Getter;
 import lombok.NonNull;
@@ -81,10 +83,25 @@ public class CommandMetadata implements ICommandMetadata
 	private String syntax;
 
 	/**
+	 * Message protocol class + entry associated to this command..
+	 */
+	@XStreamAlias("protocol")
+	private String messageProtocol;
+
+	/**
+	 * Message type associated to the command.
+	 */
+	@XStreamOmitField
+	@Getter
+	@Setter
+	private Enum<? extends IMessageType> messageType;
+	
+	/**
 	 * Collection of command aliases.
 	 */
 	@Getter
-	@XStreamImplicit(itemFieldName = "alias")
+	//@XStreamAlias("others")
+	//@XStreamImplicit(itemFieldName = "other")
 	private List<String> aliases;
 
 	/**
@@ -108,6 +125,36 @@ public class CommandMetadata implements ICommandMetadata
 		this.group = group;
 		this.code = code;
 		this.name = name;
+	}
+
+	@Override
+	public final String getMessageProtocolClass()
+	{
+		if (messageProtocol != null && !messageProtocol.isEmpty())
+		{
+			int index = messageProtocol.indexOf(':');
+			if (index != -1)
+			{
+				return messageProtocol.substring(0, index);
+			}
+		}
+		
+		return messageProtocol;
+	}
+
+	@Override
+	public final String getMessageProtocolEntry()
+	{
+		if (messageProtocol != null && !messageProtocol.isEmpty())
+		{
+			int index = messageProtocol.indexOf(':');
+			if (index != -1)
+			{
+				return messageProtocol.substring(index + 1, messageProtocol.length());
+			}
+		}
+		
+		return messageProtocol;
 	}
 
 	@Override

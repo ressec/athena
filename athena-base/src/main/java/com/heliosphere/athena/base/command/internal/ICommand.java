@@ -55,4 +55,12 @@ public interface ICommand
 	 * @return Command parameters.
 	 */
 	List<ICommandParameter> getParameters();
+
+	/**
+	 * Returns the command parameter given its name.
+	 * <hr>
+	 * @param name Parameter name.
+	 * @return {@link ICommandParameter} or {@code null} if the given parameter has not been found.
+	 */
+	ICommandParameter getParameter(String name);
 }

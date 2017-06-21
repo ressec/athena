@@ -16,6 +16,7 @@ import java.util.List;
 import com.heliosphere.athena.base.command.internal.type.ICommandCategoryType;
 import com.heliosphere.athena.base.command.internal.type.ICommandCodeType;
 import com.heliosphere.athena.base.command.internal.type.ICommandGroupType;
+import com.heliosphere.athena.base.message.internal.IMessageType;
 
 /**
  * Provides a basic behavior for a command metadata that is containing the definition of a command.
@@ -59,6 +60,34 @@ public interface ICommandMetadata
 	 * @return Command description.
 	 */
 	String getDescription();
+
+	/**
+	 * Returns the message protocol class associated to this command.
+	 * <hr>
+	 * @return Message protocol class.
+	 */
+	String getMessageProtocolClass();
+
+	/**
+	 * Returns the message protocol entry associated to this command.
+	 * <hr>
+	 * @return Message protocol entry.
+	 */
+	String getMessageProtocolEntry();
+
+	/**
+	 * Returns the message type associated to this command.
+	 * <hr>
+	 * @return Message type.
+	 */
+	Enum<? extends IMessageType> getMessageType();
+
+	/**
+	 * Sets the message type associated to the command.
+	 * <hr>
+	 * @param type Message type to set.
+	 */
+	void setMessageType(Enum<? extends IMessageType> type);
 
 	/**
 	 * Returns the command syntax.

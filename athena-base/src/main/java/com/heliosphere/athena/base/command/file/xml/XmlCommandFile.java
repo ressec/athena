@@ -73,10 +73,12 @@ public final class XmlCommandFile extends XmlFile<Header, ICommandMetadata, Foot
 		// Aliases the 'commands' tag.
 		getEngine().alias("command", ICommandMetadata.class, CommandMetadata.class);
 		getEngine().alias("parameter", ICommandParameterMetadata.class, CommandParameterMetadata.class);
+		getEngine().alias("alias", String.class, String.class);
 	}
 
 	/**
 	 * Finds commands matching the given command category.
+	 * <hr>
 	 * @param category Command category.
 	 * @return List of commands.
 	 */

@@ -12,6 +12,7 @@
 package com.heliosphere.athena.base.command.file.xml.converter;
 
 import com.heliosphere.athena.base.command.internal.type.CommandCodeType;
+import com.heliosphere.athena.base.command.internal.type.ICommandCodeType;
 import com.thoughtworks.xstream.converters.basic.AbstractSingleValueConverter;
 
 /**
@@ -31,6 +32,21 @@ public final class CommandCodeEnumConverter extends AbstractSingleValueConverter
 	@Override
 	public Object fromString(String value)
 	{
-		return CommandCodeType.fromString(value);
+		try
+		{
+			return ((ICommandCodeType) CommandCodeType.class.newInstance()).fromString(value);
+		}
+		catch (InstantiationException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (IllegalAccessException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }

@@ -24,6 +24,14 @@ import com.heliosphere.athena.base.message.internal.type.MessageUsageType;
 public interface IMessageType extends Serializable
 {
 	/**
+	 * Creates a message type based on its string representation.
+	 * <hr>
+	 * @param value String representation.
+	 * @return Message type.
+	 */
+	Enum<? extends IMessageType> fromString(String value);
+
+	/**
 	 * Returns the message content expected type class.
 	 * <p>
 	 * @return Message content type class.

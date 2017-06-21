@@ -28,8 +28,10 @@ import com.heliosphere.athena.base.command.internal.ICommandParameterMetadata;
 import com.heliosphere.athena.base.command.internal.type.CommandCategoryType;
 import com.heliosphere.athena.base.command.internal.type.ICommandCategoryType;
 import com.heliosphere.athena.base.exception.InvalidArgumentException;
+import com.heliosphere.athena.base.message.internal.IMessageType;
 
 import lombok.NonNull;
+import lombok.extern.log4j.Log4j;
 
 /**
  * Represents a command interpreter that is responsible to interpret a text entered on a command-line or a terminal and transform it to a command.
@@ -37,6 +39,7 @@ import lombok.NonNull;
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
+@Log4j
 public final class CommandInterpreter implements ICommandInterpreter
 {
 	/**
@@ -80,6 +83,9 @@ public final class CommandInterpreter implements ICommandInterpreter
 			}
 		}
 
+		// Validate the command.
+		validate(metadata);
+
 		list.add(metadata);
 		commands.put(metadata.getCategory(), list);
 	}
@@ -94,7 +100,31 @@ public final class CommandInterpreter implements ICommandInterpreter
 	}
 
 	/**
+	 * Validates the command definition.
+	 * <hr>
+	 * @param metadata Command definition to validate.
+	 */
+	@SuppressWarnings({ "nls", "static-method" })
+	private void validate(final @NonNull ICommandMetadata metadata)
+	{
+		Class<?> protocolClass;
+
+		try
+		{
+			// Validate the message protocol provided.
+			protocolClass = Class.forName(metadata.getMessageProtocolClass());
+			Enum<? extends IMessageType> enumerated = ((IMessageType) (Enum<?>) protocolClass.getEnumConstants()[0]).fromString(metadata.getMessageProtocolEntry());
+			metadata.setMessageType(enumerated);
+		}
+		catch (ClassNotFoundException e)
+		{
+			log.error(String.format("Cannot register command: %1s due to: %2s", metadata.getName(), e.getMessage()));
+		}
+	}
+
+	/**
 	 * Finds commands matching the given command category.
+	 * <hr>
 	 * @param category Command category.
 	 * @return List of commands.
 	 */
@@ -161,6 +191,7 @@ public final class CommandInterpreter implements ICommandInterpreter
 
 	/**
 	 * Extracts the command definition.
+	 * <hr>
 	 * @return Command definition or {@code null} if no command definition has been identified.
 	 */
 	@SuppressWarnings("nls")

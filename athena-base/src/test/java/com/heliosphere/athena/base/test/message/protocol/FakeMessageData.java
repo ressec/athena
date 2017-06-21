@@ -9,15 +9,10 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.internal.type;
+package com.heliosphere.athena.base.test.message.protocol;
 
-/**
- * Provides a basic behavior for command code type enumerations.
- * <hr>
- * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
- * @version 1.0.0
- */
-public interface ICommandCodeType
+import com.heliosphere.athena.base.message.internal.IMessageContent;
+
+public final class FakeMessageData implements IMessageContent
 {
-	Enum<? extends ICommandCodeType> fromString(String value);
 }
