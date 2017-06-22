@@ -27,7 +27,7 @@ import com.heliosphere.athena.base.command.internal.ICommandParameterMetadata;
 import com.heliosphere.athena.base.command.internal.exception.CommandException;
 import com.heliosphere.athena.base.command.internal.interpreter.ICommandInterpreter;
 import com.heliosphere.athena.base.command.internal.protocol.ICommandCategoryType;
-import com.heliosphere.athena.base.command.protocol.CommandCategoryType;
+import com.heliosphere.athena.base.command.protocol.DefaultCommandCategoryType;
 import com.heliosphere.athena.base.exception.InvalidArgumentException;
 import com.heliosphere.athena.base.message.internal.IMessageType;
 
@@ -222,7 +222,7 @@ public final class CommandInterpreter implements ICommandInterpreter
 
 			try
 			{
-				category = CommandCategoryType.fromPrefix(matcher.group(2).trim());
+				category = DefaultCommandCategoryType.fromPrefix(matcher.group(2).trim());
 				name = matcher.group(3).trim();
 				definition = getCommand(category, name);
 			}

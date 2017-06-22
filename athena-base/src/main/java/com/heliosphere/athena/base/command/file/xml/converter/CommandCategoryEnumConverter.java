@@ -11,11 +11,11 @@
  */
 package com.heliosphere.athena.base.command.file.xml.converter;
 
-import com.heliosphere.athena.base.command.protocol.CommandCategoryType;
+import com.heliosphere.athena.base.command.protocol.DefaultCommandCategoryType;
 import com.thoughtworks.xstream.converters.basic.AbstractSingleValueConverter;
 
 /**
- * Provides a {@code XStream} converter for the {@link CommandCategoryType} enumeration.
+ * Provides a {@code XStream} converter for the {@link DefaultCommandCategoryType} enumeration.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
@@ -31,6 +31,6 @@ public final class CommandCategoryEnumConverter extends AbstractSingleValueConve
 	@Override
 	public Object fromString(String value)
 	{
-		return CommandCategoryType.NORMAL.fromString(value);
+		return DefaultCommandCategoryType.NORMAL.fromString(value);
 	}
 }

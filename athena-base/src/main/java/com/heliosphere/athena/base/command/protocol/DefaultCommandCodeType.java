@@ -18,11 +18,14 @@ import com.heliosphere.athena.base.resource.bundle.ResourceBundleManager;
 
 /**
  * Enumeration defining a set of basic command code types.
+ * <p>
+ * <b>Note:</b><br>
+ * You should not use this protocol directly (except for testing purpose) but you should define your(s) according to your needs.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public enum CommandCodeType implements ICommandCodeType
+public enum DefaultCommandCodeType implements ICommandCodeType
 {
 	/**
 	 * Special default command.
@@ -61,7 +64,7 @@ public enum CommandCodeType implements ICommandCodeType
 			throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CommandCategoryCannotBeNull));
 		}
 
-		for (CommandCodeType element : CommandCodeType.values())
+		for (DefaultCommandCodeType element : DefaultCommandCodeType.values())
 		{
 			if (element.name().equalsIgnoreCase(value))
 			{
@@ -69,6 +72,6 @@ public enum CommandCodeType implements ICommandCodeType
 			}
 		}
 
-		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, CommandCodeType.class.getName(), value));
+		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, DefaultCommandCodeType.class.getName(), value));
 	}
 }

@@ -16,44 +16,47 @@ import com.heliosphere.athena.base.command.internal.protocol.ICommandGroupType;
 import com.heliosphere.athena.base.command.internal.protocol.ICommandProtocolType;
 import com.heliosphere.athena.base.exception.InvalidArgumentException;
 import com.heliosphere.athena.base.message.internal.IMessageType;
+import com.heliosphere.athena.base.message.internal.type.DefaultMessageProtocol;
 import com.heliosphere.athena.base.resource.bundle.BundleAthenaBase;
 import com.heliosphere.athena.base.resource.bundle.ResourceBundleManager;
-import com.heliosphere.athena.base.test.message.protocol.FakeMessageProtocol;
 
 import lombok.NonNull;
 
 /**
- * Enumeration defining a set of command types.
+ * Enumeration defining a set of {@code default} command types.
+ * <p>
+ * <b>Note:</b><br>
+ * You should not use this protocol directly (except for testing purpose) but you should define your(s) according to your needs.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public enum CommandProtocolType implements ICommandProtocolType
+public enum DefaultCommandProtocol implements ICommandProtocolType
 {
 	/**
 	 * Command: {@code AFK}.
 	 */
-	AFK(CommandCategoryType.NORMAL, CommandGroupType.CHAT, FakeMessageProtocol.STATUS_AFK),
+	AFK(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.CHAT, DefaultMessageProtocol.STATUS_AFK),
 
 	/**
 	 * Command: {@code Server Time}.
 	 */
-	SERVER_TIME(CommandCategoryType.NORMAL, CommandGroupType.SYSTEM, FakeMessageProtocol.QUERY_SERVER_TIME),
+	SERVER_TIME(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM, DefaultMessageProtocol.QUERY_SERVER_TIME),
 
 	/**
 	 * Command: {@code Client Time}.
 	 */
-	CLIENT_TIME(CommandCategoryType.NORMAL, CommandGroupType.SYSTEM, FakeMessageProtocol.NONE),
+	CLIENT_TIME(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM, DefaultMessageProtocol.NONE),
 
 	/**
 	 * Help command.
 	 */
-	HELP(CommandCategoryType.NORMAL, CommandGroupType.SYSTEM, FakeMessageProtocol.NONE),
+	HELP(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM, DefaultMessageProtocol.NONE),
 
 	/**
 	 * Quit command.
 	 */
-	QUIT(CommandCategoryType.NORMAL, CommandGroupType.SYSTEM, FakeMessageProtocol.NONE);
+	QUIT(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM, DefaultMessageProtocol.NONE);
 
 	/**
 	 * Command category type.
@@ -77,7 +80,7 @@ public enum CommandProtocolType implements ICommandProtocolType
 	 * @param group Command group type.
 	 * @param message Message type.
 	 */
-	private CommandProtocolType(final @NonNull Enum<? extends ICommandCategoryType> category, final @NonNull Enum<? extends ICommandGroupType> group, final @NonNull Enum<? extends IMessageType> message)
+	private DefaultCommandProtocol(final @NonNull Enum<? extends ICommandCategoryType> category, final @NonNull Enum<? extends ICommandGroupType> group, final @NonNull Enum<? extends IMessageType> message)
 	{
 		this.category = category;
 		this.group = group;
@@ -85,14 +88,14 @@ public enum CommandProtocolType implements ICommandProtocolType
 	}
 
 	@Override
-	public final CommandProtocolType fromString(final String value)
+	public final DefaultCommandProtocol fromString(final String value)
 	{
 		if (value == null || value.trim().length() == 0)
 		{
 			throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CommandCategoryCannotBeNull));
 		}
 
-		for (CommandProtocolType element : CommandProtocolType.values())
+		for (DefaultCommandProtocol element : DefaultCommandProtocol.values())
 		{
 			if (element.name().equalsIgnoreCase(value))
 			{
@@ -100,7 +103,7 @@ public enum CommandProtocolType implements ICommandProtocolType
 			}
 		}
 
-		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, CommandProtocolType.class.getName(), value));
+		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, DefaultCommandProtocol.class.getName(), value));
 	}
 
 	@Override

@@ -11,11 +11,11 @@
  */
 package com.heliosphere.athena.base.command.file.xml.converter;
 
-import com.heliosphere.athena.base.command.protocol.CommandGroupType;
+import com.heliosphere.athena.base.command.protocol.DefaultCommandGroupType;
 import com.thoughtworks.xstream.converters.basic.AbstractSingleValueConverter;
 
 /**
- * Provides an {@code XStream} enumeration converter for {@link CommandGroupType}.
+ * Provides an {@code XStream} enumeration converter for {@link DefaultCommandGroupType}.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
@@ -31,6 +31,6 @@ public final class CommandGroupEnumConverter extends AbstractSingleValueConverte
 	@Override
 	public Object fromString(String value)
 	{
-		return CommandGroupType.CHAT.fromString(value);
+		return DefaultCommandGroupType.CHAT.fromString(value);
 	}
 }

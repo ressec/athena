@@ -18,11 +18,14 @@ import com.heliosphere.athena.base.resource.bundle.ResourceBundleManager;
 
 /**
  * Enumeration defining a set of {@code default} command group types.
+ * <p>
+ * <b>Note:</b><br>
+ * You should not use this protocol directly (except for testing purpose) but you should define your(s) according to your needs.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public enum CommandGroupType implements ICommandGroupType
+public enum DefaultCommandGroupType implements ICommandGroupType
 {
 	/**
 	 * Chat command group type.
@@ -51,7 +54,7 @@ public enum CommandGroupType implements ICommandGroupType
 			throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CommandCategoryCannotBeNull));
 		}
 
-		for (CommandGroupType element : CommandGroupType.values())
+		for (DefaultCommandGroupType element : DefaultCommandGroupType.values())
 		{
 			if (element.name().equalsIgnoreCase(value))
 			{
@@ -59,6 +62,6 @@ public enum CommandGroupType implements ICommandGroupType
 			}
 		}
 
-		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, CommandGroupType.class.getName(), value));
+		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, DefaultCommandGroupType.class.getName(), value));
 	}
 }
