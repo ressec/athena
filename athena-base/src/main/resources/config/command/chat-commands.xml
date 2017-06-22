@@ -5,16 +5,35 @@
     <version>1.0</version>
     <author>Resse Christophe</author>
     <description>XML file containing definitions for some chat commands.</description>
+
+    <!-- 
+      PROTOCOL CLASSES.
+      
+      Those entries define the several protocol (enumerations) classes used for the commands.
+
+      The 'command-category' defines the enumeration class used for the command category. 
+      The 'command-group'    defines the enumeration class used for the command group. 
+      The 'command-code'     defines the enumeration class used for the command code. 
+      The 'message'          defines the enumeration class used for the message association (used when converting a command into a message). 
+     -->
+    <protocol-command-category>com.heliosphere.athena.base.command.protocol.DefaultCommandCategoryType</protocol-command-category>
+    <protocol-command-group>com.heliosphere.athena.base.command.protocol.DefaultCommandGroupType</protocol-command-group>
+    <protocol-command-code>com.heliosphere.athena.base.command.protocol.DefaultCommandCodeType</protocol-command-code>
+    <protocol-message>com.heliosphere.athena.base.message.protocol.DefaultMessageType</protocol-message>
+
   </header>
 
   <commands>
 
     <!-- AFK command which is a very simple command. -->
     <command>
-      <group>Chat</group>
-      <category>Normal</category>
+      <category>NORMAL</category>
+      <group>CHAT</group>
+      <code>AFK</code>
+      <message>STATUS_AFK</message>
       <name>afk</name>
       <description>Marks you as "Away from keyboard".</description>
+      <!-- Message protocol associated  with this command. Format is <full_enumeration_class_name>:<enumerated_value> -->
       <aliases>
         <alias>away</alias>
       </aliases>
@@ -24,14 +43,18 @@
     <!-- WHO command which is a quite complex command. -->
     <command>
 
-      <group>Chat</group>
-      <category>Normal</category>
+      <group>CHAT</group>
+      <category>NORMAL</category>
+      <code>WHO</code>
+      <message>QUERY_WHO</message>
       <name>who</name>
       <description>Performs a query on the server for online players matching your query.</description>
       <syntax>/who 'filters'</syntax>
-      <aliases>people</aliases>
-
+      <aliases>
+        <alias>people</alias>
+      </aliases>
       <parameters>
+
         <parameter>
           <name>name</name>
           <description>Used to filter on the player name.</description>

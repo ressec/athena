@@ -9,10 +9,14 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.internal;
+package com.heliosphere.athena.base.command;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.heliosphere.athena.base.command.internal.ICommand;
+import com.heliosphere.athena.base.command.internal.ICommandMetadata;
+import com.heliosphere.athena.base.command.internal.ICommandParameter;
 
 import lombok.NonNull;
 
@@ -82,5 +86,22 @@ public final class Command implements ICommand
 		}
 
 		parameters.add(parameter);
+	}
+
+	@Override
+	public final ICommandParameter getParameter(String name)
+	{
+		if (parameters != null)
+		{
+			for (ICommandParameter parameter : parameters)
+			{
+				if (parameter.getMetadata().getName().equals(name))
+				{
+					return parameter;
+				}
+			}
+		}
+
+		return null;
 	}
 }

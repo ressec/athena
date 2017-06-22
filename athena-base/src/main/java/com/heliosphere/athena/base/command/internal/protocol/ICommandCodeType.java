@@ -9,20 +9,21 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.internal.type;
+package com.heliosphere.athena.base.command.internal.protocol;
 
 /**
- * Provides a basic behavior for parameter type enumerations.
+ * Provides a basic behavior for command code type enumerations.
  * <hr>
- * @author <a href="mailto:christophe.resse@hotmail.com">Christophe Resse</a>
+ * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface IParameterType //extends IEnumType
+public interface ICommandCodeType
 {
 	/**
-	 * Returns the parameter type.
-	 * <p>
-	 * @return Parameter type.
+	 * Creates a command code type based on its string representation.
+	 * <hr>
+	 * @param value String representation.
+	 * @return Command code type.
 	 */
-	String getType();
+	Enum<? extends ICommandCodeType> fromString(String value);
 }

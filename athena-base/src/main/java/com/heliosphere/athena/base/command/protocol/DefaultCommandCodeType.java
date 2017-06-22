@@ -9,92 +9,62 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.internal.type;
+package com.heliosphere.athena.base.command.protocol;
 
+import com.heliosphere.athena.base.command.internal.protocol.ICommandCodeType;
 import com.heliosphere.athena.base.exception.InvalidArgumentException;
 import com.heliosphere.athena.base.resource.bundle.BundleAthenaBase;
 import com.heliosphere.athena.base.resource.bundle.ResourceBundleManager;
 
 /**
- * Enumeration defining a set of command group types.
+ * Enumeration defining a set of basic command code types.
+ * <p>
+ * <b>Note:</b><br>
+ * You should not use this protocol directly (except for testing purpose) but you should define your(s) according to your needs.
  * <hr>
- * @author <a href="mailto:christophe.resse@hotmail.com">Christophe Resse</a>
+ * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public enum CommandGroupType implements ICommandGroupType
+public enum DefaultCommandCodeType implements ICommandCodeType
 {
 	/**
-	 * Chat command group type.
+	 * Special default command.
 	 */
-	CHAT,
+	DISPLAY_TERMINAL,
 
 	/**
-	 * Pvp command group type.
+	 * AFK command.
 	 */
-	PVP,
+	AFK,
 
 	/**
-	 * Character command group type.
+	 * WHO command.
 	 */
-	CHARACTER,
+	WHO,
 
 	/**
-	 * Emote command group type.
+	 * Quit command used to terminate the client application abruptly.
 	 */
-	EMOTE,
+	QUIT;
 
 	/**
-	 * Guild command group type.
-	 */
-	GUILD,
-
-	/**
-	 * Combat command group type.
-	 */
-	COMBAT,
-
-	/**
-	 * Party command group type.
-	 */
-	PARTY,
-
-	/**
-	 * Raid command group type.
-	 */
-	RAID,
-
-	/**
-	 * Pet command group type.
-	 */
-	PET,
-
-	/**
-	 * System command group type.
-	 */
-	SYSTEM,
-
-	/**
-	 * Targeting command group type.
-	 */
-	TARGETING;
-
-	/**
-	 * Creates an command group enumerated value from a given string value.
+	 * Creates an command code enumerated value from a given string value.
 	 * <p>
 	 * <b>Example:</b><p> 
-	 * <code>CommandGroupType.fromString("Guild");</code>
+	 * <code>CommandCodeType.fromString("Quit");</code>
 	 * <hr>
 	 * @param value String representing the enumerated value.
-	 * @return Command group type.
+	 * @return Command code type.
 	 */
-	public static Enum<? extends ICommandGroupType> fromString(String value)
+	@Override
+	public Enum<? extends ICommandCodeType> fromString(String value)
 	{
 		if (value == null || value.trim().length() == 0)
 		{
 			throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CommandCategoryCannotBeNull));
 		}
 
-		for (CommandGroupType element : CommandGroupType.values())
+		for (DefaultCommandCodeType element : DefaultCommandCodeType.values())
 		{
 			if (element.name().equalsIgnoreCase(value))
 			{
@@ -102,6 +72,6 @@ public enum CommandGroupType implements ICommandGroupType
 			}
 		}
 
-		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, CommandGroupType.class.getName(), value));
+		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, DefaultCommandCodeType.class.getName(), value));
 	}
 }

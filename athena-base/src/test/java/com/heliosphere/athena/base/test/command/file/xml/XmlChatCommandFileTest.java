@@ -23,13 +23,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.heliosphere.athena.base.command.file.xml.XmlCommandFile;
-import com.heliosphere.athena.base.command.internal.CommandException;
 import com.heliosphere.athena.base.command.internal.ICommand;
 import com.heliosphere.athena.base.command.internal.ICommandMetadata;
 import com.heliosphere.athena.base.command.internal.ICommandParameterMetadata;
-import com.heliosphere.athena.base.command.internal.interpreter.CommandInterpreter;
-import com.heliosphere.athena.base.command.internal.type.CommandCategoryType;
-import com.heliosphere.athena.base.command.internal.type.CommandGroupType;
+import com.heliosphere.athena.base.command.internal.exception.CommandException;
+import com.heliosphere.athena.base.command.interpreter.CommandInterpreter;
+import com.heliosphere.athena.base.command.protocol.DefaultCommandCategoryType;
+import com.heliosphere.athena.base.command.protocol.DefaultCommandGroupType;
 
 /**
  * Test class for the {@link XmlCommandFile} class.
@@ -108,8 +108,8 @@ public class XmlChatCommandFileTest
 			ICommandParameterMetadata parameterDefinition = whoCommandDefinition.getParameters().get(0);
 			Assert.assertTrue(parameterDefinition.getName().equals("name"));
 
-			List<ICommandMetadata> normal = chatCommandfile.findByCategory(CommandCategoryType.NORMAL);
-			List<ICommandMetadata> chat = chatCommandfile.findByGroup(CommandGroupType.CHAT);
+			List<ICommandMetadata> normal = chatCommandfile.findByCategory(DefaultCommandCategoryType.NORMAL);
+			List<ICommandMetadata> chat = chatCommandfile.findByGroup(DefaultCommandGroupType.CHAT);
 			Assert.assertTrue(normal.size() != 0);
 			Assert.assertTrue(chat.size() != 0);
 

@@ -9,15 +9,28 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.internal.type;
+package com.heliosphere.athena.base.message.internal.protocol;
 
 /**
- * Provides a basic behavior for command code type enumerations.
+ * Enumeration of the several possible message category types.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ICommandCodeType
+public enum MessageCategoryType
 {
-	// Marker interface.
+	/**
+	 * Message is a request ; meaning that it will be associated with a reply message.
+	 */
+	REQUEST,
+
+	/**
+	 * Message is a reply ; meaning that its associated to a previously sent request message.
+	 */
+	REPLY,
+
+	/**
+	 * Message is a notification.
+	 */
+	NOTIFICATION;
 }

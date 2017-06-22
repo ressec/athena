@@ -13,9 +13,11 @@ package com.heliosphere.athena.base.command.internal;
 
 import java.util.List;
 
-import com.heliosphere.athena.base.command.internal.type.ICommandCategoryType;
-import com.heliosphere.athena.base.command.internal.type.ICommandCodeType;
-import com.heliosphere.athena.base.command.internal.type.ICommandGroupType;
+import com.heliosphere.athena.base.command.internal.exception.CommandInitializationException;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandCategoryType;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandCodeType;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandGroupType;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageType;
 
 /**
  * Provides a basic behavior for a command metadata that is containing the definition of a command.
@@ -30,21 +32,60 @@ public interface ICommandMetadata
 	 * <p>
 	 * @return Command category type.
 	 */
-	Enum<? extends ICommandCategoryType> getCategory();
+	Enum<? extends ICommandCategoryType> getCategoryType();
+
+	/**
+	 * Sets the command category protocol class name.
+	 * <hr>
+	 * @param protocol Protocol class name (enumeration class name).
+	 * @throws CommandInitializationException Thrown to indicate an error occurred while initializing the command.
+	 */
+	void setProtocolCategoryClassName(String protocol) throws CommandInitializationException;
 
 	/**
 	 * Returns the command group type.
 	 * <p>
 	 * @return Command group type.
 	 */
-	Enum<? extends ICommandGroupType> getGroup();
+	Enum<? extends ICommandGroupType> getGroupType();
+
+	/**
+	 * Sets the command group protocol class name.
+	 * <hr>
+	 * @param protocol Protocol class name (enumeration class name).
+	 * @throws CommandInitializationException Thrown to indicate an error occurred while initializing the command.
+	 */
+	void setProtocolGroupClassName(String protocol) throws CommandInitializationException;
 
 	/**
 	 * Returns the command code type.
 	 * <p>
 	 * @return Command code type.
 	 */
-	Enum<? extends ICommandCodeType> getCode();
+	Enum<? extends ICommandCodeType> getCodeType();
+
+	/**
+	 * Sets the command code protocol class name.
+	 * <hr>
+	 * @param protocol Protocol class name (enumeration class name).
+	 * @throws CommandInitializationException Thrown to indicate an error occurred while initializing the command.
+	 */
+	void setProtocolCodeClassName(String protocol) throws CommandInitializationException;
+
+	/**
+	 * Returns the message type.
+	 * <p>
+	 * @return Message type.
+	 */
+	Enum<? extends IMessageType> getMessageType();
+
+	/**
+	 * Sets the message protocol class name.
+	 * <hr>
+	 * @param protocol Protocol class name (enumeration class name).
+	 * @throws CommandInitializationException Thrown to indicate an error occurred while initializing the command.
+	 */
+	void setProtocolMessageClassName(String protocol) throws CommandInitializationException;
 
 	/**
 	 * Returns the command name.

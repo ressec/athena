@@ -14,19 +14,21 @@ package com.heliosphere.athena.base.command.file.xml;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.heliosphere.athena.base.command.internal.CommandMetadata;
-import com.heliosphere.athena.base.command.internal.CommandParameterMetadata;
+import com.heliosphere.athena.base.command.CommandMetadata;
+import com.heliosphere.athena.base.command.CommandParameterMetadata;
 import com.heliosphere.athena.base.command.internal.ICommandMetadata;
 import com.heliosphere.athena.base.command.internal.ICommandParameterMetadata;
-import com.heliosphere.athena.base.command.internal.type.ICommandCategoryType;
-import com.heliosphere.athena.base.command.internal.type.ICommandGroupType;
+import com.heliosphere.athena.base.command.internal.exception.CommandInitializationException;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandCategoryType;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandGroupType;
 import com.heliosphere.athena.base.file.internal.AbstractStructuredFile;
+import com.heliosphere.athena.base.file.internal.FileException;
 import com.heliosphere.athena.base.file.xml.Footer;
-import com.heliosphere.athena.base.file.xml.Header;
 import com.heliosphere.athena.base.file.xml.XmlFile;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import lombok.NonNull;
+import lombok.extern.log4j.Log4j;
 
 /**
  * Represents a {@code XML} file containing commands' definitions.
@@ -34,8 +36,9 @@ import lombok.NonNull;
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0
  */
+@Log4j
 @XStreamAlias("file")
-public final class XmlCommandFile extends XmlFile<Header, ICommandMetadata, Footer>
+public final class XmlCommandFile extends XmlFile<XmlCommandHeader, ICommandMetadata, Footer>
 {
 	/**
 	 * Default serialization identifier.
@@ -70,13 +73,39 @@ public final class XmlCommandFile extends XmlFile<Header, ICommandMetadata, Foot
 		// Aliases the 'content' list as 'parameters'.
 		getEngine().aliasAttribute(AbstractStructuredFile.class, "content", "commands");
 
+		// Aliases the header tag.
+		getEngine().alias("header", XmlCommandHeader.class);
+
 		// Aliases the 'commands' tag.
 		getEngine().alias("command", ICommandMetadata.class, CommandMetadata.class);
 		getEngine().alias("parameter", ICommandParameterMetadata.class, CommandParameterMetadata.class);
+		getEngine().alias("alias", String.class, String.class);
+	}
+
+	@Override
+	public void load() throws FileException
+	{
+		super.load();
+
+		for (ICommandMetadata command : getContent())
+		{
+			try
+			{
+				command.setProtocolCategoryClassName(getHeader().getProtocolCommandCategory());
+				command.setProtocolGroupClassName(getHeader().getProtocolCommandGroup());
+				command.setProtocolCodeClassName(getHeader().getProtocolCommandCode());
+				command.setProtocolMessageClassName(getHeader().getProtocolMessage());
+			}
+			catch (CommandInitializationException e)
+			{
+				throw new FileException(e);
+			}
+		}
 	}
 
 	/**
 	 * Finds commands matching the given command category.
+	 * <hr>
 	 * @param category Command category.
 	 * @return List of commands.
 	 */
@@ -86,7 +115,7 @@ public final class XmlCommandFile extends XmlFile<Header, ICommandMetadata, Foot
 
 		for (ICommandMetadata command : getContent())
 		{
-			if (command.getCategory() == category)
+			if (command.getCategoryType() == category)
 			{
 				result.add(command);
 			}
@@ -106,7 +135,7 @@ public final class XmlCommandFile extends XmlFile<Header, ICommandMetadata, Foot
 
 		for (ICommandMetadata command : getContent())
 		{
-			if (command.getGroup() == group)
+			if (command.getGroupType() == group)
 			{
 				result.add(command);
 			}

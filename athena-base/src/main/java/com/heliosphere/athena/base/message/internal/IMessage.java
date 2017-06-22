@@ -13,13 +13,51 @@ package com.heliosphere.athena.base.message.internal;
 
 import java.io.Serializable;
 
+import com.heliosphere.athena.base.message.internal.exception.MessageException;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageType;
+import com.heliosphere.athena.base.message.internal.protocol.MessageCategoryType;
+import com.heliosphere.athena.base.message.internal.protocol.MessageResponseType;
+
 /**
- * Marker interface for all Heliosphere' messages.
+ * Interface providing a basic behavior for Heliosphere' messages.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 public interface IMessage extends Serializable
 {
-	// Empty.
+	/**
+	 * Returns the message type.
+	 * <hr>
+	 * @return Message type.
+	 */
+	Enum<? extends IMessageType> getType();
+
+	/**
+	 * Returns the message category type.
+	 * <hr>
+	 * @return Message category type.
+	 */
+	MessageCategoryType getCategoryType();
+
+	/**
+	 * Message response type.
+	 * <hr>
+	 * @return Message response type.
+	 */
+	MessageResponseType getResponseType();
+
+	/**
+	 * Message content.
+	 * <hr>
+	 * @return Message content.
+	 */
+	IMessageContent getContent();
+
+	/**
+	 * Validates the message.
+	 * <hr>
+	 * @throws MessageException Thrown in case an error occurred during {@link IMessage} validation.
+	 */
+	void validate() throws MessageException;
 }

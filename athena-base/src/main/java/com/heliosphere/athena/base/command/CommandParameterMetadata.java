@@ -9,13 +9,14 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.internal;
+package com.heliosphere.athena.base.command;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.heliosphere.athena.base.command.file.xml.converter.ParameterEnumConverter;
-import com.heliosphere.athena.base.command.internal.type.IParameterType;
+import com.heliosphere.athena.base.command.internal.ICommandParameterMetadata;
+import com.heliosphere.athena.base.command.internal.protocol.IParameterType;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;

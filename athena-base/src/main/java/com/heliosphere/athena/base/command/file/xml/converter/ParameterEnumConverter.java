@@ -11,11 +11,11 @@
  */
 package com.heliosphere.athena.base.command.file.xml.converter;
 
-import com.heliosphere.athena.base.command.internal.type.ParameterType;
+import com.heliosphere.athena.base.command.protocol.DefaultParameterType;
 import com.thoughtworks.xstream.converters.basic.AbstractSingleValueConverter;
 
 /**
- * Provides a {@code XStream} converter for the {@link ParameterType} enumeration.
+ * Provides a {@code XStream} converter for the {@link DefaultParameterType} enumeration.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
@@ -31,6 +31,6 @@ public class ParameterEnumConverter extends AbstractSingleValueConverter
 	@Override
 	public Object fromString(String value)
 	{
-		return ParameterType.fromString(value);
+		return DefaultParameterType.fromString(value);
 	}
 }

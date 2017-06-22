@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.heliosphere.athena.base.command.internal.ICommand;
-import com.heliosphere.athena.base.command.internal.type.CommandCodeType;
-import com.heliosphere.athena.base.command.internal.type.ICommandCodeType;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandCodeType;
+import com.heliosphere.athena.base.command.protocol.DefaultCommandCodeType;
 
 import lombok.NonNull;
 
@@ -56,7 +56,7 @@ public final class CommandResponse implements ICommandResponse
 	public CommandResponse(final @NonNull ICommand command, final @NonNull CommandStatusType status)
 	{
 		this.command = command;
-		this.order = CommandCodeType.DISPLAY_TERMINAL;
+		this.order = DefaultCommandCodeType.DISPLAY_TERMINAL;
 		this.status = status;
 	}
 

@@ -9,21 +9,20 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.internal.type;
+package com.heliosphere.athena.base.command.internal.protocol;
 
 /**
- * Provides a basic behavior for enumerations.
+ * Provides a basic behavior for parameter type enumerations.
  * <hr>
  * @author <a href="mailto:christophe.resse@hotmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface IEnumType
+public interface IParameterType //extends IEnumType
 {
 	/**
-	 * Creates an enum from a given value.
+	 * Returns the parameter type.
 	 * <p>
-	 * @param value String representing the enumerated value.
-	 * @return Enumerated value.
+	 * @return Parameter type.
 	 */
-	Enum<? extends IEnumType> from(final String value);
+	String getType();
 }

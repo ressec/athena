@@ -9,20 +9,24 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.internal.type;
+package com.heliosphere.athena.base.command.protocol;
 
+import com.heliosphere.athena.base.command.internal.protocol.ICommandCategoryType;
 import com.heliosphere.athena.base.exception.InvalidArgumentException;
 import com.heliosphere.athena.base.resource.bundle.BundleAthenaBase;
 import com.heliosphere.athena.base.resource.bundle.ResourceBundleManager;
 
 /**
- * Enumeration defining a set of command category types.
+ * Enumeration defining a {@code default} set of command category types.
+ * <p>
+ * <b>Note:</b><br>
+ * You can use this protocol directly or you can define your(s) according to your needs.
  * <hr>
- * @author <a href="mailto:christophe.resse@hotmail.com">Christophe Resse</a>
+ * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @SuppressWarnings("nls")
-public enum CommandCategoryType implements ICommandCategoryType
+public enum DefaultCommandCategoryType implements ICommandCategoryType
 {
 	/**
 	 * Debug command category type.
@@ -60,7 +64,7 @@ public enum CommandCategoryType implements ICommandCategoryType
 	 * <p>
 	 * @param prefix Command prefix.
 	 */
-	private CommandCategoryType(final String prefix)
+	private DefaultCommandCategoryType(final String prefix)
 	{
 		this.prefix = prefix;
 	}
@@ -80,14 +84,15 @@ public enum CommandCategoryType implements ICommandCategoryType
 	 * @param value String representing the enumerated value.
 	 * @return Command category.
 	 */
-	public static final CommandCategoryType fromString(final String value)
+	@Override
+	public final DefaultCommandCategoryType fromString(final String value)
 	{
 		if (value == null || value.trim().length() == 0)
 		{
 			throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CommandCategoryCannotBeNull));
 		}
 
-		for (CommandCategoryType element : CommandCategoryType.values())
+		for (DefaultCommandCategoryType element : DefaultCommandCategoryType.values())
 		{
 			if (element.name().equalsIgnoreCase(value))
 			{
@@ -95,7 +100,7 @@ public enum CommandCategoryType implements ICommandCategoryType
 			}
 		}
 
-		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, CommandCategoryType.class.getName(), value));
+		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, DefaultCommandCategoryType.class.getName(), value));
 	}
 
 	/**
@@ -107,14 +112,14 @@ public enum CommandCategoryType implements ICommandCategoryType
 	 * @param prefix String representing the command prefix.
 	 * @return Command category.
 	 */
-	public static final CommandCategoryType fromPrefix(final String prefix)
+	public static final DefaultCommandCategoryType fromPrefix(final String prefix)
 	{
 		if (prefix == null || prefix.trim().length() == 0)
 		{
 			throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CommandCategoryCannotBeNull));
 		}
 
-		for (CommandCategoryType value : CommandCategoryType.values())
+		for (DefaultCommandCategoryType value : DefaultCommandCategoryType.values())
 		{
 			if (value.getPrefix().equalsIgnoreCase(prefix))
 			{
@@ -122,6 +127,6 @@ public enum CommandCategoryType implements ICommandCategoryType
 			}
 		}
 
-		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, CommandCategoryType.class.getName(), prefix));
+		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, DefaultCommandCategoryType.class.getName(), prefix));
 	}
 }

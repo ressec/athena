@@ -9,15 +9,28 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.internal.type;
+package com.heliosphere.athena.base.command.internal.protocol;
 
 /**
- * Provides a basic behavior for command group type enumerations.
+ * Provides a basic behavior for command category type enumerations.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ICommandGroupType //extends IEnumType
+public interface ICommandCategoryType
 {
-	// Marker interface.
+	/**
+	 * Creates a command category type based on its string representation.
+	 * <hr>
+	 * @param value String representation.
+	 * @return Command category type.
+	 */
+	Enum<? extends ICommandCategoryType> fromString(String value);
+
+	/**
+	 * Returns the prefix for the command category.
+	 * <p>
+	 * @return Command category prefix.
+	 */
+	String getPrefix();
 }

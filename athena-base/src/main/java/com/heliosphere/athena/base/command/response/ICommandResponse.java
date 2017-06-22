@@ -14,8 +14,7 @@ package com.heliosphere.athena.base.command.response;
 import java.util.List;
 
 import com.heliosphere.athena.base.command.internal.ICommand;
-import com.heliosphere.athena.base.command.internal.type.ICommandCodeType;
-import com.heliosphere.athena.base.message.internal.IMessage;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandCodeType;
 
 /**
  * Provides a basic behavior for a command's response.
@@ -23,7 +22,7 @@ import com.heliosphere.athena.base.message.internal.IMessage;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ICommandResponse extends IMessage
+public interface ICommandResponse
 {
 	/**
 	 * Adds a message to the response.

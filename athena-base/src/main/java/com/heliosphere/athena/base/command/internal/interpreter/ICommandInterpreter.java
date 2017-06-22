@@ -13,9 +13,9 @@ package com.heliosphere.athena.base.command.internal.interpreter;
 
 import java.util.List;
 
-import com.heliosphere.athena.base.command.internal.CommandException;
 import com.heliosphere.athena.base.command.internal.ICommand;
 import com.heliosphere.athena.base.command.internal.ICommandMetadata;
+import com.heliosphere.athena.base.command.internal.exception.CommandException;
 
 /**
  * Provides a basic behavior for a command interpreter.

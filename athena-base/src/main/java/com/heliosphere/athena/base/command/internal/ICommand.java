@@ -13,15 +13,13 @@ package com.heliosphere.athena.base.command.internal;
 
 import java.util.List;
 
-import com.heliosphere.athena.base.message.internal.IMessage;
-
 /**
  * Provides a basic behavior for a command.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ICommand extends IMessage
+public interface ICommand
 {
 	/**
 	 * Returns the command metadata (definition).
@@ -57,4 +55,12 @@ public interface ICommand extends IMessage
 	 * @return Command parameters.
 	 */
 	List<ICommandParameter> getParameters();
+
+	/**
+	 * Returns the command parameter given its name.
+	 * <hr>
+	 * @param name Parameter name.
+	 * @return {@link ICommandParameter} or {@code null} if the given parameter has not been found.
+	 */
+	ICommandParameter getParameter(String name);
 }
