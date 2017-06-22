@@ -26,7 +26,7 @@ import lombok.NonNull;
  * @author <a href="mailto:christophe.resse@hotmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public enum ParameterType implements IParameterType
+public enum DefaultParameterType implements IParameterType
 {
 	/**
 	 * A parameter type accepting {@code string} value.
@@ -58,7 +58,7 @@ public enum ParameterType implements IParameterType
 	 * <p>
 	 * @param type Parameter type.
 	 */
-	private ParameterType(final @NonNull String type)
+	private DefaultParameterType(final @NonNull String type)
 	{
 		this.type = type;
 	}
@@ -85,7 +85,7 @@ public enum ParameterType implements IParameterType
 			throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CommandCategoryCannotBeNull));
 		}
 
-		for (ParameterType element : ParameterType.values())
+		for (DefaultParameterType element : DefaultParameterType.values())
 		{
 			if (element.name().equalsIgnoreCase(value))
 			{
@@ -93,7 +93,7 @@ public enum ParameterType implements IParameterType
 			}
 		}
 
-		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, ParameterType.class.getName(), value));
+		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, DefaultParameterType.class.getName(), value));
 	}
 
 	/**
@@ -112,7 +112,7 @@ public enum ParameterType implements IParameterType
 			throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CommandCategoryCannotBeNull));
 		}
 
-		for (ParameterType element : ParameterType.values())
+		for (DefaultParameterType element : DefaultParameterType.values())
 		{
 			if (element.getType().equals(value))
 			{
@@ -120,6 +120,6 @@ public enum ParameterType implements IParameterType
 			}
 		}
 
-		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, ParameterType.class.getName(), value));
+		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, DefaultParameterType.class.getName(), value));
 	}
 }

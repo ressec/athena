@@ -16,7 +16,7 @@ import java.util.List;
 
 import com.heliosphere.athena.base.command.internal.ICommandParameter;
 import com.heliosphere.athena.base.command.internal.ICommandParameterMetadata;
-import com.heliosphere.athena.base.command.protocol.ParameterType;
+import com.heliosphere.athena.base.command.protocol.DefaultParameterType;
 
 import lombok.NonNull;
 
@@ -70,7 +70,7 @@ public class CommandParameter implements ICommandParameter
 		this.values = new ArrayList<>();
 		for (String value : values)
 		{
-			switch ((ParameterType) metadata.getType())
+			switch ((DefaultParameterType) metadata.getType())
 			{
 				case INTEGER:
 					this.values.add(Integer.valueOf(value));
