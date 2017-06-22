@@ -11,7 +11,7 @@
  */
 package com.heliosphere.athena.base.command.internal.protocol;
 
-import com.heliosphere.athena.base.message.internal.IMessageType;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageType;
 
 /**
  * Provides a basic behavior for command type enumerations.

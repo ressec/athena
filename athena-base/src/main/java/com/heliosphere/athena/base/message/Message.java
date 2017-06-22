@@ -9,10 +9,14 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.message.internal;
+package com.heliosphere.athena.base.message;
 
-import com.heliosphere.athena.base.message.internal.type.MessageCategoryType;
-import com.heliosphere.athena.base.message.internal.type.MessageResponseType;
+import com.heliosphere.athena.base.message.internal.AbstractMessage;
+import com.heliosphere.athena.base.message.internal.IMessage;
+import com.heliosphere.athena.base.message.internal.IMessageContent;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageType;
+import com.heliosphere.athena.base.message.internal.protocol.MessageCategoryType;
+import com.heliosphere.athena.base.message.internal.protocol.MessageResponseType;
 
 /**
  * Provides a concrete message implementation.

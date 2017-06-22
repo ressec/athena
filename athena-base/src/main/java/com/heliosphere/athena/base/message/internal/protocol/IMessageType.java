@@ -9,11 +9,11 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.message.internal;
+package com.heliosphere.athena.base.message.internal.protocol;
 
 import java.io.Serializable;
 
-import com.heliosphere.athena.base.message.internal.type.MessageUsageType;
+import com.heliosphere.athena.base.message.internal.IMessageContent;
 
 /**
  * Interface providing a basic behavior for Heliosphere' messages type (protocol).

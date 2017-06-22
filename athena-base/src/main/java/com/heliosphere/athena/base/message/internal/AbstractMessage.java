@@ -11,8 +11,11 @@
  */
 package com.heliosphere.athena.base.message.internal;
 
-import com.heliosphere.athena.base.message.internal.type.MessageCategoryType;
-import com.heliosphere.athena.base.message.internal.type.MessageResponseType;
+import com.heliosphere.athena.base.message.internal.exception.MessageContentException;
+import com.heliosphere.athena.base.message.internal.exception.MessageException;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageType;
+import com.heliosphere.athena.base.message.internal.protocol.MessageCategoryType;
+import com.heliosphere.athena.base.message.internal.protocol.MessageResponseType;
 
 /**
  * Provides an abstract message implementation.

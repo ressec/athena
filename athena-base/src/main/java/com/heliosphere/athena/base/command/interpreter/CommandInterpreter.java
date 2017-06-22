@@ -29,7 +29,7 @@ import com.heliosphere.athena.base.command.internal.interpreter.ICommandInterpre
 import com.heliosphere.athena.base.command.internal.protocol.ICommandCategoryType;
 import com.heliosphere.athena.base.command.protocol.DefaultCommandCategoryType;
 import com.heliosphere.athena.base.exception.InvalidArgumentException;
-import com.heliosphere.athena.base.message.internal.IMessageType;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageType;
 
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j;

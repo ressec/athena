@@ -15,8 +15,8 @@ import com.heliosphere.athena.base.command.internal.protocol.ICommandCategoryTyp
 import com.heliosphere.athena.base.command.internal.protocol.ICommandGroupType;
 import com.heliosphere.athena.base.command.internal.protocol.ICommandProtocolType;
 import com.heliosphere.athena.base.exception.InvalidArgumentException;
-import com.heliosphere.athena.base.message.internal.IMessageType;
-import com.heliosphere.athena.base.message.internal.type.DefaultMessageProtocol;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageType;
+import com.heliosphere.athena.base.message.protocol.DefaultMessageType;
 import com.heliosphere.athena.base.resource.bundle.BundleAthenaBase;
 import com.heliosphere.athena.base.resource.bundle.ResourceBundleManager;
 
@@ -36,27 +36,27 @@ public enum DefaultCommandProtocol implements ICommandProtocolType
 	/**
 	 * Command: {@code AFK}.
 	 */
-	AFK(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.CHAT, DefaultMessageProtocol.STATUS_AFK),
+	AFK(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.CHAT, DefaultMessageType.STATUS_AFK),
 
 	/**
 	 * Command: {@code Server Time}.
 	 */
-	SERVER_TIME(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM, DefaultMessageProtocol.QUERY_SERVER_TIME),
+	SERVER_TIME(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM, DefaultMessageType.QUERY_SERVER_TIME),
 
 	/**
 	 * Command: {@code Client Time}.
 	 */
-	CLIENT_TIME(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM, DefaultMessageProtocol.NONE),
+	CLIENT_TIME(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM, DefaultMessageType.NONE),
 
 	/**
 	 * Help command.
 	 */
-	HELP(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM, DefaultMessageProtocol.NONE),
+	HELP(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM, DefaultMessageType.NONE),
 
 	/**
 	 * Quit command.
 	 */
-	QUIT(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM, DefaultMessageProtocol.NONE);
+	QUIT(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM, DefaultMessageType.NONE);
 
 	/**
 	 * Command category type.

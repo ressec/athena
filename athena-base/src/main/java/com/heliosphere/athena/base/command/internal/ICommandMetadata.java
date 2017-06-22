@@ -17,7 +17,7 @@ import com.heliosphere.athena.base.command.internal.exception.CommandInitializat
 import com.heliosphere.athena.base.command.internal.protocol.ICommandCategoryType;
 import com.heliosphere.athena.base.command.internal.protocol.ICommandCodeType;
 import com.heliosphere.athena.base.command.internal.protocol.ICommandGroupType;
-import com.heliosphere.athena.base.message.internal.IMessageType;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageType;
 
 /**
  * Provides a basic behavior for a command metadata that is containing the definition of a command.

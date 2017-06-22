@@ -9,9 +9,10 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.message.internal;
+package com.heliosphere.athena.base.message.internal.exception;
 
 import com.heliosphere.athena.base.exception.IExceptionType;
+import com.heliosphere.athena.base.message.internal.IMessageContent;
 import com.heliosphere.athena.base.resource.bundle.IBundle;
 
 /**

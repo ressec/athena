@@ -9,7 +9,7 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.message.internal.type;
+package com.heliosphere.athena.base.message.internal.protocol;
 
 /**
  * Enumeration of the several possible message response types.

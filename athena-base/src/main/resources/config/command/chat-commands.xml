@@ -16,10 +16,10 @@
       The 'command-code'     defines the enumeration class used for the command code. 
       The 'message'          defines the enumeration class used for the message association (used when converting a command into a message). 
      -->
-    <protocol-command-category>com.heliosphere.athena.base.command.internal.type.CommandCategoryType</protocol-command-category>
-    <protocol-command-group>com.heliosphere.athena.base.command.internal.type.CommandGroupType</protocol-command-group>
-    <protocol-command-code>com.heliosphere.athena.base.command.internal.type.CommandCodeType</protocol-command-code>
-    <protocol-message>com.heliosphere.athena.base.test.message.protocol.FakeMessageProtocol</protocol-message>
+    <protocol-command-category>com.heliosphere.athena.base.command.protocol.DefaultCommandCategoryType</protocol-command-category>
+    <protocol-command-group>com.heliosphere.athena.base.command.protocol.DefaultCommandGroupType</protocol-command-group>
+    <protocol-command-code>com.heliosphere.athena.base.command.protocol.DefaultCommandCodeType</protocol-command-code>
+    <protocol-message>com.heliosphere.athena.base.message.protocol.DefaultMessageType</protocol-message>
 
   </header>
 

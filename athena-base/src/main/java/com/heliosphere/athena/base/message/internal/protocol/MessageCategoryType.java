@@ -9,31 +9,28 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.message.internal.type;
+package com.heliosphere.athena.base.message.internal.protocol;
 
 /**
- * Enumeration of the several possible message usage types.
- * <p>
- * The most common one will always be {@link MessageUsageType#NONE} but this enumeration 
- * exist to avoid having to create two many message protocols.
+ * Enumeration of the several possible message category types.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public enum MessageUsageType
+public enum MessageCategoryType
 {
 	/**
-	 * No restriction on the usage of the message type ; meaning it can be used on any side of an application.
+	 * Message is a request ; meaning that it will be associated with a reply message.
 	 */
-	NONE,
+	REQUEST,
 
 	/**
-	 * Internal usage only ; meaning that a client's component cannot make use of this type of message.
+	 * Message is a reply ; meaning that its associated to a previously sent request message.
 	 */
-	SERVER_ONLY,
+	REPLY,
 
 	/**
-	 * Client side usage only ; meaning that a server's component cannot make use of this type of message.
+	 * Message is a notification.
 	 */
-	CLIENT_ONLY;
+	NOTIFICATION;
 }

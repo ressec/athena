@@ -9,11 +9,12 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.message.internal.type;
+package com.heliosphere.athena.base.message.protocol;
 
 import com.heliosphere.athena.base.exception.InvalidArgumentException;
 import com.heliosphere.athena.base.message.internal.IMessageContent;
-import com.heliosphere.athena.base.message.internal.IMessageType;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageType;
+import com.heliosphere.athena.base.message.internal.protocol.MessageUsageType;
 import com.heliosphere.athena.base.message.internal.protocol.data.DefaultMessageData;
 import com.heliosphere.athena.base.resource.bundle.BundleAthenaBase;
 import com.heliosphere.athena.base.resource.bundle.ResourceBundleManager;
@@ -27,7 +28,7 @@ import com.heliosphere.athena.base.resource.bundle.ResourceBundleManager;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public enum DefaultMessageProtocol implements IMessageType
+public enum DefaultMessageType implements IMessageType
 {
 	/**
 	 * Not associated with a message.
@@ -70,7 +71,7 @@ public enum DefaultMessageProtocol implements IMessageType
 	 * @param usage Message usage type.
 	 * @param contentClass Message type content class.
 	 */
-	private DefaultMessageProtocol(final MessageUsageType usage, final Class<? extends IMessageContent> contentClass)
+	private DefaultMessageType(final MessageUsageType usage, final Class<? extends IMessageContent> contentClass)
 	{
 		this.usage = usage;
 		this.contentClass = contentClass;
@@ -105,7 +106,7 @@ public enum DefaultMessageProtocol implements IMessageType
 			throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CommandCategoryCannotBeNull));
 		}
 
-		for (DefaultMessageProtocol element : DefaultMessageProtocol.values())
+		for (DefaultMessageType element : DefaultMessageType.values())
 		{
 			if (element.name().equalsIgnoreCase(value))
 			{
@@ -113,6 +114,6 @@ public enum DefaultMessageProtocol implements IMessageType
 			}
 		}
 
-		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, DefaultMessageProtocol.class.getName(), value));
+		throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CannotCreateEnumerated, DefaultMessageType.class.getName(), value));
 	}
 }

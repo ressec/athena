@@ -13,8 +13,10 @@ package com.heliosphere.athena.base.message.internal;
 
 import java.io.Serializable;
 
-import com.heliosphere.athena.base.message.internal.type.MessageCategoryType;
-import com.heliosphere.athena.base.message.internal.type.MessageResponseType;
+import com.heliosphere.athena.base.message.internal.exception.MessageException;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageType;
+import com.heliosphere.athena.base.message.internal.protocol.MessageCategoryType;
+import com.heliosphere.athena.base.message.internal.protocol.MessageResponseType;
 
 /**
  * Interface providing a basic behavior for Heliosphere' messages.
