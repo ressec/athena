@@ -9,28 +9,25 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.file.xml.converter;
+package com.heliosphere.athena.base.message.internal.protocol.data;
 
-import com.heliosphere.athena.base.command.protocol.ParameterType;
-import com.thoughtworks.xstream.converters.basic.AbstractSingleValueConverter;
+import com.heliosphere.athena.base.message.internal.IMessageContent;
 
 /**
- * Provides a {@code XStream} converter for the {@link ParameterType} enumeration.
+ * Default message data for testing purpose only.
+ * <p>
+ * <b>Note:</b><br>
+ * You should not use this protocol data but define your(s) according to your needs.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public class ParameterEnumConverter extends AbstractSingleValueConverter
+public final class DefaultMessageData implements IMessageContent
 {
-	@Override
-	public boolean canConvert(Class clazz)
-	{
-		return clazz.equals(Enum.class);
-	}
+	/**
+	 * Default serialization identifier. 
+	 */
+	private static final long serialVersionUID = 1L;
 
-	@Override
-	public Object fromString(String value)
-	{
-		return ParameterType.fromString(value);
-	}
+	// Empty.
 }

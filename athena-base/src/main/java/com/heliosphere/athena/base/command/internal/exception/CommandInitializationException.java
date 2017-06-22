@@ -9,8 +9,9 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.internal;
+package com.heliosphere.athena.base.command.internal.exception;
 
+import com.heliosphere.athena.base.command.Command;
 import com.heliosphere.athena.base.exception.IExceptionType;
 import com.heliosphere.athena.base.resource.bundle.IBundle;
 

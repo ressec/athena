@@ -9,12 +9,14 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.internal;
+package com.heliosphere.athena.base.command;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.heliosphere.athena.base.command.internal.type.ParameterType;
+import com.heliosphere.athena.base.command.internal.ICommandParameter;
+import com.heliosphere.athena.base.command.internal.ICommandParameterMetadata;
+import com.heliosphere.athena.base.command.protocol.ParameterType;
 
 import lombok.NonNull;
 

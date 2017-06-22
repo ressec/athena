@@ -9,7 +9,7 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.internal.interpreter;
+package com.heliosphere.athena.base.command.interpreter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,15 +18,16 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.heliosphere.athena.base.command.internal.Command;
-import com.heliosphere.athena.base.command.internal.CommandException;
-import com.heliosphere.athena.base.command.internal.CommandParameter;
+import com.heliosphere.athena.base.command.Command;
+import com.heliosphere.athena.base.command.CommandParameter;
 import com.heliosphere.athena.base.command.internal.ICommand;
 import com.heliosphere.athena.base.command.internal.ICommandMetadata;
 import com.heliosphere.athena.base.command.internal.ICommandParameter;
 import com.heliosphere.athena.base.command.internal.ICommandParameterMetadata;
-import com.heliosphere.athena.base.command.internal.type.CommandCategoryType;
-import com.heliosphere.athena.base.command.internal.type.ICommandCategoryType;
+import com.heliosphere.athena.base.command.internal.exception.CommandException;
+import com.heliosphere.athena.base.command.internal.interpreter.ICommandInterpreter;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandCategoryType;
+import com.heliosphere.athena.base.command.protocol.CommandCategoryType;
 import com.heliosphere.athena.base.exception.InvalidArgumentException;
 import com.heliosphere.athena.base.message.internal.IMessageType;
 

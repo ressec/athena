@@ -13,7 +13,7 @@ package com.heliosphere.athena.base.command.internal;
 
 import java.util.List;
 
-import com.heliosphere.athena.base.command.internal.type.IParameterType;
+import com.heliosphere.athena.base.command.internal.protocol.IParameterType;
 
 /**
  * Provides a basic behavior for a command parameter metadata that is containing the definition of a command parameter.

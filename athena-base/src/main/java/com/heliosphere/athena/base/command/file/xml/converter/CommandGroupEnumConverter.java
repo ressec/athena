@@ -11,7 +11,7 @@
  */
 package com.heliosphere.athena.base.command.file.xml.converter;
 
-import com.heliosphere.athena.base.command.internal.type.CommandGroupType;
+import com.heliosphere.athena.base.command.protocol.CommandGroupType;
 import com.thoughtworks.xstream.converters.basic.AbstractSingleValueConverter;
 
 /**

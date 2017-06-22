@@ -9,14 +9,17 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.internal;
+package com.heliosphere.athena.base.command;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.heliosphere.athena.base.command.internal.type.ICommandCategoryType;
-import com.heliosphere.athena.base.command.internal.type.ICommandCodeType;
-import com.heliosphere.athena.base.command.internal.type.ICommandGroupType;
+import com.heliosphere.athena.base.command.internal.ICommandMetadata;
+import com.heliosphere.athena.base.command.internal.ICommandParameterMetadata;
+import com.heliosphere.athena.base.command.internal.exception.CommandInitializationException;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandCategoryType;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandCodeType;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandGroupType;
 import com.heliosphere.athena.base.message.internal.IMessageType;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 

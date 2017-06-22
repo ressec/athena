@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.heliosphere.athena.base.command.internal.ICommand;
-import com.heliosphere.athena.base.command.internal.type.CommandCodeType;
-import com.heliosphere.athena.base.command.internal.type.ICommandCodeType;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandCodeType;
+import com.heliosphere.athena.base.command.protocol.CommandCodeType;
 
 import lombok.NonNull;
 

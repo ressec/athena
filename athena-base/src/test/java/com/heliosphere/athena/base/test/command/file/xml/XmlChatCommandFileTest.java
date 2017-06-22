@@ -22,14 +22,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.heliosphere.athena.base.command.file.xml.command.XmlCommandFile;
-import com.heliosphere.athena.base.command.internal.CommandException;
+import com.heliosphere.athena.base.command.file.xml.XmlCommandFile;
 import com.heliosphere.athena.base.command.internal.ICommand;
 import com.heliosphere.athena.base.command.internal.ICommandMetadata;
 import com.heliosphere.athena.base.command.internal.ICommandParameterMetadata;
-import com.heliosphere.athena.base.command.internal.interpreter.CommandInterpreter;
-import com.heliosphere.athena.base.command.internal.type.CommandCategoryType;
-import com.heliosphere.athena.base.command.internal.type.CommandGroupType;
+import com.heliosphere.athena.base.command.internal.exception.CommandException;
+import com.heliosphere.athena.base.command.interpreter.CommandInterpreter;
+import com.heliosphere.athena.base.command.protocol.CommandCategoryType;
+import com.heliosphere.athena.base.command.protocol.CommandGroupType;
 
 /**
  * Test class for the {@link XmlCommandFile} class.

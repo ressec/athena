@@ -9,18 +9,18 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.file.xml.command;
+package com.heliosphere.athena.base.command.file.xml;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.heliosphere.athena.base.command.internal.CommandInitializationException;
-import com.heliosphere.athena.base.command.internal.CommandMetadata;
-import com.heliosphere.athena.base.command.internal.CommandParameterMetadata;
+import com.heliosphere.athena.base.command.CommandMetadata;
+import com.heliosphere.athena.base.command.CommandParameterMetadata;
 import com.heliosphere.athena.base.command.internal.ICommandMetadata;
 import com.heliosphere.athena.base.command.internal.ICommandParameterMetadata;
-import com.heliosphere.athena.base.command.internal.type.ICommandCategoryType;
-import com.heliosphere.athena.base.command.internal.type.ICommandGroupType;
+import com.heliosphere.athena.base.command.internal.exception.CommandInitializationException;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandCategoryType;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandGroupType;
 import com.heliosphere.athena.base.file.internal.AbstractStructuredFile;
 import com.heliosphere.athena.base.file.internal.FileException;
 import com.heliosphere.athena.base.file.xml.Footer;

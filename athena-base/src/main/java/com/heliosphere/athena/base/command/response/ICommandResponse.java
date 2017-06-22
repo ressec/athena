@@ -14,7 +14,7 @@ package com.heliosphere.athena.base.command.response;
 import java.util.List;
 
 import com.heliosphere.athena.base.command.internal.ICommand;
-import com.heliosphere.athena.base.command.internal.type.ICommandCodeType;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandCodeType;
 
 /**
  * Provides a basic behavior for a command's response.

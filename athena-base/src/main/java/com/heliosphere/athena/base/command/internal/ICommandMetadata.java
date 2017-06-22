@@ -13,9 +13,10 @@ package com.heliosphere.athena.base.command.internal;
 
 import java.util.List;
 
-import com.heliosphere.athena.base.command.internal.type.ICommandCategoryType;
-import com.heliosphere.athena.base.command.internal.type.ICommandCodeType;
-import com.heliosphere.athena.base.command.internal.type.ICommandGroupType;
+import com.heliosphere.athena.base.command.internal.exception.CommandInitializationException;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandCategoryType;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandCodeType;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandGroupType;
 import com.heliosphere.athena.base.message.internal.IMessageType;
 
 /**

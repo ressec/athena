@@ -18,12 +18,12 @@ import org.beryx.textio.TextIO;
 import org.beryx.textio.TextIoFactory;
 import org.beryx.textio.TextTerminal;
 
-import com.heliosphere.athena.base.command.file.xml.command.XmlCommandFile;
-import com.heliosphere.athena.base.command.internal.CommandException;
+import com.heliosphere.athena.base.command.file.xml.XmlCommandFile;
 import com.heliosphere.athena.base.command.internal.ICommand;
 import com.heliosphere.athena.base.command.internal.ICommandListener;
-import com.heliosphere.athena.base.command.internal.interpreter.CommandInterpreter;
+import com.heliosphere.athena.base.command.internal.exception.CommandException;
 import com.heliosphere.athena.base.command.internal.interpreter.ICommandInterpreter;
+import com.heliosphere.athena.base.command.interpreter.CommandInterpreter;
 import com.heliosphere.athena.base.file.internal.FileException;
 
 import lombok.NonNull;

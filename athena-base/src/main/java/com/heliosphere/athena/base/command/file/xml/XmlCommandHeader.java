@@ -9,7 +9,7 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.command.file.xml.command;
+package com.heliosphere.athena.base.command.file.xml;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
