@@ -19,5 +19,11 @@ package com.heliosphere.athena.base.command.internal.type;
  */
 public interface ICommandCodeType
 {
+	/**
+	 * Creates a command code type based on its string representation.
+	 * <hr>
+	 * @param value String representation.
+	 * @return Command code type.
+	 */
 	Enum<? extends ICommandCodeType> fromString(String value);
 }

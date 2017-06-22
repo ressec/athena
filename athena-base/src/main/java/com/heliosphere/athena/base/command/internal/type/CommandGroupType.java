@@ -16,9 +16,9 @@ import com.heliosphere.athena.base.resource.bundle.BundleAthenaBase;
 import com.heliosphere.athena.base.resource.bundle.ResourceBundleManager;
 
 /**
- * Enumeration defining a set of command group types.
+ * Enumeration defining a set of {@code default} command group types.
  * <hr>
- * @author <a href="mailto:christophe.resse@hotmail.com">Christophe Resse</a>
+ * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 public enum CommandGroupType implements ICommandGroupType
@@ -29,57 +29,12 @@ public enum CommandGroupType implements ICommandGroupType
 	CHAT,
 
 	/**
-	 * Pvp command group type.
-	 */
-	PVP,
-
-	/**
-	 * Character command group type.
-	 */
-	CHARACTER,
-
-	/**
-	 * Emote command group type.
-	 */
-	EMOTE,
-
-	/**
-	 * Guild command group type.
-	 */
-	GUILD,
-
-	/**
-	 * Combat command group type.
-	 */
-	COMBAT,
-
-	/**
-	 * Party command group type.
-	 */
-	PARTY,
-
-	/**
-	 * Raid command group type.
-	 */
-	RAID,
-
-	/**
-	 * Pet command group type.
-	 */
-	PET,
-
-	/**
 	 * System command group type.
 	 */
-	SYSTEM,
+	SYSTEM;
 
 	/**
-	 * Targeting command group type.
-	 */
-	TARGETING;
-
-	/**
-	 * Creates an command group enumerated value from a given string value.
+	 * Creates a command group enumerated value from a given string value.
 	 * <p>
 	 * <b>Example:</b><p> 
 	 * <code>CommandGroupType.fromString("Guild");</code>
@@ -87,7 +42,8 @@ public enum CommandGroupType implements ICommandGroupType
 	 * @param value String representing the enumerated value.
 	 * @return Command group type.
 	 */
-	public static Enum<? extends ICommandGroupType> fromString(String value)
+	@Override
+	public Enum<? extends ICommandGroupType> fromString(String value)
 	{
 		if (value == null || value.trim().length() == 0)
 		{

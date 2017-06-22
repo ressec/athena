@@ -31,21 +31,60 @@ public interface ICommandMetadata
 	 * <p>
 	 * @return Command category type.
 	 */
-	Enum<? extends ICommandCategoryType> getCategory();
+	Enum<? extends ICommandCategoryType> getCategoryType();
+
+	/**
+	 * Sets the command category protocol class name.
+	 * <hr>
+	 * @param protocol Protocol class name (enumeration class name).
+	 * @throws CommandInitializationException Thrown to indicate an error occurred while initializing the command.
+	 */
+	void setProtocolCategoryClassName(String protocol) throws CommandInitializationException;
 
 	/**
 	 * Returns the command group type.
 	 * <p>
 	 * @return Command group type.
 	 */
-	Enum<? extends ICommandGroupType> getGroup();
+	Enum<? extends ICommandGroupType> getGroupType();
+
+	/**
+	 * Sets the command group protocol class name.
+	 * <hr>
+	 * @param protocol Protocol class name (enumeration class name).
+	 * @throws CommandInitializationException Thrown to indicate an error occurred while initializing the command.
+	 */
+	void setProtocolGroupClassName(String protocol) throws CommandInitializationException;
 
 	/**
 	 * Returns the command code type.
 	 * <p>
 	 * @return Command code type.
 	 */
-	Enum<? extends ICommandCodeType> getCode();
+	Enum<? extends ICommandCodeType> getCodeType();
+
+	/**
+	 * Sets the command code protocol class name.
+	 * <hr>
+	 * @param protocol Protocol class name (enumeration class name).
+	 * @throws CommandInitializationException Thrown to indicate an error occurred while initializing the command.
+	 */
+	void setProtocolCodeClassName(String protocol) throws CommandInitializationException;
+
+	/**
+	 * Returns the message type.
+	 * <p>
+	 * @return Message type.
+	 */
+	Enum<? extends IMessageType> getMessageType();
+
+	/**
+	 * Sets the message protocol class name.
+	 * <hr>
+	 * @param protocol Protocol class name (enumeration class name).
+	 * @throws CommandInitializationException Thrown to indicate an error occurred while initializing the command.
+	 */
+	void setProtocolMessageClassName(String protocol) throws CommandInitializationException;
 
 	/**
 	 * Returns the command name.
@@ -60,34 +99,6 @@ public interface ICommandMetadata
 	 * @return Command description.
 	 */
 	String getDescription();
-
-	/**
-	 * Returns the message protocol class associated to this command.
-	 * <hr>
-	 * @return Message protocol class.
-	 */
-	String getMessageProtocolClass();
-
-	/**
-	 * Returns the message protocol entry associated to this command.
-	 * <hr>
-	 * @return Message protocol entry.
-	 */
-	String getMessageProtocolEntry();
-
-	/**
-	 * Returns the message type associated to this command.
-	 * <hr>
-	 * @return Message type.
-	 */
-	Enum<? extends IMessageType> getMessageType();
-
-	/**
-	 * Sets the message type associated to the command.
-	 * <hr>
-	 * @param type Message type to set.
-	 */
-	void setMessageType(Enum<? extends IMessageType> type);
 
 	/**
 	 * Returns the command syntax.

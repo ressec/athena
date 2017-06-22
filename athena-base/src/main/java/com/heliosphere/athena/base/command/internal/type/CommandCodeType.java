@@ -29,6 +29,16 @@ public enum CommandCodeType implements ICommandCodeType
 	DISPLAY_TERMINAL,
 
 	/**
+	 * AFK command.
+	 */
+	AFK,
+
+	/**
+	 * WHO command.
+	 */
+	WHO,
+
+	/**
 	 * Quit command used to terminate the client application abruptly.
 	 */
 	QUIT;

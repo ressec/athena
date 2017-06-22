@@ -11,26 +11,45 @@
  */
 package com.heliosphere.athena.base.command.internal.type;
 
+import com.heliosphere.athena.base.message.internal.IMessageType;
+
 /**
- * Provides a basic behavior for command category type enumerations.
+ * Provides a basic behavior for command type enumerations.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ICommandCategoryType
+public interface ICommandProtocolType
 {
 	/**
 	 * Creates a command category type based on its string representation.
+	 * <p>
+	 * <b>Example:</b><p> 
+	 * <code>FakeCommandProtocolType.fromString("QUIT");</code>
 	 * <hr>
 	 * @param value String representation.
 	 * @return Command category type.
 	 */
-	Enum<? extends ICommandCategoryType> fromString(String value);
+	Enum<? extends ICommandProtocolType> fromString(String value);
 
 	/**
-	 * Returns the prefix for the command category.
+	 * Returns the command category type.
 	 * <p>
-	 * @return Command category prefix.
+	 * @return Command category type.
 	 */
-	String getPrefix();
+	Enum<? extends ICommandCategoryType> getCategoryType();
+
+	/**
+	 * Returns the command group type.
+	 * <p>
+	 * @return Command group type.
+	 */
+	Enum<? extends ICommandGroupType> getGroupType();
+
+	/**
+	 * Returns the message type.
+	 * <p>
+	 * @return Message type.
+	 */
+	Enum<? extends IMessageType> getMessageType();
 }

@@ -16,9 +16,9 @@ import com.heliosphere.athena.base.resource.bundle.BundleAthenaBase;
 import com.heliosphere.athena.base.resource.bundle.ResourceBundleManager;
 
 /**
- * Enumeration defining a set of command category types.
+ * Enumeration defining a {@code default} set of command category types.
  * <hr>
- * @author <a href="mailto:christophe.resse@hotmail.com">Christophe Resse</a>
+ * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @SuppressWarnings("nls")
@@ -80,7 +80,8 @@ public enum CommandCategoryType implements ICommandCategoryType
 	 * @param value String representing the enumerated value.
 	 * @return Command category.
 	 */
-	public static final CommandCategoryType fromString(final String value)
+	@Override
+	public final CommandCategoryType fromString(final String value)
 	{
 		if (value == null || value.trim().length() == 0)
 		{

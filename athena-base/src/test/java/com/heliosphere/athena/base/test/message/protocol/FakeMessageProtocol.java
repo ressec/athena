@@ -27,9 +27,19 @@ import com.heliosphere.athena.base.resource.bundle.ResourceBundleManager;
 public enum FakeMessageProtocol implements IMessageType
 {
 	/**
+	 * Not associated with a message.
+	 */
+	NONE(MessageUsageType.NONE, null),
+
+	/**
 	 * Register a user.
 	 */
 	REGISTER_USER(MessageUsageType.NONE, FakeMessageData.class),
+
+	/**
+	 * Query for the server time.
+	 */
+	QUERY_SERVER_TIME(MessageUsageType.NONE, FakeMessageData.class),
 
 	/**
 	 * Query for people.

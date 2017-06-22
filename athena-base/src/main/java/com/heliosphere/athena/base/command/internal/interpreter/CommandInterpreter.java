@@ -69,7 +69,7 @@ public final class CommandInterpreter implements ICommandInterpreter
 	@Override
 	public final void registerCommand(final @NonNull ICommandMetadata metadata)
 	{
-		List<ICommandMetadata> list = commands.get(metadata.getCategory());
+		List<ICommandMetadata> list = commands.get(metadata.getCategoryType());
 
 		if (list == null)
 		{
@@ -84,10 +84,10 @@ public final class CommandInterpreter implements ICommandInterpreter
 		}
 
 		// Validate the command.
-		validate(metadata);
+		//validate(metadata);
 
 		list.add(metadata);
-		commands.put(metadata.getCategory(), list);
+		commands.put(metadata.getCategoryType(), list);
 	}
 
 	@Override
@@ -99,28 +99,28 @@ public final class CommandInterpreter implements ICommandInterpreter
 		}
 	}
 
-	/**
-	 * Validates the command definition.
-	 * <hr>
-	 * @param metadata Command definition to validate.
-	 */
-	@SuppressWarnings({ "nls", "static-method" })
-	private void validate(final @NonNull ICommandMetadata metadata)
-	{
-		Class<?> protocolClass;
-
-		try
-		{
-			// Validate the message protocol provided.
-			protocolClass = Class.forName(metadata.getMessageProtocolClass());
-			Enum<? extends IMessageType> enumerated = ((IMessageType) (Enum<?>) protocolClass.getEnumConstants()[0]).fromString(metadata.getMessageProtocolEntry());
-			metadata.setMessageType(enumerated);
-		}
-		catch (ClassNotFoundException e)
-		{
-			log.error(String.format("Cannot register command: %1s due to: %2s", metadata.getName(), e.getMessage()));
-		}
-	}
+//	/**
+//	 * Validates the command definition.
+//	 * <hr>
+//	 * @param metadata Command definition to validate.
+//	 */
+//	@SuppressWarnings({ "nls", "static-method" })
+//	private void validate(final @NonNull ICommandMetadata metadata)
+//	{
+//		Class<?> protocolClass;
+//
+//		try
+//		{
+//			// Validate the message protocol provided.
+//			protocolClass = Class.forName(metadata.getMessageProtocolClass());
+//			Enum<? extends IMessageType> enumerated = ((IMessageType) (Enum<?>) protocolClass.getEnumConstants()[0]).fromString(metadata.getMessageProtocolEntry());
+//			metadata.setMessageType(enumerated);
+//		}
+//		catch (ClassNotFoundException e)
+//		{
+//			log.error(String.format("Cannot register command: %1s due to: %2s", metadata.getName(), e.getMessage()));
+//		}
+//	}
 
 	/**
 	 * Finds commands matching the given command category.

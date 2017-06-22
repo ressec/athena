@@ -17,7 +17,13 @@ package com.heliosphere.athena.base.command.internal.type;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ICommandGroupType //extends IEnumType
+public interface ICommandGroupType
 {
-	// Marker interface.
+	/**
+	 * Creates a command group type based on its string representation.
+	 * <hr>
+	 * @param value String representation.
+	 * @return Command group type.
+	 */
+	Enum<? extends ICommandGroupType> fromString(String value);
 }
