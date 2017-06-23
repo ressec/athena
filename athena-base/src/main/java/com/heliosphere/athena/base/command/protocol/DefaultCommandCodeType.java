@@ -43,6 +43,11 @@ public enum DefaultCommandCodeType implements ICommandCodeType
 	WHO,
 
 	/**
+	 * Command: {@code register user}.
+	 */
+	REGISTER_USER,
+
+	/**
 	 * Quit command used to terminate the client application abruptly.
 	 */
 	QUIT;

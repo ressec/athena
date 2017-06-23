@@ -100,7 +100,7 @@ public class Message extends AbstractMessage
 	 */
 	public final static IMessage createReplyConfirmed(final IMessage original)
 	{
-		return new Message(original.getType(), MessageCategoryType.REPLY, MessageResponseType.CONFIRMED, null);
+		return new Message(original.getType(), MessageCategoryType.REPLY, MessageResponseType.CONFIRMED, original.getContent());
 	}
 
 	/**
