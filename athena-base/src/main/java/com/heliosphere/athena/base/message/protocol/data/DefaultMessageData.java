@@ -9,9 +9,12 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.message.internal.protocol.data;
+package com.heliosphere.athena.base.message.protocol.data;
 
 import com.heliosphere.athena.base.message.internal.IMessageContent;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Default message data for testing purpose only.
@@ -29,5 +32,7 @@ public final class DefaultMessageData implements IMessageContent
 	 */
 	private static final long serialVersionUID = 1L;
 
-	// Empty.
+	@Getter
+	@Setter
+	private String data;
 }

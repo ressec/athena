@@ -15,7 +15,7 @@ import com.heliosphere.athena.base.exception.InvalidArgumentException;
 import com.heliosphere.athena.base.message.internal.IMessageContent;
 import com.heliosphere.athena.base.message.internal.protocol.IMessageType;
 import com.heliosphere.athena.base.message.internal.protocol.MessageUsageType;
-import com.heliosphere.athena.base.message.internal.protocol.data.DefaultMessageData;
+import com.heliosphere.athena.base.message.protocol.data.DefaultMessageData;
 import com.heliosphere.athena.base.resource.bundle.BundleAthenaBase;
 import com.heliosphere.athena.base.resource.bundle.ResourceBundleManager;
 
