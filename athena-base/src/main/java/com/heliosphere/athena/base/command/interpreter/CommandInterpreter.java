@@ -146,22 +146,25 @@ public final class CommandInterpreter implements ICommandInterpreter
 		List<ICommandMetadata> definitions = findByCategory(category);
 
 		// Lookup by name.
-		for (ICommandMetadata definition : definitions)
+		if (definitions != null)
 		{
-			if (definition.getName().equals(nameOrAlias))
+			for (ICommandMetadata definition : definitions)
 			{
-				return definition;
-			}
-		}
-
-		// Lookup by alias.
-		for (ICommandMetadata definition : definitions)
-		{
-			for (String alias : definition.getAliases())
-			{
-				if (alias.equals(nameOrAlias))
+				if (definition.getName().equals(nameOrAlias))
 				{
 					return definition;
+				}
+			}
+
+			// Lookup by alias.
+			for (ICommandMetadata definition : definitions)
+			{
+				for (String alias : definition.getAliases())
+				{
+					if (alias.equals(nameOrAlias))
+					{
+						return definition;
+					}
 				}
 			}
 		}

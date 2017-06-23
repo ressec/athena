@@ -52,10 +52,15 @@ public abstract class AbstractTerminal implements Runnable
 	private static volatile Thread thread = null;
 
 	/**
-	 * Prompt.
+	 * Initial command prompt.
 	 */
 	@SuppressWarnings("nls")
-	private final static String PROMPT = "Command:";
+	private final static String PROMPT = "Command (unregistered):>";
+
+	/**
+	 * Current command prompt.
+	 */
+	private String prompt = PROMPT;
 
 	/**
 	 * Command listeners.
@@ -145,6 +150,16 @@ public abstract class AbstractTerminal implements Runnable
 		}
 	}
 
+	/**
+	 * Sets the new command prompt.
+	 * <hr>
+	 * @param prompt Command prompt to set.
+	 */
+	public final void setPrompt(final @NonNull String prompt)
+	{
+		this.prompt = prompt;
+	}
+
 	@SuppressWarnings("nls")
 	@Override
 	public final void run()
@@ -155,7 +170,7 @@ public abstract class AbstractTerminal implements Runnable
 		{
 			if (status == TerminalStatusType.RUNNING)
 			{
-				text = io.newStringInputReader().read(PROMPT);
+				text = io.newStringInputReader().read(prompt);
 
 				try
 				{
