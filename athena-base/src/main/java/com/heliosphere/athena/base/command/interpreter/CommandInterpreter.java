@@ -29,7 +29,6 @@ import com.heliosphere.athena.base.command.internal.interpreter.ICommandInterpre
 import com.heliosphere.athena.base.command.internal.protocol.ICommandCategoryType;
 import com.heliosphere.athena.base.command.protocol.DefaultCommandCategoryType;
 import com.heliosphere.athena.base.exception.InvalidArgumentException;
-import com.heliosphere.athena.base.message.internal.protocol.IMessageType;
 
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j;
@@ -99,29 +98,6 @@ public final class CommandInterpreter implements ICommandInterpreter
 			registerCommand(definition);
 		}
 	}
-
-//	/**
-//	 * Validates the command definition.
-//	 * <hr>
-//	 * @param metadata Command definition to validate.
-//	 */
-//	@SuppressWarnings({ "nls", "static-method" })
-//	private void validate(final @NonNull ICommandMetadata metadata)
-//	{
-//		Class<?> protocolClass;
-//
-//		try
-//		{
-//			// Validate the message protocol provided.
-//			protocolClass = Class.forName(metadata.getMessageProtocolClass());
-//			Enum<? extends IMessageType> enumerated = ((IMessageType) (Enum<?>) protocolClass.getEnumConstants()[0]).fromString(metadata.getMessageProtocolEntry());
-//			metadata.setMessageType(enumerated);
-//		}
-//		catch (ClassNotFoundException e)
-//		{
-//			log.error(String.format("Cannot register command: %1s due to: %2s", metadata.getName(), e.getMessage()));
-//		}
-//	}
 
 	/**
 	 * Finds commands matching the given command category.
