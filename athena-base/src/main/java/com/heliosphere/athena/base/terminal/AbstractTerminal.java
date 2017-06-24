@@ -26,7 +26,6 @@ import com.heliosphere.athena.base.command.internal.interpreter.ICommandInterpre
 import com.heliosphere.athena.base.command.interpreter.CommandInterpreter;
 import com.heliosphere.athena.base.file.internal.FileException;
 
-import jline.Terminal;
 import lombok.NonNull;
 
 /**
