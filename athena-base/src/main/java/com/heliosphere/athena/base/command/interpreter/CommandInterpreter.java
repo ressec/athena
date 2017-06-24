@@ -12,11 +12,13 @@
 package com.heliosphere.athena.base.command.interpreter;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import com.heliosphere.athena.base.command.Command;
 import com.heliosphere.athena.base.command.CommandParameter;
@@ -29,7 +31,6 @@ import com.heliosphere.athena.base.command.internal.interpreter.ICommandInterpre
 import com.heliosphere.athena.base.command.internal.protocol.ICommandCategoryType;
 import com.heliosphere.athena.base.command.protocol.DefaultCommandCategoryType;
 import com.heliosphere.athena.base.exception.InvalidArgumentException;
-import com.heliosphere.athena.base.message.internal.protocol.IMessageType;
 
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j;
@@ -68,6 +69,19 @@ public final class CommandInterpreter implements ICommandInterpreter
 	}
 
 	@Override
+	public final List<ICommandMetadata> getCommandDefinitions()
+	{
+		List<ICommandMetadata> result = new ArrayList<>();
+			
+		for (List<ICommandMetadata> list : commands.values())
+		{
+			result.addAll(list);
+		}
+		
+		return result;
+	}
+
+	@Override
 	public final void registerCommand(final @NonNull ICommandMetadata metadata)
 	{
 		List<ICommandMetadata> list = commands.get(metadata.getCategoryType());
@@ -84,9 +98,6 @@ public final class CommandInterpreter implements ICommandInterpreter
 			}
 		}
 
-		// Validate the command.
-		//validate(metadata);
-
 		list.add(metadata);
 		commands.put(metadata.getCategoryType(), list);
 	}
@@ -99,29 +110,6 @@ public final class CommandInterpreter implements ICommandInterpreter
 			registerCommand(definition);
 		}
 	}
-
-//	/**
-//	 * Validates the command definition.
-//	 * <hr>
-//	 * @param metadata Command definition to validate.
-//	 */
-//	@SuppressWarnings({ "nls", "static-method" })
-//	private void validate(final @NonNull ICommandMetadata metadata)
-//	{
-//		Class<?> protocolClass;
-//
-//		try
-//		{
-//			// Validate the message protocol provided.
-//			protocolClass = Class.forName(metadata.getMessageProtocolClass());
-//			Enum<? extends IMessageType> enumerated = ((IMessageType) (Enum<?>) protocolClass.getEnumConstants()[0]).fromString(metadata.getMessageProtocolEntry());
-//			metadata.setMessageType(enumerated);
-//		}
-//		catch (ClassNotFoundException e)
-//		{
-//			log.error(String.format("Cannot register command: %1s due to: %2s", metadata.getName(), e.getMessage()));
-//		}
-//	}
 
 	/**
 	 * Finds commands matching the given command category.

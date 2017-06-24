@@ -115,6 +115,16 @@ public abstract class AbstractTerminal implements Runnable
 	}
 
 	/**
+	 * Returns the command interpreter used by this {@link Terminal}.
+	 * <hr>
+	 * @return {@link ICommandInterpreter}. 
+	 */
+	public final ICommandInterpreter getInterpreter()
+	{
+		return interpreter;
+	}
+
+	/**
 	 * Adds a command listener.
 	 * <hr>
 	 * @param listener Command listener to add.

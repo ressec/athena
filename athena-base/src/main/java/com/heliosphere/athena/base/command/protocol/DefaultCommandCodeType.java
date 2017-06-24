@@ -38,7 +38,12 @@ public enum DefaultCommandCodeType implements ICommandCodeType
 	AFK,
 
 	/**
-	 * WHO command.
+	 * Help command.
+	 */
+	HELP,
+
+	/**
+	 * Who command.
 	 */
 	WHO,
 

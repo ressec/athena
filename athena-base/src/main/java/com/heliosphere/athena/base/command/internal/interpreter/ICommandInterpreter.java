@@ -20,7 +20,7 @@ import com.heliosphere.athena.base.command.internal.exception.CommandException;
 /**
  * Provides a basic behavior for a command interpreter.
  * <hr>
- * @author <a href="mailto:christophe.resse@hotmail.com">Christophe Resse</a>
+ * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 public interface ICommandInterpreter
@@ -48,4 +48,10 @@ public interface ICommandInterpreter
 	 */
 	void registerCommands(List<ICommandMetadata> metadata);
 
+	/**
+	 * Returns the list of command metadata (definitions) used by the command interpreter.
+	 * <hr>
+	 * @return List of command definitions.
+	 */
+	List<ICommandMetadata> getCommandDefinitions();
 }
