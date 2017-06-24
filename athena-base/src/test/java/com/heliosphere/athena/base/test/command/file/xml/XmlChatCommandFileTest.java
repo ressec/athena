@@ -102,9 +102,9 @@ public class XmlChatCommandFileTest
 			Assert.assertTrue(chatCommandfile.getHeader().getAuthor().equals("Resse Christophe"));
 
 			ICommandMetadata afkCommandDefinition = chatCommandfile.getContent().get(0);
-			Assert.assertTrue(afkCommandDefinition.getName().equals("afk"));
+			Assert.assertTrue(afkCommandDefinition.getName().equals("help"));
 
-			ICommandMetadata whoCommandDefinition = chatCommandfile.getContent().get(1);
+			ICommandMetadata whoCommandDefinition = chatCommandfile.getByName("who");
 			ICommandParameterMetadata parameterDefinition = whoCommandDefinition.getParameters().get(0);
 			Assert.assertTrue(parameterDefinition.getName().equals("name"));
 

@@ -20,7 +20,7 @@
       <category>NORMAL</category>
       <group>SYSTEM</group>
       <code>HELP</code>
-      <message></message> <!-- No message type associated with this command. -->
+      <message>NONE</message> <!-- No message type associated with this command. -->
       <name>help</name>
       <description>Displays help on commands.</description>
       <aliases>
@@ -29,21 +29,21 @@
       <parameters>
         <parameter>
           <name>category</name>
-          <description>Display the available command categories.</description>
+          <description>Displays the available command categories.</description>
           <tag>-cat</tag>
           <regexp>(-cat)</regexp>
           <type>String</type>
         </parameter>
         <parameter>
           <name>set</name>
-          <description>Display a list of available commands for a given command category.</description>
+          <description>Displays a list of available commands for a given command category.</description>
           <tag>-set</tag>
           <regexp>(-set)\s*+([a-zA-Z]++\*?)</regexp>
           <type>String</type>
         </parameter>
         <parameter>
           <name>command</name>
-          <description>Display detailed description on a given command.</description>
+          <description>Displays detailed description on a given command.</description>
           <tag>-command</tag>
           <regexp>\s*+([a-zA-Z]++\*?)</regexp>
           <type>String</type>
