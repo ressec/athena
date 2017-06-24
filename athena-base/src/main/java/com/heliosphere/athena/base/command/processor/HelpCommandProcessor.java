@@ -20,9 +20,21 @@ import com.heliosphere.athena.base.command.internal.ICommandParameter;
 import com.heliosphere.athena.base.command.internal.exception.CommandException;
 import com.heliosphere.athena.base.command.internal.processor.AbstractCommandProcessor;
 import com.heliosphere.athena.base.command.internal.protocol.ICommandCodeType;
+import com.heliosphere.athena.base.command.protocol.DefaultCommandCodeType;
 
+/**
+ * Provides a concrete implementation for the standard {@code Help} command.
+ * <hr>
+ * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
+ * @version 1.0.0
+ */
 public final class HelpCommandProcessor extends AbstractCommandProcessor
 {
+	/**
+	 * Command code type.
+	 */
+	public final static Enum<? extends ICommandCodeType> COMMAND_TYPE = DefaultCommandCodeType.HELP;
+
 	/**
 	 * Command code type.
 	 */
@@ -31,20 +43,21 @@ public final class HelpCommandProcessor extends AbstractCommandProcessor
 	/**
 	 * Command definitions.
 	 */
-	private List<ICommandMetadata> definitions = null;
+	private List<ICommandMetadata> definitions;
 
 	/**
 	 * Creates a new command processor for a given command code type.
 	 * <hr>
-	 * @param type Command code type.
-	 * @param definitions List of command definitions.
+	 * @param type Command type.
+	 * @param definitions Command definitions.
 	 */
-	public HelpCommandProcessor(Enum<? extends ICommandCodeType> type, List<ICommandMetadata> definitions)
+	public HelpCommandProcessor(final Enum<? extends ICommandCodeType> type, final List<ICommandMetadata> definitions)
 	{
 		this.type = type;
 		this.definitions = definitions;
 	}
 
+	@SuppressWarnings("nls")
 	@Override
 	public final Object execute(final ICommand command) throws CommandException
 	{
@@ -75,6 +88,11 @@ public final class HelpCommandProcessor extends AbstractCommandProcessor
 		return "Unable to process the command!";
 	}
 
+	/**
+	 * 
+	 * @param command
+	 * @return
+	 */
 	@SuppressWarnings("nls")
 	private final List<String> extractAllCommands(final ICommand command)
 	{
@@ -82,12 +100,18 @@ public final class HelpCommandProcessor extends AbstractCommandProcessor
 
 		for (ICommandMetadata metadata : definitions)
 		{
-			results.add(String.format("|   %1s - %2s", metadata.getName(), metadata.getDescription()));
+			results.add(String.format("|   %1$-12s - %2$s", metadata.getName(), metadata.getDescription()));
 		}
 
 		return results;
 	}
 
+	/**
+	 * 
+	 * @param command
+	 * @return
+	 */
+	@SuppressWarnings("nls")
 	private final List<String> extractCommandCategories(final ICommand command)
 	{
 		List<String> results = new ArrayList<>();
@@ -95,22 +119,36 @@ public final class HelpCommandProcessor extends AbstractCommandProcessor
 		Enum<?>[] enums = command.getMetadata().getCategoryType().getDeclaringClass().getEnumConstants();
 		for (int i = 0; i < enums.length; i++)
 		{
-			results.add(enums[i].name());
+			results.add(String.format("|   %1$s", enums[i].name()));
 		}
 
 		return results;
 	}
 
+	/**
+	 * 
+	 * @param command
+	 * @return
+	 */
 	private final List<String> extractCommandsForCategory(final ICommand command)
 	{
 		List<String> results = new ArrayList<>();
 
+		//TODO Implement!
+
 		return results;
 	}
 
+	/**
+	 * 
+	 * @param command
+	 * @return
+	 */
 	private final List<String> extractCommand(final ICommand command)
 	{
 		List<String> results = new ArrayList<>();
+
+		//TODO Implement!
 
 		return results;
 	}

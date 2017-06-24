@@ -12,11 +12,13 @@
 package com.heliosphere.athena.base.command.interpreter;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import com.heliosphere.athena.base.command.Command;
 import com.heliosphere.athena.base.command.CommandParameter;
@@ -67,6 +69,19 @@ public final class CommandInterpreter implements ICommandInterpreter
 	}
 
 	@Override
+	public final List<ICommandMetadata> getCommandDefinitions()
+	{
+		List<ICommandMetadata> result = new ArrayList<>();
+			
+		for (List<ICommandMetadata> list : commands.values())
+		{
+			result.addAll(list);
+		}
+		
+		return result;
+	}
+
+	@Override
 	public final void registerCommand(final @NonNull ICommandMetadata metadata)
 	{
 		List<ICommandMetadata> list = commands.get(metadata.getCategoryType());
@@ -82,9 +97,6 @@ public final class CommandInterpreter implements ICommandInterpreter
 				return;
 			}
 		}
-
-		// Validate the command.
-		//validate(metadata);
 
 		list.add(metadata);
 		commands.put(metadata.getCategoryType(), list);

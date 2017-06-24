@@ -98,12 +98,13 @@ public enum DefaultMessageType implements IMessageType
 	 * @param value String representing the enumerated value.
 	 * @return Message type.
 	 */
+	@SuppressWarnings("nls")
 	@Override
 	public Enum<? extends IMessageType> fromString(String value)
 	{
 		if (value == null || value.trim().length() == 0)
 		{
-			throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CommandCategoryCannotBeNull));
+			throw new InvalidArgumentException("Message type cannot be null!");
 		}
 
 		for (DefaultMessageType element : DefaultMessageType.values())

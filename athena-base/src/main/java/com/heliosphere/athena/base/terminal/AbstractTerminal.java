@@ -26,6 +26,7 @@ import com.heliosphere.athena.base.command.internal.interpreter.ICommandInterpre
 import com.heliosphere.athena.base.command.interpreter.CommandInterpreter;
 import com.heliosphere.athena.base.file.internal.FileException;
 
+import jline.Terminal;
 import lombok.NonNull;
 
 /**
@@ -112,6 +113,16 @@ public abstract class AbstractTerminal implements Runnable
 	public final TextTerminal getTerminal()
 	{
 		return io.getTextTerminal();
+	}
+
+	/**
+	 * Returns the command interpreter used by this {@link Terminal}.
+	 * <hr>
+	 * @return {@link ICommandInterpreter}. 
+	 */
+	public final ICommandInterpreter getInterpreter()
+	{
+		return interpreter;
 	}
 
 	/**

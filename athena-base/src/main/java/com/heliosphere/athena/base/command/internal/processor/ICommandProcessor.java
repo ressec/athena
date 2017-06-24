@@ -14,6 +14,12 @@ package com.heliosphere.athena.base.command.internal.processor;
 import com.heliosphere.athena.base.command.internal.ICommand;
 import com.heliosphere.athena.base.command.internal.exception.CommandException;
 
+/**
+ * Provides a basic behavior for a command processor.
+ * <hr>
+ * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
+ * @version 1.0.0
+ */
 public interface ICommandProcessor
 {
 	/**
