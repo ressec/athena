@@ -41,6 +41,10 @@
   		<groupId>log4j</groupId>
   		<artifactId>log4j</artifactId>
   	</dependency>
+  	<dependency>
+  		<groupId>jline</groupId>
+  		<artifactId>jline</artifactId>
+  	</dependency>
   </dependencies>
   <url>https://github.com/ressec/athena</url>
   <inceptionYear>2017</inceptionYear>
