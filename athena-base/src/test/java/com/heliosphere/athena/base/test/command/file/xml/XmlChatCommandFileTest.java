@@ -13,7 +13,7 @@ package com.heliosphere.athena.base.test.command.file.xml;
 
 import static org.junit.Assert.fail;
 
-import java.util.List;
+import java.util.Date;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -28,8 +28,7 @@ import com.heliosphere.athena.base.command.internal.ICommandMetadata;
 import com.heliosphere.athena.base.command.internal.ICommandParameterMetadata;
 import com.heliosphere.athena.base.command.internal.exception.CommandException;
 import com.heliosphere.athena.base.command.interpreter.CommandInterpreter;
-import com.heliosphere.athena.base.command.protocol.DefaultCommandCategoryType;
-import com.heliosphere.athena.base.command.protocol.DefaultCommandGroupType;
+import com.heliosphere.athena.base.command.protocol.DefaultCommandProtocol;
 
 /**
  * Test class for the {@link XmlCommandFile} class.
@@ -90,37 +89,14 @@ public class XmlChatCommandFileTest
 	}
 
 	/**
-	 * Creates a resource based on a file with an absolute path name.
+	 * Test an XML command file can be loaded.
 	 */
-	@SuppressWarnings("nls")
 	@Test
-	public final void loadXmlFile()
+	public final void testLoadXmlCommandFile()
 	{
 		try
 		{
 			Assert.assertTrue(chatCommandfile != null);
-			Assert.assertTrue(chatCommandfile.getHeader().getAuthor().equals("Resse Christophe"));
-
-			ICommandMetadata afkCommandDefinition = chatCommandfile.getContent().get(0);
-			Assert.assertTrue(afkCommandDefinition.getName().equals("help"));
-
-			ICommandMetadata whoCommandDefinition = chatCommandfile.getByName("who");
-			ICommandParameterMetadata parameterDefinition = whoCommandDefinition.getParameters().get(0);
-			Assert.assertTrue(parameterDefinition.getName().equals("name"));
-
-			List<ICommandMetadata> normal = chatCommandfile.findByCategory(DefaultCommandCategoryType.NORMAL);
-			List<ICommandMetadata> chat = chatCommandfile.findByGroup(DefaultCommandGroupType.CHAT);
-			Assert.assertTrue(normal.size() != 0);
-			Assert.assertTrue(chat.size() != 0);
-
-			ICommandMetadata who = chatCommandfile.getByName("who");
-			Assert.assertTrue(who != null);
-
-			List<ICommandMetadata> commands = chatCommandfile.findByAlias("people");
-			Assert.assertTrue(commands != null && commands.size() == 1);
-
-			ICommandParameterMetadata parameter = who.getByName("server");
-			Assert.assertTrue(parameter != null);
 		}
 		catch (Exception e)
 		{
@@ -129,17 +105,103 @@ public class XmlChatCommandFileTest
 	}
 
 	/**
+	 * Test the header of a XML command file.
 	 */
 	@SuppressWarnings("nls")
 	@Test
-	public final void interpretWhoCommand()
+	public final void testHeader()
+	{
+		try
+		{
+			String author = chatCommandfile.getHeader().getAuthor();
+			String company = chatCommandfile.getHeader().getCompany();
+			String version = chatCommandfile.getHeader().getVersion();
+
+			Assert.assertTrue(author.equals("Resse Christophe"));
+			Assert.assertTrue(company.equals("Heliosphere Ltd."));
+			Assert.assertTrue(version.equals("1.0"));
+		}
+		catch (Exception e)
+		{
+			fail(e.getMessage());
+		}
+	}
+
+	/**
+	 * Test the footer of a XML command file.
+	 */
+	@SuppressWarnings("nls")
+	@Test
+	public final void testFooter()
+	{
+		try
+		{
+			Date changed = chatCommandfile.getFooter().getChanged();
+			Date generated = chatCommandfile.getFooter().getGenerated();
+
+			Assert.assertTrue(changed.toString().equals("Tue Jun 06 23:15:17 CEST 2017"));
+			Assert.assertTrue(generated.toString().equals("Sat Jun 03 12:48:03 CEST 2017"));
+		}
+		catch (Exception e)
+		{
+			fail(e.getMessage());
+		}
+	}
+
+	/**
+	 * Test we can retrieve a command by its name.
+	 */
+	@SuppressWarnings("nls")
+	@Test
+	public final void testFindCommandByName()
+	{
+		ICommandMetadata afk = chatCommandfile.getByName("afk");
+		Assert.assertTrue(afk.getName().equals("afk"));
+	}
+
+	/**
+	 * Test we can retrieve a command parameter.
+	 */
+	@SuppressWarnings("nls")
+	@Test
+	public final void testGetCommandParameter()
+	{
+		ICommandMetadata help = chatCommandfile.getByName("help");
+		ICommandParameterMetadata category = help.getParameterByName("category");
+		Assert.assertTrue(category != null && category.getTag().equals("-cat"));
+	}
+
+	/**
+	 * Test we can retrieve a command by one of its alias.
+	 */
+	@SuppressWarnings("nls")
+	@Test
+	public final void testFindCommandByAlias()
+	{
+		ICommandMetadata help = chatCommandfile.findByAlias("h").get(0);
+		Assert.assertTrue(help.getName().equals("help"));
+	}
+
+	/**
+	 * Test the {@link CommandInterpreter} interprets correctly several forms of 
+	 * the {@link DefaultCommandProtocol#HELP} command.
+	 */
+	@SuppressWarnings("nls")
+	@Test
+	public final void testInterpretHelpCommand()
 	{
 		try
 		{
 			CommandInterpreter interpreter = new CommandInterpreter();
 			interpreter.registerCommands(chatCommandfile.getContent());
 
-			ICommand command = interpreter.interpret("    /     who      -n      Candy-sAlbukerque -l 14-18             ");
+			ICommand command = interpreter.interpret("    /     help      -cat         ");
+			Assert.assertTrue(command != null);
+
+			command = interpreter.interpret("    /     help          ");
+			Assert.assertTrue(command != null);
+
+			command = interpreter.interpret("    /     help      -name=help    ");
 			Assert.assertTrue(command != null);
 		}
 		catch (CommandException e)
@@ -147,6 +209,24 @@ public class XmlChatCommandFileTest
 			fail(e.getMessage());
 		}
 	}
+
+	//	@SuppressWarnings("nls")
+	//	@Test
+	//	public final void interpretWhoCommand()
+	//	{
+	//		try
+	//		{
+	//			CommandInterpreter interpreter = new CommandInterpreter();
+	//			interpreter.registerCommands(chatCommandfile.getContent());
+	//
+	//			ICommand command = interpreter.interpret("    /     who      -n      Candy-sAlbukerque -l 14-18             ");
+	//			Assert.assertTrue(command != null);
+	//		}
+	//		catch (CommandException e)
+	//		{
+	//			fail(e.getMessage());
+	//		}
+	//	}
 
 	/**
 	 * Test an invalid command interpretation.
