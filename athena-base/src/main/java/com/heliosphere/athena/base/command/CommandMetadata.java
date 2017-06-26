@@ -180,7 +180,7 @@ public class CommandMetadata implements ICommandMetadata
 	}
 
 	@Override
-	public final ICommandParameterMetadata getByName(final @NonNull String name)
+	public final ICommandParameterMetadata getParameterByName(final @NonNull String name)
 	{
 		for (ICommandParameterMetadata parameter : getParameters())
 		{
@@ -194,7 +194,7 @@ public class CommandMetadata implements ICommandMetadata
 	}
 
 	@Override
-	public final ICommandParameterMetadata getByTag(final @NonNull String tag)
+	public final ICommandParameterMetadata getParameterByTag(final @NonNull String tag)
 	{
 		for (ICommandParameterMetadata parameter : getParameters())
 		{
