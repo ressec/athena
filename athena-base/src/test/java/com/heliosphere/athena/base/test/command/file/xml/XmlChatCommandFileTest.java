@@ -13,6 +13,8 @@ package com.heliosphere.athena.base.test.command.file.xml;
 
 import static org.junit.Assert.fail;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.After;
@@ -134,13 +136,15 @@ public class XmlChatCommandFileTest
 	@Test
 	public final void testFooter()
 	{
+		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 		try
 		{
 			Date changed = chatCommandfile.getFooter().getChanged();
 			Date generated = chatCommandfile.getFooter().getGenerated();
 
-			Assert.assertTrue(changed.toString().equals("Tue Jun 06 23:15:17 CEST 2017"));
-			Assert.assertTrue(generated.toString().equals("Sat Jun 03 12:48:03 CEST 2017"));
+			Assert.assertTrue(sdf.format(changed).equals("2017-06-06 23:15:17"));
+			Assert.assertTrue(sdf.format(generated).equals("2017-06-03 12:48:03"));
 		}
 		catch (Exception e)
 		{
