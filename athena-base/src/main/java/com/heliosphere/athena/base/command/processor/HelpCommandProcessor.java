@@ -103,6 +103,8 @@ public final class HelpCommandProcessor extends AbstractCommandProcessor
 			results.add(String.format("|   %1$-12s - %2$s", metadata.getName(), metadata.getDescription()));
 		}
 
+		results.add("\r\n");
+
 		return results;
 	}
 
@@ -116,11 +118,13 @@ public final class HelpCommandProcessor extends AbstractCommandProcessor
 	{
 		List<String> results = new ArrayList<>();
 
-		Enum<?>[] enums = command.getMetadata().getCategoryType().getDeclaringClass().getEnumConstants();
+		Enum<?>[] enums = command.getMetadata().getProtocolCategory().getDeclaringClass().getEnumConstants();
 		for (int i = 0; i < enums.length; i++)
 		{
 			results.add(String.format("|   %1$s", enums[i].name()));
 		}
+
+		results.add("\r\n");
 
 		return results;
 	}
@@ -136,6 +140,8 @@ public final class HelpCommandProcessor extends AbstractCommandProcessor
 
 		//TODO Implement!
 
+		results.add("\r\n");
+
 		return results;
 	}
 
@@ -149,6 +155,8 @@ public final class HelpCommandProcessor extends AbstractCommandProcessor
 		List<String> results = new ArrayList<>();
 
 		//TODO Implement!
+
+		results.add("\r\n");
 
 		return results;
 	}

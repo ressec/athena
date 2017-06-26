@@ -13,7 +13,7 @@ package com.heliosphere.athena.base.command.internal.coordinator;
 
 import com.heliosphere.athena.base.command.internal.interpreter.ICommandInterpreter;
 import com.heliosphere.athena.base.command.internal.processor.ICommandProcessor;
-import com.heliosphere.athena.base.command.internal.protocol.ICommandCodeType;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandProtocolType;
 
 /**
  * Provides a basic behavior for a command coordinator.
@@ -33,8 +33,8 @@ public interface ICommandCoordinator
 	/**
 	 * Registers a new command processor.
 	 * <hr>
-	 * @param type Command type.
+	 * @param type Command protocol type.
 	 * @param processor Command processor to register for the command type.
 	 */
-	void registerProcessor(Enum<? extends ICommandCodeType> type, ICommandProcessor processor);
+	void registerProcessor(Enum<? extends ICommandProtocolType> type, ICommandProcessor processor);
 }

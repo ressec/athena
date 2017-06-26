@@ -11,12 +11,10 @@
  */
 package com.heliosphere.athena.base.command.internal;
 
-import java.util.List;
-
 /**
  * Provides a basic behavior for a command parameter.
  * <hr>
- * @author <a href="mailto:christophe.resse@hotmail.com">Christophe Resse</a>
+ * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 public interface ICommandParameter
@@ -43,9 +41,9 @@ public interface ICommandParameter
 	String getText();
 
 	/**
-	 * Returns the command parameter value(s).
+	 * Returns the command parameter value.
 	 * <p>
-	 * @return Command parameter value(s).
+	 * @return Command parameter value.
 	 */
-	List<Object> getValues();
+	Object getValue();
 }
