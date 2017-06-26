@@ -11,9 +11,6 @@
  */
 package com.heliosphere.athena.base.command;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.heliosphere.athena.base.command.internal.ICommandParameter;
 import com.heliosphere.athena.base.command.internal.ICommandParameterMetadata;
 import com.heliosphere.athena.base.command.protocol.DefaultParameterType;
@@ -34,9 +31,9 @@ public class CommandParameter implements ICommandParameter
 	private String text;
 
 	/**
-	 * Parameter values.
+	 * Parameter value.
 	 */
-	private List<Object> values;
+	private Object value;
 
 	/**
 	 * Parameter metadata.
@@ -60,39 +57,35 @@ public class CommandParameter implements ICommandParameter
 	 * <hr>
 	 * @param text Text representing the parameter as entered on a command-line or a terminal.
 	 * @param metadata Command parameter metadata (definition).
-	 * @param values List of parameter's values.
+	 * @param value Parameter's value (can be {@code null} in case only the parameter tag is defined).
 	 */
-	public CommandParameter(final @NonNull String text, final @NonNull ICommandParameterMetadata metadata, final @NonNull List<String> values)
+	public CommandParameter(final @NonNull String text, final @NonNull ICommandParameterMetadata metadata, final String value)
 	{
 		this.text = text;
 		this.metadata = metadata;
 
-		this.values = new ArrayList<>();
-		for (String value : values)
+		switch ((DefaultParameterType) metadata.getType())
 		{
-			switch ((DefaultParameterType) metadata.getType())
-			{
-				case INTEGER:
-					this.values.add(Integer.valueOf(value));
-					break;
+			case INTEGER:
+				this.value = Integer.valueOf(value);
+				break;
 
-				case BOOLEAN:
-					this.values.add(Boolean.valueOf(value));
-					break;
+			case BOOLEAN:
+				this.value = Boolean.valueOf(value);
+				break;
 
-				case LONG:
-					this.values.add(Long.valueOf(value));
-					break;
+			case LONG:
+				this.value = Long.valueOf(value);
+				break;
 
-				case STRING:
-					this.values.add(value);
-					break;
+			case STRING:
+				this.value = value;
+				break;
 
-				default:
-					// Default is considered as a 'string'.
-					this.values.add(value);
-					break;
-			}
+			default:
+				// Default is considered as a 'string'.
+				this.value = value;
+				break;
 		}
 	}
 
@@ -103,9 +96,9 @@ public class CommandParameter implements ICommandParameter
 	}
 
 	@Override
-	public final List<Object> getValues()
+	public final Object getValue()
 	{
-		return values;
+		return value;
 	}
 
 	@Override

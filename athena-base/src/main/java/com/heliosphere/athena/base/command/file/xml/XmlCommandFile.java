@@ -24,6 +24,7 @@ import com.heliosphere.athena.base.command.internal.protocol.ICommandGroupType;
 import com.heliosphere.athena.base.file.internal.AbstractStructuredFile;
 import com.heliosphere.athena.base.file.internal.FileException;
 import com.heliosphere.athena.base.file.xml.Footer;
+import com.heliosphere.athena.base.file.xml.Header;
 import com.heliosphere.athena.base.file.xml.XmlFile;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -38,7 +39,7 @@ import lombok.extern.log4j.Log4j;
  */
 @Log4j
 @XStreamAlias("file")
-public final class XmlCommandFile extends XmlFile<XmlCommandHeader, ICommandMetadata, Footer>
+public final class XmlCommandFile extends XmlFile<Header, ICommandMetadata, Footer>
 {
 	/**
 	 * Default serialization identifier.
@@ -74,7 +75,7 @@ public final class XmlCommandFile extends XmlFile<XmlCommandHeader, ICommandMeta
 		getEngine().aliasAttribute(AbstractStructuredFile.class, "content", "commands");
 
 		// Aliases the header tag.
-		getEngine().alias("header", XmlCommandHeader.class);
+		//getEngine().alias("header", XmlCommandHeader.class);
 
 		// Aliases the 'commands' tag.
 		getEngine().alias("command", ICommandMetadata.class, CommandMetadata.class);
@@ -91,10 +92,11 @@ public final class XmlCommandFile extends XmlFile<XmlCommandHeader, ICommandMeta
 		{
 			try
 			{
-				command.setProtocolCategoryClassName(getHeader().getProtocolCommandCategory());
-				command.setProtocolGroupClassName(getHeader().getProtocolCommandGroup());
-				command.setProtocolCodeClassName(getHeader().getProtocolCommandCode());
-				command.setProtocolMessageClassName(getHeader().getProtocolMessage());
+				command.initialize();
+//				command.setProtocolCategoryClassName(getHeader().getProtocolCommandCategory());
+//				command.setProtocolGroupClassName(getHeader().getProtocolCommandGroup());
+//				command.setProtocolCodeClassName(getHeader().getProtocolCommandCode());
+//				command.setProtocolMessageClassName(getHeader().getProtocolMessage());
 			}
 			catch (CommandInitializationException e)
 			{
@@ -115,7 +117,7 @@ public final class XmlCommandFile extends XmlFile<XmlCommandHeader, ICommandMeta
 
 		for (ICommandMetadata command : getContent())
 		{
-			if (command.getCategoryType() == category)
+			if (command.getProtocolCategory() == category)
 			{
 				result.add(command);
 			}
@@ -135,7 +137,7 @@ public final class XmlCommandFile extends XmlFile<XmlCommandHeader, ICommandMeta
 
 		for (ICommandMetadata command : getContent())
 		{
-			if (command.getGroupType() == group)
+			if (command.getProtocolGroup() == group)
 			{
 				result.add(command);
 			}

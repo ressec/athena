@@ -11,8 +11,6 @@
  */
 package com.heliosphere.athena.base.command.internal.protocol;
 
-import com.heliosphere.athena.base.message.internal.protocol.IMessageType;
-
 /**
  * Provides a basic behavior for command type enumerations.
  * <hr>
@@ -37,19 +35,12 @@ public interface ICommandProtocolType
 	 * <p>
 	 * @return Command category type.
 	 */
-	Enum<? extends ICommandCategoryType> getCategoryType();
+	Enum<? extends ICommandCategoryType> getCategory();
 
 	/**
 	 * Returns the command group type.
 	 * <p>
 	 * @return Command group type.
 	 */
-	Enum<? extends ICommandGroupType> getGroupType();
-
-	/**
-	 * Returns the message type.
-	 * <p>
-	 * @return Message type.
-	 */
-	Enum<? extends IMessageType> getMessageType();
+	Enum<? extends ICommandGroupType> getGroup();
 }

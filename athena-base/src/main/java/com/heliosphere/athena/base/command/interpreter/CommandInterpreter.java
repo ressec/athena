@@ -84,7 +84,7 @@ public final class CommandInterpreter implements ICommandInterpreter
 	@Override
 	public final void registerCommand(final @NonNull ICommandMetadata metadata)
 	{
-		List<ICommandMetadata> list = commands.get(metadata.getCategoryType());
+		List<ICommandMetadata> list = commands.get(metadata.getProtocolCategory());
 
 		if (list == null)
 		{
@@ -99,7 +99,7 @@ public final class CommandInterpreter implements ICommandInterpreter
 		}
 
 		list.add(metadata);
-		commands.put(metadata.getCategoryType(), list);
+		commands.put(metadata.getProtocolCategory(), list);
 	}
 
 	@Override
@@ -206,10 +206,10 @@ public final class CommandInterpreter implements ICommandInterpreter
 			 * Group 2:'/'
 			 * Group 3:'who      '
 			 */
-			//			for (int i = 0; i <= matcher.groupCount(); i++)
-			//			{
-			//				System.out.println("Group " + i + " : " + matcher.group(i));
-			//			}
+//						for (int i = 0; i <= matcher.groupCount(); i++)
+//						{
+//							System.out.println("Group " + i + " : " + matcher.group(i));
+//						}
 
 			try
 			{
@@ -273,8 +273,8 @@ public final class CommandInterpreter implements ICommandInterpreter
 		Pattern pattern = null;
 		Matcher matcher = null;
 		String tag = null;
-		List<String> values = new ArrayList<>();
-
+		String value = null;
+		
 		// Get the next parameter present in the working copy of the command text.
 		for (ICommandParameterMetadata metadata : command.getMetadata().getParameters())
 		{
@@ -293,19 +293,23 @@ public final class CommandInterpreter implements ICommandInterpreter
 				{
 					if (matcher.group(index) != null)
 					{
-						values.add(matcher.group(index).trim());
+						value = matcher.group(index).trim();
 					}
 				}
 			}
 
-			if (tag != null && tag.equals(metadata.getTag())) // We found a matching parameter!
+			if (tag != null) 
 			{
-				// Let's extract set the parameter.
-				parameter = new CommandParameter(matcher.group(0), metadata, values);
+				tag = tag.replace("=", "");
+				if (tag.equals(metadata.getTag())) // We found a matching parameter!
+				{
+					// Let's extract set the parameter.
+					parameter = new CommandParameter(matcher.group(0), metadata, value);
 
-				// Remove the parameter text from the command text.
-				copy = copy.replace(matcher.group(0), "").trim();
-				return parameter;
+					// Remove the parameter text from the command text.
+					copy = copy.replace(matcher.group(0), "").trim();
+					return parameter;
+				}
 			}
 		}
 

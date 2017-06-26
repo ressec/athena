@@ -87,6 +87,8 @@ public abstract class AbstractResource implements IResource
 			}
 		}
 
+		//String fullPath = file.getAbsolutePath();
+
 		return this.file.exists();
 	}
 

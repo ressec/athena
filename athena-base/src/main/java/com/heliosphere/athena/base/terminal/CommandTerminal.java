@@ -26,21 +26,15 @@ import lombok.NonNull;
 public class CommandTerminal extends AbstractTerminal
 {
 	/**
-	 * Creates a new basic terminal.
-	 */
-	public CommandTerminal()
-	{
-		super();
-	}
-
-	/**
 	 * Creates a new basic terminal given the path name of an XMl file containing commands to register.
 	 * <hr>
-	 * @param pathname XML path name containing the commands to register. 
+	 * @param name Terminal's session name. 
+	 * @param terminalConfigurationFilename Terminal configuration file name. 
+	 * @param commandFilename XML path name containing the commands to register. 
 	 * @throws FileException In case an error occurred while trying to access the file.
 	 */
-	public CommandTerminal(final @NonNull String pathname) throws FileException
+	public CommandTerminal(final @NonNull String name, final @NonNull String terminalConfigurationFilename, final @NonNull String commandFilename) throws FileException
 	{
-		super(pathname);
+		super(name, terminalConfigurationFilename, commandFilename);
 	}
 }

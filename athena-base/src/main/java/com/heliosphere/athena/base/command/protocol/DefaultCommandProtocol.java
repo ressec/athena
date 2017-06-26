@@ -15,18 +15,13 @@ import com.heliosphere.athena.base.command.internal.protocol.ICommandCategoryTyp
 import com.heliosphere.athena.base.command.internal.protocol.ICommandGroupType;
 import com.heliosphere.athena.base.command.internal.protocol.ICommandProtocolType;
 import com.heliosphere.athena.base.exception.InvalidArgumentException;
-import com.heliosphere.athena.base.message.internal.protocol.IMessageType;
-import com.heliosphere.athena.base.message.protocol.DefaultMessageType;
 import com.heliosphere.athena.base.resource.bundle.BundleAthenaBase;
 import com.heliosphere.athena.base.resource.bundle.ResourceBundleManager;
 
 import lombok.NonNull;
 
 /**
- * Enumeration defining a set of {@code default} command types.
- * <p>
- * <b>Note:</b><br>
- * You should not use this protocol directly (except for testing purpose) but you should define your(s) according to your needs.
+ * Enumeration defining a {@code default} command protocol.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
@@ -36,27 +31,17 @@ public enum DefaultCommandProtocol implements ICommandProtocolType
 	/**
 	 * Command: {@code AFK}.
 	 */
-	AFK(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.CHAT, DefaultMessageType.STATUS_AFK),
-
-	/**
-	 * Command: {@code Server Time}.
-	 */
-	SERVER_TIME(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM, DefaultMessageType.QUERY_SERVER_TIME),
-
-	/**
-	 * Command: {@code Client Time}.
-	 */
-	CLIENT_TIME(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM, DefaultMessageType.NONE),
+	AFK(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.CHAT),
 
 	/**
 	 * Help command.
 	 */
-	HELP(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM, DefaultMessageType.NONE),
+	HELP(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM),
 
 	/**
 	 * Quit command.
 	 */
-	QUIT(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM, DefaultMessageType.NONE);
+	QUIT(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM);
 
 	/**
 	 * Command category type.
@@ -69,30 +54,24 @@ public enum DefaultCommandProtocol implements ICommandProtocolType
 	private final Enum<? extends ICommandGroupType> group;
 
 	/**
-	 * Message type.
-	 */
-	private final Enum<? extends IMessageType> message;
-
-	/**
 	 * Creates a new enumerated value given some values.
 	 * <p>
 	 * @param category Command category type.
 	 * @param group Command group type.
-	 * @param message Message type.
 	 */
-	private DefaultCommandProtocol(final @NonNull Enum<? extends ICommandCategoryType> category, final @NonNull Enum<? extends ICommandGroupType> group, final @NonNull Enum<? extends IMessageType> message)
+	private DefaultCommandProtocol(final @NonNull Enum<? extends ICommandCategoryType> category, final @NonNull Enum<? extends ICommandGroupType> group)
 	{
 		this.category = category;
 		this.group = group;
-		this.message = message;
 	}
 
+	@SuppressWarnings("nls")
 	@Override
 	public final DefaultCommandProtocol fromString(final String value)
 	{
 		if (value == null || value.trim().length() == 0)
 		{
-			throw new InvalidArgumentException(ResourceBundleManager.getMessage(BundleAthenaBase.CommandCategoryCannotBeNull));
+			throw new InvalidArgumentException("Default command string representation cannot be null or empty!");
 		}
 
 		for (DefaultCommandProtocol element : DefaultCommandProtocol.values())
@@ -107,20 +86,14 @@ public enum DefaultCommandProtocol implements ICommandProtocolType
 	}
 
 	@Override
-	public final Enum<? extends ICommandCategoryType> getCategoryType()
+	public final Enum<? extends ICommandCategoryType> getCategory()
 	{
 		return category;
 	}
 
 	@Override
-	public final Enum<? extends ICommandGroupType> getGroupType()
+	public final Enum<? extends ICommandGroupType> getGroup()
 	{
 		return group;
-	}
-
-	@Override
-	public final Enum<? extends IMessageType> getMessageType()
-	{
-		return message;
 	}
 }

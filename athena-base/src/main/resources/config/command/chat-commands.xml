@@ -5,68 +5,58 @@
     <version>1.0</version>
     <author>Resse Christophe</author>
     <description>XML file containing definitions for some chat commands.</description>
-
-    <protocol-command-category>com.heliosphere.athena.base.command.protocol.DefaultCommandCategoryType</protocol-command-category>
-    <protocol-command-group>com.heliosphere.athena.base.command.protocol.DefaultCommandGroupType</protocol-command-group>
-    <protocol-command-code>com.heliosphere.athena.base.command.protocol.DefaultCommandCodeType</protocol-command-code>
-    <protocol-message>com.heliosphere.athena.base.message.protocol.DefaultMessageType</protocol-message>
-
   </header>
 
   <commands>
 
     <!-- HELP command. -->
     <command>
-      <category>NORMAL</category>
-      <group>SYSTEM</group>
-      <code>HELP</code>
-      <message>NONE</message> <!-- No message type associated with this command. -->
+      <protocol>com.heliosphere.athena.base.command.protocol.DefaultCommandProtocol.HELP</protocol> <!-- Command protocol enumerated value -->
+      <processor>HelpCommandProcessor</processor>
       <name>help</name>
-      <description>Displays help on commands.</description>
+      <description>Display help on commands.</description>
       <aliases>
         <alias>h</alias>
       </aliases>
       <parameters>
         <parameter>
           <name>category</name>
-          <description>Displays the available command categories.</description>
+          <description>Display the available command categories.</description>
           <tag>-cat</tag>
           <regexp>(-cat)</regexp>
           <type>String</type>
         </parameter>
         <parameter>
           <name>set</name>
-          <description>Displays a list of available commands for a given command category.</description>
+          <description>Display a list of available commands for a given command category.</description>
           <tag>-set</tag>
-          <regexp>(-set)\s*+([a-zA-Z]++\*?)</regexp>
+          <regexp>(-set=)\s*+([a-zA-Z]++\*?)</regexp>
           <type>String</type>
         </parameter>
         <parameter>
-          <name>command</name>
-          <description>Displays detailed description on a given command.</description>
-          <tag>-command</tag>
-          <regexp>\s*+([a-zA-Z]++\*?)</regexp>
+          <name>name</name>
+          <description>Display detailed description on a given command name.</description>
+          <tag>-name</tag>
+          <regexp>(-name=)\s*+([a-zA-Z]++\*?)</regexp>
           <type>String</type>
         </parameter>
       </parameters>
     </command>
 
-    <!-- AFK command which is a very simple command. -->
+    <!-- AFK command. -->
     <command>
-      <category>NORMAL</category>
-      <group>CHAT</group>
-      <code>AFK</code>
-      <message>STATUS_AFK</message>
+      <protocol>com.heliosphere.athena.base.command.protocol.DefaultCommandProtocol.AFK</protocol> <!-- Command protocol enumerated value -->
+      <processor></processor> <!-- This command has no pre-defined command processor, it will be handled by a message -->
       <name>afk</name>
-      <description>Marks you as "Away from keyboard".</description>
+      <description>Mark you as: "Away from keyboard".</description>
       <!-- Message protocol associated  with this command. Format is <full_enumeration_class_name>:<enumerated_value> -->
       <aliases>
         <alias>away</alias>
       </aliases>
-      <parameters></parameters> <!-- This command has no parameter. -->
+      <parameters></parameters> <!-- This command has no parameter! -->
     </command>
 
-    <!-- WHO command which is a quite complex command. -->
+    <!-- WHO command which is a quite complex command.
     <command>
 
       <group>CHAT</group>
@@ -157,7 +147,7 @@
 
       </parameters>
 
-    </command>
+    </command> -->
 
   </commands>
   

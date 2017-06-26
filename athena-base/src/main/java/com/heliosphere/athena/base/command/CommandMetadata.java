@@ -18,9 +18,9 @@ import com.heliosphere.athena.base.command.internal.ICommandMetadata;
 import com.heliosphere.athena.base.command.internal.ICommandParameterMetadata;
 import com.heliosphere.athena.base.command.internal.exception.CommandInitializationException;
 import com.heliosphere.athena.base.command.internal.protocol.ICommandCategoryType;
-import com.heliosphere.athena.base.command.internal.protocol.ICommandCodeType;
 import com.heliosphere.athena.base.command.internal.protocol.ICommandGroupType;
-import com.heliosphere.athena.base.message.internal.protocol.IMessageType;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandProtocolType;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 import lombok.Getter;
@@ -35,39 +35,57 @@ import lombok.Setter;
  */
 public class CommandMetadata implements ICommandMetadata
 {
-	/**
-	 * Command category (string representation).
-	 */
-	@Getter
-	@Setter
-	private String category;
+//	/**
+//	 * Command category (string representation).
+//	 */
+//	@Getter
+//	@Setter
+//	private String category;
+
+//	/**
+//	 * Command group type (string representation).
+//	 */
+//	@Getter
+//	@Setter
+//	private String group;
 
 	/**
-	 * Command group type (string representation).
+	 * Full command protocol name.
 	 */
 	@Getter
 	@Setter
-	private String group;
+	@XStreamAlias("protocol")
+	private String fullProtocolName;
 
 	/**
-	 * Command code type (string representation).
+	 * Command processor class name.
 	 */
 	@Getter
 	@Setter
-	private String code;
+	@XStreamAlias("processor")
+	private String processorClassName;
+
+//	/**
+//	 * Message type (string representation).
+//	 */
+//	@Getter
+//	@Setter
+//	private String message;
 
 	/**
-	 * Message type (string representation).
+	 * Command protocol type.
 	 */
 	@Getter
 	@Setter
-	private String message;
+	//@XStreamConverter(CommandCodeEnumConverter.class)
+	@XStreamOmitField
+	private Enum<? extends ICommandProtocolType> protocolType;
 
 	/**
 	 * Command category.
 	 */
-	@Getter
-	@Setter
+//	@Getter
+//	@Setter
 	//@XStreamConverter(CommandCategoryEnumConverter.class)
 	@XStreamOmitField
 	private Enum<? extends ICommandCategoryType> categoryType;
@@ -75,28 +93,19 @@ public class CommandMetadata implements ICommandMetadata
 	/**
 	 * Command group.
 	 */
-	@Getter
-	@Setter
+//	@Getter
+//	@Setter
 	//@XStreamConverter(CommandGroupEnumConverter.class)
 	@XStreamOmitField
 	private Enum<? extends ICommandGroupType> groupType;
 
-	/**
-	 * Command code.
-	 */
-	@Getter
-	@Setter
-	//@XStreamConverter(CommandCodeEnumConverter.class)
-	@XStreamOmitField
-	private Enum<? extends ICommandCodeType> codeType;
-
-	/**
-	 * Message type associated to the command.
-	 */
-	@Getter
-	@Setter
-	@XStreamOmitField
-	private Enum<? extends IMessageType> messageType;
+//	/**
+//	 * Message type associated to the command.
+//	 */
+//	@Getter
+//	@Setter
+//	@XStreamOmitField
+//	private Enum<? extends IMessageType> messageType;
 
 	/**
 	 * Command name.
@@ -134,21 +143,31 @@ public class CommandMetadata implements ICommandMetadata
 	/**
 	 * Creates a new command metadata (definition).
 	 * <hr>
-	 * @param category Command category.
-	 * @param group Command group.
-	 * @param code Command code.
-	 * @param message Message.
+	 * @param protocol Command full protocol type name.
 	 * @param name Command name.
 	 */
-	public CommandMetadata(final @NonNull String category, final @NonNull String group, final @NonNull String code, final @NonNull String message, final @NonNull String name)
+	public CommandMetadata(final @NonNull String protocol, final @NonNull String name)
 	{
-		this.category = category;
-		this.group = group;
-		this.code = code;
-		this.message = message;
+		this.fullProtocolName = protocol;
 		this.name = name;
+
+		try
+		{
+			initialize();
+		}
+		catch (CommandInitializationException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
+	@Override
+	public final void initialize() throws CommandInitializationException
+	{
+		setProtocol(fullProtocolName);
+	}
+	
 	@Override
 	public final void addParameter(final @NonNull ICommandParameterMetadata parameter)
 	{
@@ -161,7 +180,7 @@ public class CommandMetadata implements ICommandMetadata
 	}
 
 	@Override
-	public final ICommandParameterMetadata getByName(final @NonNull String name)
+	public final ICommandParameterMetadata getParameterByName(final @NonNull String name)
 	{
 		for (ICommandParameterMetadata parameter : getParameters())
 		{
@@ -175,7 +194,7 @@ public class CommandMetadata implements ICommandMetadata
 	}
 
 	@Override
-	public final ICommandParameterMetadata getByTag(final @NonNull String tag)
+	public final ICommandParameterMetadata getParameterByTag(final @NonNull String tag)
 	{
 		for (ICommandParameterMetadata parameter : getParameters())
 		{
@@ -190,69 +209,107 @@ public class CommandMetadata implements ICommandMetadata
 
 	@SuppressWarnings({ "unchecked", "nls" })
 	@Override
-	public final void setProtocolCategoryClassName(String protocolClassName) throws CommandInitializationException
+	public final void setProtocol(String fullProtocolName) throws CommandInitializationException
 	{
 		Class<Enum<?>> enumClass;
-		
-		try
+		String protocolClassName = null;
+		String value = null;
+
+		int index = fullProtocolName.lastIndexOf('.');
+		if (index != -1)
 		{
-			enumClass = (Class<Enum<?>>) Class.forName(protocolClassName);
-			categoryType = ((ICommandCategoryType) (Enum<?>) enumClass.getEnumConstants()[0]).fromString(category);
-		}
-		catch (Exception e)
-		{
-			throw new CommandInitializationException(String.format("Unable to initialize command [name=%1s, reason=%2s]", getName(), e.getMessage()));
-		}
+			protocolClassName = fullProtocolName.substring(0, index);
+			value = fullProtocolName.substring(index + 1, fullProtocolName.length());
+			
+			try
+			{
+				enumClass = (Class<Enum<?>>) Class.forName(protocolClassName);
+				protocolType = ((ICommandProtocolType) (Enum<?>) enumClass.getEnumConstants()[0]).fromString(value);
+			}
+			catch (Exception e)
+			{
+				throw new CommandInitializationException(String.format("Unable to initialize command protocol [name=%1s, reason=%2s]", getName(), e.getMessage()));
+			}
+		}		
 	}
 
-	@SuppressWarnings({ "unchecked", "nls" })
 	@Override
-	public final void setProtocolGroupClassName(String protocolClassName) throws CommandInitializationException
+	public final Enum<? extends ICommandCategoryType> getProtocolCategory()
 	{
-		Class<Enum<?>> enumClass;
-		
-		try
-		{
-			enumClass = (Class<Enum<?>>) Class.forName(protocolClassName);
-			groupType = ((ICommandGroupType) (Enum<?>) enumClass.getEnumConstants()[0]).fromString(group);
-		}
-		catch (Exception e)
-		{
-			throw new CommandInitializationException(String.format("Unable to initialize command [name=%1s, reason=%2s]", getName(), e.getMessage()));
-		}
+		return ((ICommandProtocolType) protocolType).getCategory();
 	}
 
-	@SuppressWarnings({ "unchecked", "nls" })
 	@Override
-	public final void setProtocolCodeClassName(String protocolClassName) throws CommandInitializationException
+	public final Enum<? extends ICommandGroupType> getProtocolGroup()
 	{
-		Class<Enum<?>> enumClass;
-		
-		try
-		{
-			enumClass = (Class<Enum<?>>) Class.forName(protocolClassName);
-			codeType = ((ICommandCodeType) (Enum<?>) enumClass.getEnumConstants()[0]).fromString(code);
-		}
-		catch (Exception e)
-		{
-			throw new CommandInitializationException(String.format("Unable to initialize command [name=%1s, reason=%2s]", getName(), e.getMessage()));
-		}
+		return ((ICommandProtocolType) protocolType).getGroup();
 	}
 
-	@SuppressWarnings({ "unchecked", "nls" })
-	@Override
-	public final void setProtocolMessageClassName(String protocolClassName) throws CommandInitializationException
-	{
-		Class<Enum<?>> enumClass;
-		
-		try
-		{
-			enumClass = (Class<Enum<?>>) Class.forName(protocolClassName);
-			messageType = ((IMessageType) (Enum<?>) enumClass.getEnumConstants()[0]).fromString(message);
-		}
-		catch (Exception e)
-		{
-			throw new CommandInitializationException(String.format("Unable to initialize command [name=%1s, reason=%2s]", getName(), e.getMessage()));
-		}
-	}
+//	@SuppressWarnings({ "unchecked", "nls" })
+//	@Override
+//	public final void setProtocolCategoryClassName(String protocolClassName) throws CommandInitializationException
+//	{
+//		Class<Enum<?>> enumClass;
+//		
+//		try
+//		{
+//			enumClass = (Class<Enum<?>>) Class.forName(protocolClassName);
+//			categoryType = ((ICommandCategoryType) (Enum<?>) enumClass.getEnumConstants()[0]).fromString(category);
+//		}
+//		catch (Exception e)
+//		{
+//			throw new CommandInitializationException(String.format("Unable to initialize command [name=%1s, reason=%2s]", getName(), e.getMessage()));
+//		}
+//	}
+
+//	@SuppressWarnings({ "unchecked", "nls" })
+//	@Override
+//	public final void setProtocolGroupClassName(String protocolClassName) throws CommandInitializationException
+//	{
+//		Class<Enum<?>> enumClass;
+//		
+//		try
+//		{
+//			enumClass = (Class<Enum<?>>) Class.forName(protocolClassName);
+//			groupType = ((ICommandGroupType) (Enum<?>) enumClass.getEnumConstants()[0]).fromString(group);
+//		}
+//		catch (Exception e)
+//		{
+//			throw new CommandInitializationException(String.format("Unable to initialize command [name=%1s, reason=%2s]", getName(), e.getMessage()));
+//		}
+//	}
+
+//	@SuppressWarnings({ "unchecked", "nls" })
+//	@Override
+//	public final void setProtocolCodeClassName(String protocolClassName) throws CommandInitializationException
+//	{
+//		Class<Enum<?>> enumClass;
+//		
+//		try
+//		{
+//			enumClass = (Class<Enum<?>>) Class.forName(protocolClassName);
+//			codeType = ((ICommandCodeType) (Enum<?>) enumClass.getEnumConstants()[0]).fromString(code);
+//		}
+//		catch (Exception e)
+//		{
+//			throw new CommandInitializationException(String.format("Unable to initialize command [name=%1s, reason=%2s]", getName(), e.getMessage()));
+//		}
+//	}
+
+//	@SuppressWarnings({ "unchecked", "nls" })
+//	@Override
+//	public final void setProtocolMessageClassName(String protocolClassName) throws CommandInitializationException
+//	{
+//		Class<Enum<?>> enumClass;
+//		
+//		try
+//		{
+//			enumClass = (Class<Enum<?>>) Class.forName(protocolClassName);
+//			messageType = ((IMessageType) (Enum<?>) enumClass.getEnumConstants()[0]).fromString(message);
+//		}
+//		catch (Exception e)
+//		{
+//			throw new CommandInitializationException(String.format("Unable to initialize command [name=%1s, reason=%2s]", getName(), e.getMessage()));
+//		}
+//	}
 }
