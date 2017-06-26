@@ -11,12 +11,13 @@
  */
 package com.heliosphere.athena.base.terminal;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
-import org.beryx.textio.TextIO;
-import org.beryx.textio.TextIoFactory;
 import org.beryx.textio.TextTerminal;
+import org.beryx.textio.swing.SwingTextTerminal;
 
 import com.heliosphere.athena.base.command.file.xml.XmlCommandFile;
 import com.heliosphere.athena.base.command.internal.ICommand;
@@ -25,7 +26,10 @@ import com.heliosphere.athena.base.command.internal.exception.CommandException;
 import com.heliosphere.athena.base.command.internal.interpreter.ICommandInterpreter;
 import com.heliosphere.athena.base.command.interpreter.CommandInterpreter;
 import com.heliosphere.athena.base.file.internal.FileException;
+import com.heliosphere.athena.base.file.internal.resource.IResource;
+import com.heliosphere.athena.base.file.internal.resource.Resource;
 
+import jline.Terminal;
 import lombok.NonNull;
 
 /**
@@ -39,7 +43,7 @@ public abstract class AbstractTerminal implements Runnable
 	/**
 	 * Terminal state.
 	 */
-	private static TerminalStatusType status = TerminalStatusType.UNKNOWN;
+	private TerminalStatusType status = TerminalStatusType.UNKNOWN;
 
 	/**
 	 * Wait interval.
@@ -49,7 +53,7 @@ public abstract class AbstractTerminal implements Runnable
 	/**
 	 * Terminal thread.
 	 */
-	private static volatile Thread thread = null;
+	private volatile Thread thread = null;
 
 	/**
 	 * Initial command prompt.
@@ -70,7 +74,7 @@ public abstract class AbstractTerminal implements Runnable
 	/**
 	 * Text IO entry point.
 	 */
-	protected TextIO io = null;
+	protected SwingTextTerminal io = null;
 
 	/**
 	 * Text entered on the console.
@@ -87,20 +91,37 @@ public abstract class AbstractTerminal implements Runnable
 	 */
 	public AbstractTerminal()
 	{
-		io = TextIoFactory.getTextIO();
+		io = new SwingTextTerminal();
 		interpreter = new CommandInterpreter();
 	}
 
 	/**
 	 * Creates a new abstract terminal and registers a set of commands given a {@code XML file}.
 	 * <hr>
-	 * @param pathname XML file path and name containing the command definitions.
+	 * @param name Terminal's session name.
+	 * @param terminalConfigurationFilename Terminal configuration file name.
+	 * @param commandFilename XML file path and name containing the command definitions.
 	 * @throws FileException Thrown in case an error occurred while trying to access the file.
 	 */
-	public AbstractTerminal(String pathname) throws FileException
+	public AbstractTerminal(String name, String terminalConfigurationFilename, String commandFilename) throws FileException
 	{
 		this();
-		registerCommands(pathname);
+
+		Properties properties = new Properties();
+		IResource resource = new Resource(terminalConfigurationFilename);
+
+		try (FileInputStream input = new FileInputStream(resource.getFile()))
+		{
+			properties.load(input);
+			io.initProperties(properties);
+			io.getFrame().setTitle(name);
+		}
+		catch (Exception e)
+		{
+			throw new FileException(e);
+		}
+
+		registerCommands(commandFilename);
 	}
 
 	/**
@@ -111,7 +132,7 @@ public abstract class AbstractTerminal implements Runnable
 	@SuppressWarnings("rawtypes")
 	public final TextTerminal getTerminal()
 	{
-		return io.getTextTerminal();
+		return io;
 	}
 
 	/**
@@ -180,7 +201,8 @@ public abstract class AbstractTerminal implements Runnable
 		{
 			if (status == TerminalStatusType.RUNNING)
 			{
-				text = io.newStringInputReader().read(prompt);
+				io.print(prompt);
+				text = io.read(false);
 
 				try
 				{
