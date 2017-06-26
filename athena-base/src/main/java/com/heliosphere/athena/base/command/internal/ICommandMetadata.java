@@ -33,28 +33,12 @@ public interface ICommandMetadata
 	 */
 	Enum<? extends ICommandCategoryType> getProtocolCategory();
 
-	//	/**
-	//	 * Sets the command category protocol class name.
-	//	 * <hr>
-	//	 * @param protocol Protocol class name (enumeration class name).
-	//	 * @throws CommandInitializationException Thrown to indicate an error occurred while initializing the command.
-	//	 */
-	//	void setProtocolCategoryClassName(String protocol) throws CommandInitializationException;
-
 	/**
 	 * Returns the command protocol group type.
 	 * <p>
 	 * @return Command protocol group type.
 	 */
 	Enum<? extends ICommandGroupType> getProtocolGroup();
-
-	//	/**
-	//	 * Sets the command group protocol class name.
-	//	 * <hr>
-	//	 * @param protocol Protocol class name (enumeration class name).
-	//	 * @throws CommandInitializationException Thrown to indicate an error occurred while initializing the command.
-	//	 */
-	//	void setProtocolGroupClassName(String protocol) throws CommandInitializationException;
 
 	/**
 	 * Returns the command protocol type.
@@ -70,21 +54,6 @@ public interface ICommandMetadata
 	 * @throws CommandInitializationException Thrown to indicate an error occurred while initializing the command.
 	 */
 	void setProtocol(String fullProtocolName) throws CommandInitializationException;
-
-	//	/**
-	//	 * Returns the message type.
-	//	 * <p>
-	//	 * @return Message type.
-	//	 */
-	//	Enum<? extends IMessageType> getMessageType();
-
-	//	/**
-	//	 * Sets the message protocol class name.
-	//	 * <hr>
-	//	 * @param protocol Protocol class name (enumeration class name).
-	//	 * @throws CommandInitializationException Thrown to indicate an error occurred while initializing the command.
-	//	 */
-	//	void setProtocolMessageClassName(String protocol) throws CommandInitializationException;
 
 	/**
 	 * Returns the command name.
@@ -134,7 +103,7 @@ public interface ICommandMetadata
 	 * @param name Parameter name.
 	 * @return Command parameter or {@code null} if no parameter with the given name has been found.
 	 */
-	ICommandParameterMetadata getByName(String name);
+	ICommandParameterMetadata getParameterByName(String name);
 
 	/**
 	 * Finds a parameter by its tag.
@@ -142,7 +111,12 @@ public interface ICommandMetadata
 	 * @param tag Parameter tag.
 	 * @return Command parameter or {@code null} if no parameter with the given tag has been found.
 	 */
-	ICommandParameterMetadata getByTag(String tag);
+	ICommandParameterMetadata getParameterByTag(String tag);
 
+	/**
+	 * Initializes the command definition.
+	 * <hr>
+	 * @throws CommandInitializationException Thrown in case an error occurred while initializing the command definition.
+	 */
 	void initialize() throws CommandInitializationException;
 }
