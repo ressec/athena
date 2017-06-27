@@ -17,8 +17,10 @@ import java.util.List;
 import com.heliosphere.athena.base.command.internal.ICommand;
 import com.heliosphere.athena.base.command.internal.ICommandMetadata;
 import com.heliosphere.athena.base.command.internal.ICommandParameter;
+import com.heliosphere.athena.base.command.internal.ICommandParameterMetadata;
 import com.heliosphere.athena.base.command.internal.exception.CommandException;
 import com.heliosphere.athena.base.command.internal.processor.AbstractCommandProcessor;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandCategoryType;
 import com.heliosphere.athena.base.command.internal.protocol.ICommandCodeType;
 import com.heliosphere.athena.base.command.protocol.DefaultCommandCodeType;
 
@@ -78,9 +80,9 @@ public final class HelpCommandProcessor extends AbstractCommandProcessor
 				{
 					return extractCommandsForCategory(command);
 				}
-				if (parameter.getMetadata().getName().equals("command"))
+				if (parameter.getMetadata().getName().equals("name"))
 				{
-					return extractCommand(command);
+					return extractCommandHelp(command);
 				}
 			}
 		}
@@ -98,9 +100,11 @@ public final class HelpCommandProcessor extends AbstractCommandProcessor
 	{
 		List<String> results = new ArrayList<>();
 
+		results.add(" ");
+		results.add("Available commands are:");
 		for (ICommandMetadata metadata : definitions)
 		{
-			results.add(String.format("|   %1$-12s - %2$s", metadata.getName(), metadata.getDescription()));
+			results.add(String.format(" %1$-12s %2$s", metadata.getName(), metadata.getDescription()));
 		}
 
 		results.add("\r\n");
@@ -118,10 +122,12 @@ public final class HelpCommandProcessor extends AbstractCommandProcessor
 	{
 		List<String> results = new ArrayList<>();
 
+		results.add(" ");
+		results.add("Command categories are:");
 		Enum<?>[] enums = command.getMetadata().getProtocolCategory().getDeclaringClass().getEnumConstants();
 		for (int i = 0; i < enums.length; i++)
 		{
-			results.add(String.format("|   %1$s", enums[i].name()));
+			results.add(String.format(" %1s %2s", ((ICommandCategoryType) enums[i]).getPrefix(), enums[i].name()));
 		}
 
 		results.add("\r\n");
@@ -146,18 +152,93 @@ public final class HelpCommandProcessor extends AbstractCommandProcessor
 	}
 
 	/**
-	 * 
-	 * @param command
-	 * @return
+	 * Returns the detailed help for the given command.
+	 * <hr>
+	 * @param command {@link ICommand}.
+	 * @return List of text lines composing the detailed help for the command.
 	 */
-	private final List<String> extractCommand(final ICommand command)
+	@SuppressWarnings("nls")
+	private final List<String> extractCommandHelp(final ICommand command)
 	{
 		List<String> results = new ArrayList<>();
+		ICommandMetadata other = null;
 
-		//TODO Implement!
+		other = getCommandDefinitionByName((String) command.getParameter("name").getValue());
+		if (other != null)
+		{
+			results.add(" ");
+			results.add(String.format("Help on command '%1s': %2s", other.getName(), other.getDescription()));
+			results.add(" ");
 
-		results.add("\r\n");
+			// Aliases.
+			if (!other.getAliases().isEmpty())
+			{
+				results.add("Aliases:");
+				for (String alias : other.getAliases())
+				{
+					results.add("|   " + alias);
+				}
+			}
+			else
+			{
+				results.add("No alias defined!");
+			}
+
+			results.add(" ");
+
+			// Parameters.
+			if (!other.getParameters().isEmpty())
+			{
+				results.add("Parameters:");
+				for (ICommandParameterMetadata parameter : other.getParameters())
+				{
+					results.add(" - '" + parameter.getName() + "' " + parameter.getDescription());
+					results.add(" |__ RegExp   : " + parameter.getRegExp());
+
+					// Examples.
+					if (parameter.getExamples() != null && !parameter.getExamples().isEmpty())
+					{
+						results.add(" |__ Examples : ");
+						for (String example : parameter.getExamples())
+						{
+							results.add("     |_ " + example);
+						}
+					}
+					else
+					{
+						results.add(" |__ No example defined!");
+					}
+
+					results.add(" ");
+				}
+			}
+			else
+			{
+				results.add("No parameter defined!");
+			}
+
+			results.add("\r\n");
+		}
 
 		return results;
+	}
+
+	/**
+	 * Retrieves a command definition (metadata) based on a given name.
+	 * <hr>
+	 * @param name Name of the command to retrieve.
+	 * @return {@link ICommandMetadata} if found, {@code null} otherwise.
+	 */
+	private final ICommandMetadata getCommandDefinitionByName(final String name)
+	{
+		for (ICommandMetadata command : definitions)
+		{
+			if (command.getName().equalsIgnoreCase(name))
+			{
+				return command;
+			}
+		}
+
+		return null;
 	}
 }
