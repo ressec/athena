@@ -75,7 +75,7 @@ public class CommandParameterMetadata implements ICommandParameterMetadata
 	 * Collection of examples.
 	 */
 	@Getter
-	@XStreamImplicit(itemFieldName = "example")
+	//@XStreamImplicit(itemFieldName = "example")
 	private List<String> examples;
 
 	/**

@@ -59,7 +59,7 @@ public abstract class AbstractTerminal implements Runnable
 	 * Initial command prompt.
 	 */
 	@SuppressWarnings("nls")
-	private final static String PROMPT = "Command (unregistered):>";
+	private final static String PROMPT = "Command (unregistered):> ";
 
 	/**
 	 * Current command prompt.

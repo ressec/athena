@@ -81,6 +81,7 @@ public final class XmlCommandFile extends XmlFile<Header, ICommandMetadata, Foot
 		getEngine().alias("command", ICommandMetadata.class, CommandMetadata.class);
 		getEngine().alias("parameter", ICommandParameterMetadata.class, CommandParameterMetadata.class);
 		getEngine().alias("alias", String.class, String.class);
+		getEngine().alias("example", String.class, String.class);
 	}
 
 	@Override
