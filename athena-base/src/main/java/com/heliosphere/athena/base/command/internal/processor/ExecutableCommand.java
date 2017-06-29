@@ -13,21 +13,31 @@ package com.heliosphere.athena.base.command.internal.processor;
 
 import com.heliosphere.athena.base.command.internal.ICommand;
 import com.heliosphere.athena.base.command.internal.exception.CommandException;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandProtocolType;
+import com.heliosphere.athena.base.terminal.CommandTerminal;
 
 /**
- * Provides a basic behavior for a command processor.
+ * Provides a basic behavior for an executable command. An executable command can be
+ * automatically executed by a command coordinator.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ICommandProcessor
+public interface ExecutableCommand
 {
+	/**
+	 * Returns the command protocol type.
+	 * <hr>
+	 * @return Command protocol type.
+	 */
+	Enum<? extends ICommandProtocolType> getProtocolType();
+
 	/**
 	 * Executes the given command.
 	 * <hr>
+	 * @param terminal Terminal where the result of the execution of the command should be written.
 	 * @param command Command to execute.
-	 * @return Result.
 	 * @throws CommandException Thrown in case an error occurred while processing the command.
 	 */
-	Object execute(ICommand command) throws CommandException;
+	void execute(CommandTerminal terminal, ICommand command) throws CommandException;
 }

@@ -11,6 +11,7 @@
  */
 package com.heliosphere.athena.base.terminal;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -153,7 +154,7 @@ public final class CommandTerminal extends AbstractTerminal
 				}
 				catch (CommandException e)
 				{
-					getTerminal().println(e.getMessage());
+					printException(e);
 				}
 			}
 
@@ -167,4 +168,15 @@ public final class CommandTerminal extends AbstractTerminal
 			}
 		}
 	}
+
+	@SuppressWarnings("nls")
+	public final void printException(final Exception e)
+	{
+		appendToPane("[error] " + e.getMessage() + "\n", Color.ORANGE);
+	}
+
+	//	public final void printInfo(final ITerminalMessage message)
+	//	{
+	//
+	//	}
 }

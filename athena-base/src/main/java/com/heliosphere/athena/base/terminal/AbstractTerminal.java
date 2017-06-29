@@ -177,12 +177,37 @@ public abstract class AbstractTerminal implements Runnable
 	 * @param color Foreground color to use to write the text.
 	 */
 	@SuppressWarnings({ "nls", "boxing" })
-	protected void appendToPane(final String text, final Color color)
+	public final void appendToPane(final String text, final Color color)
 	{
 		StyleContext sc = StyleContext.getDefaultStyleContext();
 		AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, color);
 
-		aset = sc.addAttribute(aset, StyleConstants.FontFamily, "Menlo");
+		//		aset = sc.addAttribute(aset, StyleConstants.FontFamily, "Menlo Regular");
+		//		aset = sc.addAttribute(aset, StyleConstants.FontSize, 12);
+		aset = sc.addAttribute(aset, StyleConstants.Alignment, StyleConstants.ALIGN_LEFT);
+
+		int len = io.getTextPane().getDocument().getLength();
+		io.getTextPane().setCaretPosition(len);
+		io.getTextPane().setCharacterAttributes(aset, false);
+		io.getTextPane().replaceSelection(text);
+	}
+
+	/**
+	 * Appends some styled text to the text pane.
+	 * <hr>
+	 * @param text Text to be written to the console.
+	 * @param color Foreground color to use to write the text.
+	 * @param fontFamily Font family.
+	 * @param fontSize Font size.
+	 */
+	@SuppressWarnings("boxing")
+	public final void appendToPane(final String text, final Color color, final String fontFamily, final int fontSize)
+	{
+		StyleContext sc = StyleContext.getDefaultStyleContext();
+		AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, color);
+
+		aset = sc.addAttribute(aset, StyleConstants.FontFamily, fontFamily);
+		aset = sc.addAttribute(aset, StyleConstants.FontSize, fontSize);
 		aset = sc.addAttribute(aset, StyleConstants.Alignment, StyleConstants.ALIGN_LEFT);
 
 		int len = io.getTextPane().getDocument().getLength();
