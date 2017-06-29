@@ -11,9 +11,18 @@
  */
 package com.heliosphere.athena.base.terminal;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.heliosphere.athena.base.command.file.xml.XmlCommandFile;
 import com.heliosphere.athena.base.command.internal.ICommand;
+import com.heliosphere.athena.base.command.internal.ICommandListener;
+import com.heliosphere.athena.base.command.internal.exception.CommandException;
+import com.heliosphere.athena.base.command.internal.interpreter.ICommandInterpreter;
+import com.heliosphere.athena.base.command.interpreter.CommandInterpreter;
 import com.heliosphere.athena.base.file.internal.FileException;
 
+import jline.Terminal;
 import lombok.NonNull;
 
 /**
@@ -23,18 +32,139 @@ import lombok.NonNull;
  * @version 1.0.0
  * @see ICommand
  */
-public class CommandTerminal extends AbstractTerminal
+public final class CommandTerminal extends AbstractTerminal
 {
+	/**
+	 * Initial command prompt.
+	 */
+	@SuppressWarnings("nls")
+	private final static String PROMPT = "Command (unregistered):> ";
+
+	/**
+	 * Current command prompt.
+	 */
+	private String prompt = PROMPT;
+
+	/**
+	 * Command listeners.
+	 */
+	private List<ICommandListener> listeners = new ArrayList<>();
+
+	/**
+	 * Text entered on the console.
+	 */
+	protected String text = null;
+
+	/**
+	 * Command interpreter.
+	 */
+	protected ICommandInterpreter interpreter = null;
+
 	/**
 	 * Creates a new basic terminal given the path name of an XMl file containing commands to register.
 	 * <hr>
-	 * @param name Terminal's session name. 
-	 * @param terminalConfigurationFilename Terminal configuration file name. 
+	 * @param name Terminal's window title. 
+	 * @param config Terminal configuration file name. 
 	 * @param commandFilename XML path name containing the commands to register. 
 	 * @throws FileException In case an error occurred while trying to access the file.
 	 */
-	public CommandTerminal(final @NonNull String name, final @NonNull String terminalConfigurationFilename, final @NonNull String commandFilename) throws FileException
+	public CommandTerminal(final @NonNull String name, final @NonNull String config, final @NonNull String commandFilename) throws FileException
 	{
-		super(name, terminalConfigurationFilename, commandFilename);
+		super(name, config);
+
+		interpreter = new CommandInterpreter();
+
+		registerCommands(commandFilename);
+	}
+
+	/**
+	 * Returns the command interpreter used by this {@link Terminal}.
+	 * <hr>
+	 * @return {@link ICommandInterpreter}. 
+	 */
+	public final ICommandInterpreter getInterpreter()
+	{
+		return interpreter;
+	}
+
+	/**
+	 * Adds a command listener.
+	 * <hr>
+	 * @param listener Command listener to add.
+	 */
+	public final void registerListener(final @NonNull ICommandListener listener)
+	{
+		listeners.add(listener);
+	}
+
+	/**
+	 * Registers a set of command metadata (definitions) contained in a {@code XML} file.
+	 * <hr>
+	 * @param pathname XML command file path name.
+	 * @throws FileException Thrown in case an error occurred while trying to access the file.
+	 */
+	public final void registerCommands(final @NonNull String pathname) throws FileException
+	{
+		XmlCommandFile file = new XmlCommandFile(pathname);
+		file.load();
+		interpreter.registerCommands(file.getContent());
+	}
+
+	/**
+	 * Processes a command.
+	 * <hr>
+	 * @param command Command to process.
+	 */
+	public final void process(final ICommand command)
+	{
+		for (ICommandListener listener : listeners)
+		{
+			listener.onCommand(command);
+		}
+	}
+
+	/**
+	 * Sets the new command prompt.
+	 * <hr>
+	 * @param prompt Command prompt to set.
+	 */
+	public final void setPrompt(final @NonNull String prompt)
+	{
+		this.prompt = prompt;
+	}
+
+	@SuppressWarnings("nls")
+	@Override
+	public final void run()
+	{
+		ICommand command = null;
+
+		while (status != TerminalStatusType.STOPPED)
+		{
+			if (status == TerminalStatusType.RUNNING)
+			{
+				io.print(prompt);
+				text = io.read(false);
+
+				try
+				{
+					command = interpreter.interpret(text);
+					process(command);
+				}
+				catch (CommandException e)
+				{
+					getTerminal().println(e.getMessage());
+				}
+			}
+
+			try
+			{
+				Thread.sleep(WAIT_INTERVAL); // Value is expressed in milliseconds.
+			}
+			catch (InterruptedException e)
+			{
+				getTerminal().println("Terminal interrupted!");
+			}
+		}
 	}
 }
