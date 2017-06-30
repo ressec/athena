@@ -11,44 +11,33 @@
  */
 package com.heliosphere.athena.base.terminal;
 
+import java.awt.Color;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
+
+import javax.swing.text.AttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
 
 import org.beryx.textio.TextTerminal;
 import org.beryx.textio.swing.SwingTextTerminal;
 
-import com.heliosphere.athena.base.command.file.xml.XmlCommandFile;
-import com.heliosphere.athena.base.command.internal.ICommand;
-import com.heliosphere.athena.base.command.internal.ICommandListener;
-import com.heliosphere.athena.base.command.internal.exception.CommandException;
-import com.heliosphere.athena.base.command.internal.interpreter.ICommandInterpreter;
-import com.heliosphere.athena.base.command.interpreter.CommandInterpreter;
 import com.heliosphere.athena.base.file.internal.FileException;
 import com.heliosphere.athena.base.file.internal.resource.IResource;
 import com.heliosphere.athena.base.file.internal.resource.Resource;
 
-import jline.Terminal;
-import lombok.NonNull;
-
-/**
- * Provides an abstract implementation of a terminal (a console being able to process commands) based on {@code Text IO}.
- * <hr>
- * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
- * @version 1.0.0
- */
 public abstract class AbstractTerminal implements Runnable
 {
 	/**
 	 * Terminal state.
 	 */
-	private TerminalStatusType status = TerminalStatusType.UNKNOWN;
+	protected TerminalStatusType status = TerminalStatusType.UNKNOWN;
 
 	/**
 	 * Wait interval.
 	 */
-	private static volatile int WAIT_INTERVAL = 100;
+	protected static volatile int WAIT_INTERVAL = 100;
 
 	/**
 	 * Terminal thread.
@@ -56,59 +45,31 @@ public abstract class AbstractTerminal implements Runnable
 	private volatile Thread thread = null;
 
 	/**
-	 * Initial command prompt.
-	 */
-	@SuppressWarnings("nls")
-	private final static String PROMPT = "Command (unregistered):> ";
-
-	/**
-	 * Current command prompt.
-	 */
-	private String prompt = PROMPT;
-
-	/**
-	 * Command listeners.
-	 */
-	private List<ICommandListener> listeners = new ArrayList<>();
-
-	/**
 	 * Text IO entry point.
 	 */
 	protected SwingTextTerminal io = null;
 
 	/**
-	 * Text entered on the console.
-	 */
-	protected String text = null;
-
-	/**
-	 * Command interpreter.
-	 */
-	protected ICommandInterpreter interpreter = null;
-
-	/**
 	 * Creates a new abstract terminal.
 	 */
-	public AbstractTerminal()
+	private AbstractTerminal()
 	{
 		io = new SwingTextTerminal();
-		interpreter = new CommandInterpreter();
 	}
 
 	/**
-	 * Creates a new abstract terminal and registers a set of commands given a {@code XML file}.
+	 * Creates a new abstract terminal.
 	 * <hr>
-	 * @param name Terminal's session name.
-	 * @param terminalConfigurationFilename Terminal configuration file name.
-	 * @param commandFilename XML file path and name containing the command definitions.
+	 * @param name Terminal's window title.
+	 * @param config Terminal configuration file name.
 	 * @throws FileException Thrown in case an error occurred while trying to access the file.
 	 */
-	public AbstractTerminal(String name, String terminalConfigurationFilename, String commandFilename) throws FileException
+	public AbstractTerminal(String name, String config) throws FileException
 	{
 		this();
 
 		Properties properties = new Properties();
-		IResource resource = new Resource(terminalConfigurationFilename);
+		IResource resource = new Resource(config);
 
 		try (FileInputStream input = new FileInputStream(resource.getFile()))
 		{
@@ -120,110 +81,16 @@ public abstract class AbstractTerminal implements Runnable
 		{
 			throw new FileException(e);
 		}
-
-		registerCommands(commandFilename);
 	}
 
 	/**
-	 * Returns the underlying text terminal.
+	 * Returns the terminal's thread status.
 	 * <hr>
-	 * @return Text terminal.
+	 * @return Status.
 	 */
-	@SuppressWarnings("rawtypes")
-	public final TextTerminal getTerminal()
+	public final TerminalStatusType getStatus()
 	{
-		return io;
-	}
-
-	/**
-	 * Returns the command interpreter used by this {@link Terminal}.
-	 * <hr>
-	 * @return {@link ICommandInterpreter}. 
-	 */
-	public final ICommandInterpreter getInterpreter()
-	{
-		return interpreter;
-	}
-
-	/**
-	 * Adds a command listener.
-	 * <hr>
-	 * @param listener Command listener to add.
-	 */
-	public final void registerListener(final @NonNull ICommandListener listener)
-	{
-		listeners.add(listener);
-	}
-
-	/**
-	 * Registers a set of command metadata (definitions) contained in a {@code XML} file.
-	 * <hr>
-	 * @param pathname XML command file path name.
-	 * @throws FileException Thrown in case an error occurred while trying to access the file.
-	 */
-	public final void registerCommands(final @NonNull String pathname) throws FileException
-	{
-		XmlCommandFile file = new XmlCommandFile(pathname);
-		file.load();
-		interpreter.registerCommands(file.getContent());
-	}
-
-	/**
-	 * Processes a command.
-	 * <hr>
-	 * @param command Command to process.
-	 */
-	public final void process(final ICommand command)
-	{
-		for (ICommandListener listener : listeners)
-		{
-			listener.onCommand(command);
-		}
-	}
-
-	/**
-	 * Sets the new command prompt.
-	 * <hr>
-	 * @param prompt Command prompt to set.
-	 */
-	public final void setPrompt(final @NonNull String prompt)
-	{
-		this.prompt = prompt;
-	}
-
-	@SuppressWarnings("nls")
-	@Override
-	public final void run()
-	{
-		ICommand command = null;
-
-		while (status != TerminalStatusType.STOPPED)
-		{
-			if (status == TerminalStatusType.RUNNING)
-			{
-				io.print(prompt);
-				text = io.read(false);
-
-				try
-				{
-					command = interpreter.interpret(text);
-					process(command);
-				}
-				catch (CommandException e)
-				{
-					getTerminal().println(e.getMessage());
-				}
-			}
-
-			try
-			{
-				Thread.sleep(WAIT_INTERVAL); // Value is expressed in milliseconds.
-			}
-			catch (InterruptedException e)
-			{
-				getTerminal().println("Terminal interrupted!");
-			}
-		}
+		return status;
 	}
 
 	/**
@@ -270,5 +137,82 @@ public abstract class AbstractTerminal implements Runnable
 		{
 			status = TerminalStatusType.PAUSED;
 		}
+	}
+
+	/**
+	 * Returns the underlying text terminal.
+	 * <hr>
+	 * @return Text terminal.
+	 */
+	@SuppressWarnings("rawtypes")
+	public final TextTerminal getTerminal()
+	{
+		return io;
+	}
+
+	/**
+	 * Sets the terminal title.
+	 * <hr>
+	 * @param title Title to set.
+	 */
+	public final void setTitle(final String title)
+	{
+		io.getFrame().setTitle(title);
+	}
+
+	/**
+	 * Sets the background color.
+	 * <hr>
+	 * @param color Background color to set.
+	 */
+	public final void setBackgroundColor(final Color color)
+	{
+		io.getFrame().setBackground(color);
+	}
+
+	/**
+	 * Appends some styled text to the text pane.
+	 * <hr>
+	 * @param text Text to be written to the console.
+	 * @param color Foreground color to use to write the text.
+	 */
+	@SuppressWarnings({ "nls", "boxing" })
+	public final void appendToPane(final String text, final Color color)
+	{
+		StyleContext sc = StyleContext.getDefaultStyleContext();
+		AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, color);
+
+		//		aset = sc.addAttribute(aset, StyleConstants.FontFamily, "Menlo Regular");
+		//		aset = sc.addAttribute(aset, StyleConstants.FontSize, 12);
+		aset = sc.addAttribute(aset, StyleConstants.Alignment, StyleConstants.ALIGN_LEFT);
+
+		int len = io.getTextPane().getDocument().getLength();
+		io.getTextPane().setCaretPosition(len);
+		io.getTextPane().setCharacterAttributes(aset, false);
+		io.getTextPane().replaceSelection(text);
+	}
+
+	/**
+	 * Appends some styled text to the text pane.
+	 * <hr>
+	 * @param text Text to be written to the console.
+	 * @param color Foreground color to use to write the text.
+	 * @param fontFamily Font family.
+	 * @param fontSize Font size.
+	 */
+	@SuppressWarnings("boxing")
+	public final void appendToPane(final String text, final Color color, final String fontFamily, final int fontSize)
+	{
+		StyleContext sc = StyleContext.getDefaultStyleContext();
+		AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, color);
+
+		aset = sc.addAttribute(aset, StyleConstants.FontFamily, fontFamily);
+		aset = sc.addAttribute(aset, StyleConstants.FontSize, fontSize);
+		aset = sc.addAttribute(aset, StyleConstants.Alignment, StyleConstants.ALIGN_LEFT);
+
+		int len = io.getTextPane().getDocument().getLength();
+		io.getTextPane().setCaretPosition(len);
+		io.getTextPane().setCharacterAttributes(aset, false);
+		io.getTextPane().replaceSelection(text);
 	}
 }

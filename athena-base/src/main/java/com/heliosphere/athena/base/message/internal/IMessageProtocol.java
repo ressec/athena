@@ -13,7 +13,13 @@ package com.heliosphere.athena.base.message.internal;
 
 import java.io.Serializable;
 
+/**
+ * Marker interface for message protocols.
+ * <hr>
+ * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
+ * @version 1.0.0
+ */
 public interface IMessageProtocol extends Serializable
 {
-	// Marker interface.
+	// Empty.
 }

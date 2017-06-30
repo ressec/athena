@@ -11,7 +11,7 @@
  */
 package com.heliosphere.athena.base.command.processor;
 
-import java.util.ArrayList;
+import java.awt.Color;
 import java.util.List;
 
 import com.heliosphere.athena.base.command.internal.ICommand;
@@ -19,10 +19,11 @@ import com.heliosphere.athena.base.command.internal.ICommandMetadata;
 import com.heliosphere.athena.base.command.internal.ICommandParameter;
 import com.heliosphere.athena.base.command.internal.ICommandParameterMetadata;
 import com.heliosphere.athena.base.command.internal.exception.CommandException;
-import com.heliosphere.athena.base.command.internal.processor.AbstractCommandProcessor;
+import com.heliosphere.athena.base.command.internal.processor.ExecutableCommand;
 import com.heliosphere.athena.base.command.internal.protocol.ICommandCategoryType;
-import com.heliosphere.athena.base.command.internal.protocol.ICommandCodeType;
-import com.heliosphere.athena.base.command.protocol.DefaultCommandCodeType;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandProtocolType;
+import com.heliosphere.athena.base.command.protocol.DefaultCommandProtocol;
+import com.heliosphere.athena.base.terminal.CommandTerminal;
 
 /**
  * Provides a concrete implementation for the standard {@code Help} command.
@@ -30,17 +31,12 @@ import com.heliosphere.athena.base.command.protocol.DefaultCommandCodeType;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public final class HelpCommandProcessor extends AbstractCommandProcessor
+public final class HelpCommandProcessor implements ExecutableCommand
 {
 	/**
-	 * Command code type.
+	 * Command protocol type.
 	 */
-	public final static Enum<? extends ICommandCodeType> COMMAND_TYPE = DefaultCommandCodeType.HELP;
-
-	/**
-	 * Command code type.
-	 */
-	private Enum<? extends ICommandCodeType> type;
+	public final static Enum<? extends ICommandProtocolType> COMMAND_PROTOCOL_TYPE = DefaultCommandProtocol.HELP;
 
 	/**
 	 * Command definitions.
@@ -48,68 +44,68 @@ public final class HelpCommandProcessor extends AbstractCommandProcessor
 	private List<ICommandMetadata> definitions;
 
 	/**
-	 * Creates a new command processor for a given command code type.
+	 * Creates a new {@code help }command processor.
 	 * <hr>
-	 * @param type Command type.
-	 * @param definitions Command definitions.
+	 * @param definitions Command definitions (generally registered by a command interpreter).
 	 */
-	public HelpCommandProcessor(final Enum<? extends ICommandCodeType> type, final List<ICommandMetadata> definitions)
+	public HelpCommandProcessor(final List<ICommandMetadata> definitions)
 	{
-		this.type = type;
 		this.definitions = definitions;
 	}
 
 	@SuppressWarnings("nls")
 	@Override
-	public final Object execute(final ICommand command) throws CommandException
+	public final void execute(final CommandTerminal terminal, final ICommand command) throws CommandException
 	{
 		if (command != null)
 		{
 			if (command.getParameters() == null)
 			{
-				return extractAllCommands(command);
+				extractHelpForAllCommands(command, terminal);
+				return;
 			}
 
 			for (ICommandParameter parameter : command.getParameters())
 			{
 				if (parameter.getMetadata().getName().equals("category"))
 				{
-					return extractCommandCategories(command);
+					extractCommandCategories(command, terminal);
 				}
-				if (parameter.getMetadata().getName().equals("set"))
+				else if (parameter.getMetadata().getName().equals("set"))
 				{
-					return extractCommandsForCategory(command);
+					extractCommandsForCategory(command, terminal);
 				}
-				if (parameter.getMetadata().getName().equals("name"))
+				else if (parameter.getMetadata().getName().equals("name"))
 				{
-					return extractCommandHelp(command);
+					extractCommandHelp(command, terminal);
 				}
 			}
 		}
-
-		return "Unable to process the command!";
+		else
+		{
+			terminal.appendToPane("Command cannot be null!\n", Color.ORANGE);
+		}
 	}
 
 	/**
-	 * 
-	 * @param command
-	 * @return
+	 * Extract the 'help' for all registered commands.
+	 * <hr>
+	 * @param command {@code Help} command.
+	 * @param terminal Terminal where the output of the help command as to be written.
 	 */
 	@SuppressWarnings("nls")
-	private final List<String> extractAllCommands(final ICommand command)
+	private final void extractHelpForAllCommands(final ICommand command, final CommandTerminal terminal)
 	{
-		List<String> results = new ArrayList<>();
-
-		results.add(" ");
-		results.add("Available commands are:");
+		terminal.getTerminal().println();
+		terminal.appendToPane("Available commands are: \n", Color.LIGHT_GRAY);
 		for (ICommandMetadata metadata : definitions)
 		{
-			results.add(String.format(" %1$-12s %2$s", metadata.getName(), metadata.getDescription()));
+			terminal.appendToPane(" [", Color.LIGHT_GRAY);
+			terminal.appendToPane(String.format("%1$-15s", metadata.getName()), Color.ORANGE);
+			terminal.appendToPane("] ", Color.LIGHT_GRAY);
+			terminal.appendToPane(metadata.getDescription() + "\n", Color.WHITE);
 		}
-
-		results.add("\r\n");
-
-		return results;
+		terminal.getTerminal().println();
 	}
 
 	/**
@@ -118,21 +114,19 @@ public final class HelpCommandProcessor extends AbstractCommandProcessor
 	 * @return
 	 */
 	@SuppressWarnings("nls")
-	private final List<String> extractCommandCategories(final ICommand command)
+	private final void extractCommandCategories(final ICommand command, final CommandTerminal terminal)
 	{
-		List<String> results = new ArrayList<>();
-
-		results.add(" ");
-		results.add("Command categories are:");
+		terminal.getTerminal().println();
+		terminal.appendToPane("Available command categories are: \n", Color.LIGHT_GRAY);
 		Enum<?>[] enums = command.getMetadata().getProtocolCategory().getDeclaringClass().getEnumConstants();
 		for (int i = 0; i < enums.length; i++)
 		{
-			results.add(String.format(" %1s %2s", ((ICommandCategoryType) enums[i]).getPrefix(), enums[i].name()));
+			terminal.appendToPane(" [", Color.LIGHT_GRAY);
+			terminal.appendToPane(((ICommandCategoryType) enums[i]).getPrefix(), Color.ORANGE);
+			terminal.appendToPane("] ", Color.LIGHT_GRAY);
+			terminal.appendToPane(enums[i].name() + "\n", Color.WHITE);
 		}
-
-		results.add("\r\n");
-
-		return results;
+		terminal.getTerminal().println();
 	}
 
 	/**
@@ -140,87 +134,86 @@ public final class HelpCommandProcessor extends AbstractCommandProcessor
 	 * @param command
 	 * @return
 	 */
-	private final List<String> extractCommandsForCategory(final ICommand command)
+	private final void extractCommandsForCategory(final ICommand command, final CommandTerminal terminal)
 	{
-		List<String> results = new ArrayList<>();
-
-		//TODO Implement!
-
-		results.add("\r\n");
-
-		return results;
 	}
 
 	/**
 	 * Returns the detailed help for the given command.
 	 * <hr>
-	 * @param command {@link ICommand}.
-	 * @return List of text lines composing the detailed help for the command.
+	 * @param command {@link ICommand} to execute.
+	 * @param terminal Terminal where the output should be written.
 	 */
 	@SuppressWarnings("nls")
-	private final List<String> extractCommandHelp(final ICommand command)
+	private final void extractCommandHelp(final ICommand command, final CommandTerminal terminal)
 	{
-		List<String> results = new ArrayList<>();
 		ICommandMetadata other = null;
 
 		other = getCommandDefinitionByName((String) command.getParameter("name").getValue());
 		if (other != null)
 		{
-			results.add(" ");
-			results.add(String.format("Help on command '%1s': %2s", other.getName(), other.getDescription()));
-			results.add(" ");
+			terminal.appendToPane(" \n", Color.WHITE);
+			terminal.appendToPane("-------------------- \n", Color.GREEN);
+
+			terminal.appendToPane("Help on command: '", Color.WHITE);
+			terminal.appendToPane(other.getName(), Color.YELLOW);
+			terminal.appendToPane("' - ", Color.WHITE);
+			terminal.appendToPane(other.getDescription() + "\n", Color.CYAN);
+
+			terminal.appendToPane(" \n", Color.WHITE);
 
 			// Aliases.
 			if (!other.getAliases().isEmpty())
 			{
-				results.add("Aliases:");
+				terminal.appendToPane("Aliases:\n", Color.WHITE);
 				for (String alias : other.getAliases())
 				{
-					results.add("|   " + alias);
+					terminal.appendToPane("|   ", Color.WHITE);
+					terminal.appendToPane(alias + "\n", Color.YELLOW);
 				}
 			}
 			else
 			{
-				results.add("No alias defined!");
+				terminal.appendToPane("No alias defined!\n", Color.WHITE);
 			}
-
-			results.add(" ");
 
 			// Parameters.
 			if (!other.getParameters().isEmpty())
 			{
-				results.add("Parameters:");
+				terminal.appendToPane("Parameters:\n", Color.WHITE);
 				for (ICommandParameterMetadata parameter : other.getParameters())
 				{
-					results.add(" - '" + parameter.getName() + "' " + parameter.getDescription());
-					results.add(" |__ RegExp   : " + parameter.getRegExp());
+					terminal.appendToPane(" - '", Color.WHITE);
+					terminal.appendToPane(parameter.getName(), Color.YELLOW);
+					terminal.appendToPane("' - ", Color.WHITE);
+					terminal.appendToPane(parameter.getDescription() + "\n", Color.CYAN);
+					terminal.appendToPane(" |__ RegExp   : ", Color.WHITE);
+					terminal.appendToPane(parameter.getRegExp() + "\n", Color.YELLOW);
 
 					// Examples.
 					if (parameter.getExamples() != null && !parameter.getExamples().isEmpty())
 					{
-						results.add(" |__ Examples : ");
+						terminal.appendToPane(" |__ Examples :\n", Color.WHITE);
 						for (String example : parameter.getExamples())
 						{
-							results.add("     |_ " + example);
+							terminal.appendToPane("     |_ ", Color.WHITE);
+							terminal.appendToPane(example + "\n", Color.YELLOW);
 						}
 					}
 					else
 					{
-						results.add(" |__ No example defined!");
+						terminal.appendToPane(" |__ No example defined!\n", Color.WHITE);
 					}
-
-					results.add(" ");
 				}
 			}
 			else
 			{
-				results.add("No parameter defined!");
+				terminal.appendToPane("No parmater defined!\n", Color.WHITE);
 			}
 
-			results.add("\r\n");
+			terminal.appendToPane("-------------------- \n", Color.GREEN);
+			terminal.appendToPane(" \n", Color.WHITE);
 		}
-
-		return results;
 	}
 
 	/**
@@ -240,5 +233,11 @@ public final class HelpCommandProcessor extends AbstractCommandProcessor
 		}
 
 		return null;
+	}
+
+	@Override
+	public final Enum<? extends ICommandProtocolType> getProtocolType()
+	{
+		return COMMAND_PROTOCOL_TYPE;
 	}
 }

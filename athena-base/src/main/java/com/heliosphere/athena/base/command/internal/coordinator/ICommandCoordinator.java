@@ -11,15 +11,25 @@
  */
 package com.heliosphere.athena.base.command.internal.coordinator;
 
+import com.heliosphere.athena.base.command.internal.ICommand;
+import com.heliosphere.athena.base.command.internal.ICommandMetadata;
+import com.heliosphere.athena.base.command.internal.exception.CommandNotFoundException;
 import com.heliosphere.athena.base.command.internal.interpreter.ICommandInterpreter;
-import com.heliosphere.athena.base.command.internal.processor.ICommandProcessor;
+import com.heliosphere.athena.base.command.internal.processor.ExecutableCommand;
 import com.heliosphere.athena.base.command.internal.protocol.ICommandProtocolType;
 
 /**
  * Provides a basic behavior for a command coordinator.
+ * <p>
+ * A command coordinator is an entity which is responsible to automate the execution of some pre-defined commands
+ * when issued on a terminal through a command processor.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
+ * @see ICommandMetadata
+ * @see ExecutableCommand
+ * @see ICommandInterpreter
+ * @see ITerminal
  */
 public interface ICommandCoordinator
 {
@@ -31,10 +41,20 @@ public interface ICommandCoordinator
 	ICommandInterpreter getCommandInterpreter();
 
 	/**
+	 * Executes a command execution.
+	 * <hr>
+	 * @param command Command to execute.
+	 * @throws CommandNotFoundException Thrown to indicate the command coordinator has not been able to execute the command
+	 * because its definition has not been found (For example: command definition not registered by the command coordinator).
+	 * <br> In such a case, it's the responsibility of the caller to handle the execution of this command. 
+	 */
+	void execute(ICommand command) throws CommandNotFoundException;
+
+	/**
 	 * Registers a new command processor.
 	 * <hr>
 	 * @param type Command protocol type.
 	 * @param processor Command processor to register for the command type.
 	 */
-	void registerProcessor(Enum<? extends ICommandProtocolType> type, ICommandProcessor processor);
+	void registerExecutable(Enum<? extends ICommandProtocolType> type, ExecutableCommand processor);
 }
