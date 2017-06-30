@@ -16,7 +16,6 @@ import com.heliosphere.athena.base.command.internal.ICommandMetadata;
 import com.heliosphere.athena.base.command.internal.exception.CommandNotFoundException;
 import com.heliosphere.athena.base.command.internal.interpreter.ICommandInterpreter;
 import com.heliosphere.athena.base.command.internal.processor.ExecutableCommand;
-import com.heliosphere.athena.base.command.internal.protocol.ICommandProtocolType;
 
 /**
  * Provides a basic behavior for a command coordinator.
@@ -53,8 +52,7 @@ public interface ICommandCoordinator
 	/**
 	 * Registers a new command processor.
 	 * <hr>
-	 * @param type Command protocol type.
 	 * @param processor Command processor to register for the command type.
 	 */
-	void registerExecutable(Enum<? extends ICommandProtocolType> type, ExecutableCommand processor);
+	void registerExecutable(ExecutableCommand processor);
 }

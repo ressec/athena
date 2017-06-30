@@ -19,6 +19,9 @@ import com.heliosphere.athena.base.command.internal.exception.CommandException;
 
 /**
  * Provides a basic behavior for a command interpreter.
+ * <p>
+ * A command interpreter is responsible to register some command definitions and
+ * then to interpret and convert text entered by the end-user as commands.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0

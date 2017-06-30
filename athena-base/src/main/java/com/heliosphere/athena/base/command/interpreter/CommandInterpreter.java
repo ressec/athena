@@ -12,13 +12,11 @@
 package com.heliosphere.athena.base.command.interpreter;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import com.heliosphere.athena.base.command.Command;
 import com.heliosphere.athena.base.command.CommandParameter;
@@ -36,7 +34,8 @@ import lombok.NonNull;
 import lombok.extern.log4j.Log4j;
 
 /**
- * Represents a command interpreter that is responsible to interpret a text entered on a command-line or a terminal and transform it to a command.
+ * Represents a command interpreter that is responsible to interpret a text entered on a command-line 
+ * or a terminal and transform it to a command.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Resse Christophe - Heliosphere</a>
  * @version 1.0.0

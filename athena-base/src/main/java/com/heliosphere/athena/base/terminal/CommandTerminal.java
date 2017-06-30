@@ -18,7 +18,10 @@ import java.util.List;
 import com.heliosphere.athena.base.command.file.xml.XmlCommandFile;
 import com.heliosphere.athena.base.command.internal.ICommand;
 import com.heliosphere.athena.base.command.internal.ICommandListener;
+import com.heliosphere.athena.base.command.internal.coordinator.CommandCoordinator;
+import com.heliosphere.athena.base.command.internal.coordinator.ICommandCoordinator;
 import com.heliosphere.athena.base.command.internal.exception.CommandException;
+import com.heliosphere.athena.base.command.internal.exception.CommandNotFoundException;
 import com.heliosphere.athena.base.command.internal.interpreter.ICommandInterpreter;
 import com.heliosphere.athena.base.command.interpreter.CommandInterpreter;
 import com.heliosphere.athena.base.file.internal.FileException;
@@ -39,7 +42,7 @@ public final class CommandTerminal extends AbstractTerminal
 	 * Initial command prompt.
 	 */
 	@SuppressWarnings("nls")
-	private final static String PROMPT = "Command (unregistered):> ";
+	private final static String PROMPT = "(unregistered):> ";
 
 	/**
 	 * Current command prompt.
@@ -62,6 +65,11 @@ public final class CommandTerminal extends AbstractTerminal
 	protected ICommandInterpreter interpreter = null;
 
 	/**
+	 * Command coordinator.
+	 */
+	protected ICommandCoordinator coordinator = null;
+
+	/**
 	 * Creates a new basic terminal given the path name of an XMl file containing commands to register.
 	 * <hr>
 	 * @param name Terminal's window title. 
@@ -74,8 +82,9 @@ public final class CommandTerminal extends AbstractTerminal
 		super(name, config);
 
 		interpreter = new CommandInterpreter();
-
 		registerCommands(commandFilename);
+
+		coordinator = new CommandCoordinator(this);
 	}
 
 	/**
@@ -86,6 +95,16 @@ public final class CommandTerminal extends AbstractTerminal
 	public final ICommandInterpreter getInterpreter()
 	{
 		return interpreter;
+	}
+
+	/**
+	 * Returns the command coordinator used by this {@link Terminal}.
+	 * <hr>
+	 * @return {@link ICommandCoordinator}. 
+	 */
+	public final ICommandCoordinator getCoordinator()
+	{
+		return coordinator;
 	}
 
 	/**
@@ -116,11 +135,21 @@ public final class CommandTerminal extends AbstractTerminal
 	 * <hr>
 	 * @param command Command to process.
 	 */
+	@SuppressWarnings("unused")
 	public final void process(final ICommand command)
 	{
-		for (ICommandListener listener : listeners)
+		try
 		{
-			listener.onCommand(command);
+			// Does the command can be executed by the command coordinator?
+			coordinator.execute(command);
+		}
+		catch (CommandNotFoundException e)
+		{
+			// No, then delegates the execution to a registered listener.
+			for (ICommandListener listener : listeners)
+			{
+				listener.onCommand(command);
+			}
 		}
 	}
 
