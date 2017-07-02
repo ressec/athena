@@ -314,7 +314,7 @@ public final class CommandInterpreter implements ICommandInterpreter
 		if (definition != null)
 		{
 			List<ICommandParameter> parameters = extractParameters(definition);
-			if (definition.getParameters().size() > 0 && parameters.size() == 0)
+			if (definition.getParameters().size() > 0 && parameters.size() == 0 && protocol == null)
 			{
 				throw new CommandException("Unable to interpret command from: " + text);
 			}
