@@ -20,7 +20,9 @@ import com.heliosphere.athena.base.command.internal.ICommandMetadata;
 import com.heliosphere.athena.base.command.internal.ICommandParameterMetadata;
 import com.heliosphere.athena.base.command.internal.exception.CommandInitializationException;
 import com.heliosphere.athena.base.command.internal.protocol.ICommandCategoryType;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandDomainType;
 import com.heliosphere.athena.base.command.internal.protocol.ICommandGroupType;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandProtocolType;
 import com.heliosphere.athena.base.file.internal.AbstractStructuredFile;
 import com.heliosphere.athena.base.file.internal.FileException;
 import com.heliosphere.athena.base.file.xml.Footer;
@@ -94,10 +96,6 @@ public final class XmlCommandFile extends XmlFile<Header, ICommandMetadata, Foot
 			try
 			{
 				command.initialize();
-//				command.setProtocolCategoryClassName(getHeader().getProtocolCommandCategory());
-//				command.setProtocolGroupClassName(getHeader().getProtocolCommandGroup());
-//				command.setProtocolCodeClassName(getHeader().getProtocolCommandCode());
-//				command.setProtocolMessageClassName(getHeader().getProtocolMessage());
 			}
 			catch (CommandInitializationException e)
 			{
@@ -118,7 +116,7 @@ public final class XmlCommandFile extends XmlFile<Header, ICommandMetadata, Foot
 
 		for (ICommandMetadata command : getContent())
 		{
-			if (command.getProtocolCategory() == category)
+			if (((ICommandProtocolType) command.getProtocolType()).getCategory() == category)
 			{
 				result.add(command);
 			}
@@ -129,6 +127,7 @@ public final class XmlCommandFile extends XmlFile<Header, ICommandMetadata, Foot
 
 	/**
 	 * Finds commands matching the given command group.
+	 * <hr>
 	 * @param group Command group.
 	 * @return List of commands.
 	 */
@@ -138,7 +137,28 @@ public final class XmlCommandFile extends XmlFile<Header, ICommandMetadata, Foot
 
 		for (ICommandMetadata command : getContent())
 		{
-			if (command.getProtocolGroup() == group)
+			if (((ICommandProtocolType) command.getProtocolType()).getGroup() == group)
+			{
+				result.add(command);
+			}
+		}
+
+		return result;
+	}
+
+	/**
+	 * Finds commands matching the given command domain.
+	 * <hr>
+	 * @param domain Command domain.
+	 * @return List of commands.
+	 */
+	public final List<ICommandMetadata> findByDomain(final @NonNull Enum<? extends ICommandDomainType> domain)
+	{
+		List<ICommandMetadata> result = new ArrayList<>();
+
+		for (ICommandMetadata command : getContent())
+		{
+			if (((ICommandProtocolType) command.getProtocolType()).getDomain() == domain)
 			{
 				result.add(command);
 			}

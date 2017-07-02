@@ -12,6 +12,7 @@
 package com.heliosphere.athena.base.command.protocol;
 
 import com.heliosphere.athena.base.command.internal.protocol.ICommandCategoryType;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandDomainType;
 import com.heliosphere.athena.base.command.internal.protocol.ICommandGroupType;
 import com.heliosphere.athena.base.command.internal.protocol.ICommandProtocolType;
 import com.heliosphere.athena.base.exception.InvalidArgumentException;
@@ -31,17 +32,17 @@ public enum DefaultCommandProtocol implements ICommandProtocolType
 	/**
 	 * Command: {@code AFK}.
 	 */
-	AFK(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.CHAT),
+	AFK(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.CHAT, DefaultCommandDomainType.APPLICATION),
 
 	/**
 	 * Help command.
 	 */
-	HELP(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM),
+	HELP(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM, DefaultCommandDomainType.APPLICATION),
 
 	/**
 	 * Quit command.
 	 */
-	QUIT(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM);
+	QUIT(DefaultCommandCategoryType.NORMAL, DefaultCommandGroupType.SYSTEM, DefaultCommandDomainType.APPLICATION);
 
 	/**
 	 * Command category type.
@@ -54,15 +55,22 @@ public enum DefaultCommandProtocol implements ICommandProtocolType
 	private final Enum<? extends ICommandGroupType> group;
 
 	/**
+	 * Command domain type.
+	 */
+	private final Enum<? extends ICommandDomainType> domain;
+
+	/**
 	 * Creates a new enumerated value given some values.
 	 * <p>
 	 * @param category Command category type.
 	 * @param group Command group type.
+	 * @param domain Command domain type.
 	 */
-	private DefaultCommandProtocol(final @NonNull Enum<? extends ICommandCategoryType> category, final @NonNull Enum<? extends ICommandGroupType> group)
+	private DefaultCommandProtocol(final @NonNull Enum<? extends ICommandCategoryType> category, final @NonNull Enum<? extends ICommandGroupType> group, final @NonNull Enum<? extends ICommandDomainType> domain)
 	{
 		this.category = category;
 		this.group = group;
+		this.domain = domain;
 	}
 
 	@SuppressWarnings("nls")
@@ -71,7 +79,7 @@ public enum DefaultCommandProtocol implements ICommandProtocolType
 	{
 		if (value == null || value.trim().length() == 0)
 		{
-			throw new InvalidArgumentException("Default command string representation cannot be null or empty!");
+			throw new InvalidArgumentException("Default command type string representation cannot be null or empty!");
 		}
 
 		for (DefaultCommandProtocol element : DefaultCommandProtocol.values())
@@ -95,5 +103,11 @@ public enum DefaultCommandProtocol implements ICommandProtocolType
 	public final Enum<? extends ICommandGroupType> getGroup()
 	{
 		return group;
+	}
+
+	@Override
+	public final Enum<? extends ICommandDomainType> getDomain()
+	{
+		return domain;
 	}
 }

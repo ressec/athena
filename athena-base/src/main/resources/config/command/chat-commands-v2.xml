@@ -1,0 +1,141 @@
+<chat-command-file>
+
+  <header>
+    <company>Heliosphere Ltd.</company>
+    <version>1.0</version>
+    <author>Resse Christophe</author>
+    <description>XML file containing definitions for some chat commands.</description>
+  </header>
+
+  <commands>
+
+    <!-- 
+      COMMAND: 'QUIT' 
+    -->
+    <command>
+
+      <name>quit</name>
+      <description>Quits the client application.</description>
+      <protocol>com.heliosphere.athena.base.command.protocol.DefaultCommandProtocol.QUIT</protocol>
+      <processor></processor> <!-- No implementation provided, it's the responsibility of the application to do its own cleanup before exiting! -->
+      <aliases>
+        <alias>exit</alias>
+      </aliases>
+      <parameters>
+        <!-- No parameter for this command! -->
+      </parameters>
+    </command>
+
+    <!-- 
+      COMMAND: 'HELP' 
+    -->
+    <command>
+      
+      <name>help</name>
+      <description>Display help for commands.</description>
+
+      <!--
+        There are two ways to associate a command definition with a command protocol.
+          1- The command definition is associated with a command protocol (through its 'protocol' tag.
+             In such a case, the whole command will have one implementation even if the command has 
+             several parameters.
+          2- Each command parameter definition is associated with a command protocol. In such a case, 
+             it means that each parameter can have a dedicated implementation.
+      -->
+      <protocol>com.heliosphere.athena.base.command.protocol.DefaultCommandProtocol.HELP</protocol>
+
+      <!--
+        The 'processor' tag is used to set the class name of the implementation of the command.
+        If none is provided, then this tag can be empty. In such a case, the terminal will have to
+        provided a handling for the command.
+      -->
+      <processor>com.heliosphere.athena.base.command.processor.HelpCommandProcessor</processor>
+
+      <!--
+        Set the aliases of the command, generally they correspond to shortcuts.
+      -->
+      <aliases>
+        <alias>h</alias>
+      </aliases>
+
+      <!--
+        List of parameters of the command.
+      -->
+      <parameters>
+
+        <!--
+          PARAMETER: 'CATEGORY'
+        -->
+        <parameter>
+          <name>category</name>
+          <description>Display the available command categories.</description>
+
+          <protocol></protocol> <!-- Here the protocol is empty because the protocol has already been defined at the command level! -->
+
+          <tag>-cat</tag>
+          
+          <!--
+            Regular expression for this parameter.
+          -->
+          <regexp>(-cat)</regexp>
+
+          <!--
+            Type of the value for this parameter.
+          -->
+          <type>String</type>
+        
+          <!--
+            List of examples showing how this command's parameter can be used.
+          -->  
+          <examples>
+            <example>/help -cat</example>
+          </examples>
+        
+        </parameter>
+        
+        <!--
+          PARAMETER: 'SET'
+        -->
+        <parameter>
+          <name>set</name>
+          <description>Display a list of available commands for a given command category.</description>
+          <protocol></protocol>
+          <tag>-set</tag>
+          <regexp>(-set=)\s*+([a-zA-Z]++\*?)</regexp>
+          <type>String</type>
+          <examples>
+            <example>/help -set=system</example>
+            <example>/help -set=normal</example>
+            <example>/help -set=chat</example>
+          </examples>
+        </parameter>
+        
+        <!--
+          PARAMETER: 'NAME'
+        -->
+        <parameter>
+          <name>name</name>
+          <description>Display detailed description on a given command name.</description>
+          <protocol></protocol>
+          <tag>-name</tag>
+          <regexp>(-name=)\s*+([a-zA-Z]++\*?)</regexp>
+          <type>String</type>
+          <examples>
+            <example>/help -name=help</example>
+            <example>/help -name=user</example>
+            <example>/help -name=room</example>
+          </examples>
+        </parameter>
+      
+      </parameters>
+    
+    </command>
+
+  </commands>
+
+  <footer>
+    <generated>2017-06-03 12:48:03</generated>
+    <changed>2017-06-06 23:15:17</changed>
+  </footer>
+
+</chat-command-file>

@@ -13,16 +13,25 @@ package com.heliosphere.athena.base.command.internal;
 
 import java.util.List;
 
+import com.heliosphere.athena.base.command.internal.exception.CommandInitializationException;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandProtocolType;
 import com.heliosphere.athena.base.command.internal.protocol.IParameterType;
 
 /**
  * Provides a basic behavior for a command parameter metadata that is containing the definition of a command parameter.
  * <hr>
- * @author <a href="mailto:christophe.resse@hotmail.com">Christophe Resse</a>
+ * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 public interface ICommandParameterMetadata
 {
+	/**
+	 * Returns the command protocol type.
+	 * <p>
+	 * @return Command protocol type.
+	 */
+	Enum<? extends ICommandProtocolType> getProtocolType();
+
 	/**
 	 * Returns the command parameter name.
 	 * <p>
@@ -71,4 +80,11 @@ public interface ICommandParameterMetadata
 	 * @param example Parameter example.
 	 */
 	void addExample(String example);
+
+	/**
+	 * Initializes the command definition.
+	 * <hr>
+	 * @throws CommandInitializationException Thrown in case an error occurred while initializing the command definition.
+	 */
+	void initialize() throws CommandInitializationException;
 }

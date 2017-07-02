@@ -44,7 +44,7 @@ public class XmlChatCommandFileTest
 	 * XML file containing the chat command definitions.
 	 */
 	@SuppressWarnings("nls")
-	private XmlCommandFile chatCommandfile = new XmlCommandFile("/config/command/chat-commands.xml");
+	private XmlCommandFile chatCommandfile = new XmlCommandFile("/config/command/chat-commands-v2.xml");
 
 	/**
 	 * Initialization of the test cases.
@@ -159,8 +159,8 @@ public class XmlChatCommandFileTest
 	@Test
 	public final void testFindCommandByName()
 	{
-		ICommandMetadata afk = chatCommandfile.getByName("afk");
-		Assert.assertTrue(afk.getName().equals("afk"));
+		ICommandMetadata quit = chatCommandfile.getByName("quit");
+		Assert.assertTrue(quit.getName().equals("quit"));
 	}
 
 	/**

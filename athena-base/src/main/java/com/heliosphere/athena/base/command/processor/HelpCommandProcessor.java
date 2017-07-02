@@ -44,7 +44,7 @@ public final class HelpCommandProcessor implements ExecutableCommand
 	private List<ICommandMetadata> definitions;
 
 	/**
-	 * Creates a new {@code help }command processor.
+	 * Creates a new {@code help} command processor.
 	 * <hr>
 	 * @param definitions Command definitions (generally registered by a command interpreter).
 	 */
@@ -61,7 +61,7 @@ public final class HelpCommandProcessor implements ExecutableCommand
 		{
 			if (command.getParameters() == null)
 			{
-				extractHelpForAllCommands(command, terminal);
+				extractHelpForAllCommands(terminal, command);
 				return;
 			}
 
@@ -69,15 +69,15 @@ public final class HelpCommandProcessor implements ExecutableCommand
 			{
 				if (parameter.getMetadata().getName().equals("category"))
 				{
-					extractCommandCategories(command, terminal);
+					extractCommandCategories(terminal, command);
 				}
 				else if (parameter.getMetadata().getName().equals("set"))
 				{
-					extractCommandsForCategory(command, terminal);
+					extractCommandsForCategory(terminal, command);
 				}
 				else if (parameter.getMetadata().getName().equals("name"))
 				{
-					extractCommandHelp(command, terminal);
+					extractCommandHelp(terminal, command);
 				}
 			}
 		}
@@ -88,13 +88,13 @@ public final class HelpCommandProcessor implements ExecutableCommand
 	}
 
 	/**
-	 * Extract the 'help' for all registered commands.
+	 * Extract the documentation for all registered commands.
 	 * <hr>
-	 * @param command {@code Help} command.
 	 * @param terminal Terminal where the output of the help command as to be written.
+	 * @param command {@link ICommand} to execute.
 	 */
 	@SuppressWarnings("nls")
-	private final void extractHelpForAllCommands(final ICommand command, final CommandTerminal terminal)
+	private final void extractHelpForAllCommands(final CommandTerminal terminal, final ICommand command)
 	{
 		terminal.getTerminal().println();
 		terminal.appendToPane("Available commands are: \n", Color.LIGHT_GRAY);
@@ -109,16 +109,18 @@ public final class HelpCommandProcessor implements ExecutableCommand
 	}
 
 	/**
-	 * 
-	 * @param command
-	 * @return
+	 * Extracts the documentation for all command categories. 
+	 * <hr>
+	 * @param terminal Terminal where the output should be written.
+	 * @param command {@link ICommand} to execute.
 	 */
-	@SuppressWarnings("nls")
-	private final void extractCommandCategories(final ICommand command, final CommandTerminal terminal)
+	@SuppressWarnings({ "nls", "static-method" })
+	private final void extractCommandCategories(final CommandTerminal terminal, final ICommand command)
 	{
 		terminal.getTerminal().println();
 		terminal.appendToPane("Available command categories are: \n", Color.LIGHT_GRAY);
-		Enum<?>[] enums = command.getMetadata().getProtocolCategory().getDeclaringClass().getEnumConstants();
+		Enum<?>[] enums = ((ICommandProtocolType) command.getMetadata().getProtocolType()).getCategory().getDeclaringClass().getEnumConstants();
+
 		for (int i = 0; i < enums.length; i++)
 		{
 			terminal.appendToPane(" [", Color.LIGHT_GRAY);
@@ -130,22 +132,23 @@ public final class HelpCommandProcessor implements ExecutableCommand
 	}
 
 	/**
-	 * 
-	 * @param command
-	 * @return
+	 * Extracts the documentation for a given command category. 
+	 * <hr>
+	 * @param terminal Terminal where the output should be written.
+	 * @param command {@link ICommand} to execute.
 	 */
-	private final void extractCommandsForCategory(final ICommand command, final CommandTerminal terminal)
+	private final void extractCommandsForCategory(final CommandTerminal terminal, final ICommand command)
 	{
 	}
 
 	/**
-	 * Returns the detailed help for the given command.
+	 * Extracts the detailed help for a given command.
 	 * <hr>
-	 * @param command {@link ICommand} to execute.
 	 * @param terminal Terminal where the output should be written.
+	 * @param command {@link ICommand} to execute.
 	 */
 	@SuppressWarnings("nls")
-	private final void extractCommandHelp(final ICommand command, final CommandTerminal terminal)
+	private final void extractCommandHelp(final CommandTerminal terminal, final ICommand command)
 	{
 		ICommandMetadata other = null;
 

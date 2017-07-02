@@ -12,42 +12,18 @@
 package com.heliosphere.athena.base.command.internal.protocol;
 
 /**
- * Provides a basic behavior for command type enumerations.
+ * Provides a basic behavior for command domain type enumerations.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ICommandProtocolType
+public interface ICommandDomainType
 {
 	/**
-	 * Creates a command category type based on its string representation.
-	 * <p>
-	 * <b>Example:</b><p> 
-	 * <code>FakeCommandProtocolType.fromString("QUIT");</code>
+	 * Creates a command domain type based on its string representation.
 	 * <hr>
 	 * @param value String representation.
-	 * @return Command category type.
-	 */
-	Enum<? extends ICommandProtocolType> fromString(String value);
-
-	/**
-	 * Returns the command category type.
-	 * <p>
-	 * @return Command category type.
-	 */
-	Enum<? extends ICommandCategoryType> getCategory();
-
-	/**
-	 * Returns the command group type.
-	 * <p>
-	 * @return Command group type.
-	 */
-	Enum<? extends ICommandGroupType> getGroup();
-
-	/**
-	 * Returns the command domain type.
-	 * <p>
 	 * @return Command domain type.
 	 */
-	Enum<? extends ICommandDomainType> getDomain();
+	Enum<? extends ICommandDomainType> fromString(String value);
 }
