@@ -17,6 +17,7 @@ import java.util.List;
 import com.heliosphere.athena.base.command.internal.ICommand;
 import com.heliosphere.athena.base.command.internal.ICommandMetadata;
 import com.heliosphere.athena.base.command.internal.ICommandParameter;
+import com.heliosphere.athena.base.command.internal.protocol.ICommandProtocolType;
 
 import lombok.NonNull;
 
@@ -39,18 +40,31 @@ public final class Command implements ICommand
 	private ICommandMetadata metadata = null;
 
 	/**
+	 * Command protocol.
+	 */
+	private Enum<? extends ICommandProtocolType> protocol;
+
+	/**
 	 * Command parameters.
 	 */
 	private List<ICommandParameter> parameters = null;
 
 	/**
-	 * Creates a new command given its text form.
+	 * Creates a new command given its protocol and its text form.
 	 * <hr>
+	 * @param protocol Command protocol.
 	 * @param text Original text of the command.
 	 */
-	public Command(final @NonNull String text)
+	public Command(final Enum<? extends ICommandProtocolType> protocol, final @NonNull String text)
 	{
+		this.protocol = protocol;
 		this.text = text;
+	}
+
+	@Override
+	public final Enum<? extends ICommandProtocolType> getProtocol()
+	{
+		return protocol;
 	}
 
 	@Override

@@ -94,6 +94,16 @@ public abstract class AbstractTerminal implements Runnable
 	}
 
 	/**
+	 * Returns the underlying terminal.
+	 * <hr>
+	 * @return Underlying terminal.
+	 */
+	public final SwingTextTerminal getIO()
+	{
+		return io;
+	}
+
+	/**
 	 * Starts the terminal.
 	 */
 	public final void start()

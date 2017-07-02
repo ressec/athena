@@ -98,5 +98,7 @@ public final class OutputTerminal extends AbstractTerminal
 		appendToPane(timestamp, Color.LIGHT_GRAY);
 		appendToPane(" " + user, Color.CYAN);
 		appendToPane(" " + text + "\n", Color.ORANGE);
+
+		resume();
 	}
 }

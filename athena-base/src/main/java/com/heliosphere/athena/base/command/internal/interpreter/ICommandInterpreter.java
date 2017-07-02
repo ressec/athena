@@ -16,6 +16,7 @@ import java.util.List;
 import com.heliosphere.athena.base.command.internal.ICommand;
 import com.heliosphere.athena.base.command.internal.ICommandMetadata;
 import com.heliosphere.athena.base.command.internal.exception.CommandException;
+import com.heliosphere.athena.base.command.internal.exception.CommandInitializationException;
 
 /**
  * Provides a basic behavior for a command interpreter.
@@ -41,15 +42,17 @@ public interface ICommandInterpreter
 	 * Registers a new command metadata (definition).
 	 * <hr>
 	 * @param metadata Command metadata.
+	 * @throws CommandInitializationException Thrown in case an error occurred while registering a command definition.
 	 */
-	void registerCommand(ICommandMetadata metadata);
+	void registerCommand(ICommandMetadata metadata) throws CommandInitializationException;
 
 	/**
 	 * Registers a set of command metadata (definitions).
 	 * <hr>
 	 * @param metadata List of command metadata (definitions) to register.
+	 * @throws CommandInitializationException Thrown in case an error occurred while registering a command definition.
 	 */
-	void registerCommands(List<ICommandMetadata> metadata);
+	void registerCommands(List<ICommandMetadata> metadata) throws CommandInitializationException;
 
 	/**
 	 * Returns the list of command metadata (definitions) used by the command interpreter.

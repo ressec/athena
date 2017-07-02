@@ -94,5 +94,9 @@ public class CommandCoordinator implements ICommandCoordinator
 				terminal.appendToPane(String.format("[ERROR] %1s\n", e.getMessage()), Color.ORANGE);
 			}
 		}
+		else
+		{
+			throw new CommandNotFoundException();
+		}
 	}
 }

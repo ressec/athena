@@ -14,8 +14,6 @@ package com.heliosphere.athena.base.command.internal;
 import java.util.List;
 
 import com.heliosphere.athena.base.command.internal.exception.CommandInitializationException;
-import com.heliosphere.athena.base.command.internal.protocol.ICommandCategoryType;
-import com.heliosphere.athena.base.command.internal.protocol.ICommandGroupType;
 import com.heliosphere.athena.base.command.internal.protocol.ICommandProtocolType;
 
 /**
@@ -27,20 +25,6 @@ import com.heliosphere.athena.base.command.internal.protocol.ICommandProtocolTyp
 public interface ICommandMetadata
 {
 	/**
-	 * Returns the command protocol category type.
-	 * <p>
-	 * @return Command protocol category type.
-	 */
-	Enum<? extends ICommandCategoryType> getProtocolCategory();
-
-	/**
-	 * Returns the command protocol group type.
-	 * <p>
-	 * @return Command protocol group type.
-	 */
-	Enum<? extends ICommandGroupType> getProtocolGroup();
-
-	/**
 	 * Returns the command protocol type.
 	 * <p>
 	 * @return Command protocol type.
@@ -48,12 +32,12 @@ public interface ICommandMetadata
 	Enum<? extends ICommandProtocolType> getProtocolType();
 
 	/**
-	 * Sets the command protocol.
+	 * Checks if the command definition is of the given command protocol?
 	 * <hr>
-	 * @param fullProtocolName Full protocol class name (enumeration class name followed by the enumerated value).
-	 * @throws CommandInitializationException Thrown to indicate an error occurred while initializing the command.
+	 * @param protocol Command protocol type.
+	 * @return {@code True} if the command definition is of the given protocol, {@code false} otherwise.
 	 */
-	void setProtocol(String fullProtocolName) throws CommandInitializationException;
+	boolean isOf(Enum<? extends ICommandProtocolType> protocol);
 
 	/**
 	 * Returns the command name.

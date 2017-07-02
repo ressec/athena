@@ -21,6 +21,7 @@ import com.heliosphere.athena.base.command.internal.ICommandListener;
 import com.heliosphere.athena.base.command.internal.coordinator.CommandCoordinator;
 import com.heliosphere.athena.base.command.internal.coordinator.ICommandCoordinator;
 import com.heliosphere.athena.base.command.internal.exception.CommandException;
+import com.heliosphere.athena.base.command.internal.exception.CommandInitializationException;
 import com.heliosphere.athena.base.command.internal.exception.CommandNotFoundException;
 import com.heliosphere.athena.base.command.internal.interpreter.ICommandInterpreter;
 import com.heliosphere.athena.base.command.interpreter.CommandInterpreter;
@@ -127,7 +128,15 @@ public final class CommandTerminal extends AbstractTerminal
 	{
 		XmlCommandFile file = new XmlCommandFile(pathname);
 		file.load();
-		interpreter.registerCommands(file.getContent());
+
+		try
+		{
+			interpreter.registerCommands(file.getContent());
+		}
+		catch (CommandInitializationException e)
+		{
+			throw new FileException(e);
+		}
 	}
 
 	/**
@@ -201,7 +210,8 @@ public final class CommandTerminal extends AbstractTerminal
 	@SuppressWarnings("nls")
 	public final void printException(final Exception e)
 	{
-		appendToPane("[error] " + e.getMessage() + "\n", Color.ORANGE);
+		appendToPane("[error] " + e.getMessage() + "\n\n", Color.ORANGE);
+		resume();
 	}
 
 	//	public final void printInfo(final ITerminalMessage message)

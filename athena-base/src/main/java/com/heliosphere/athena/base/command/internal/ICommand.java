@@ -13,6 +13,8 @@ package com.heliosphere.athena.base.command.internal;
 
 import java.util.List;
 
+import com.heliosphere.athena.base.command.internal.protocol.ICommandProtocolType;
+
 /**
  * Provides a basic behavior for a command.
  * <hr>
@@ -63,4 +65,11 @@ public interface ICommand
 	 * @return {@link ICommandParameter} or {@code null} if the given parameter has not been found.
 	 */
 	ICommandParameter getParameter(String name);
+
+	/**
+	 * Returns the command protocol.
+	 * <hr>
+	 * @return Command protocol.
+	 */
+	Enum<? extends ICommandProtocolType> getProtocol();
 }

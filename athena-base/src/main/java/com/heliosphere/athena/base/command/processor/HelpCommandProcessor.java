@@ -119,7 +119,8 @@ public final class HelpCommandProcessor implements ExecutableCommand
 	{
 		terminal.getTerminal().println();
 		terminal.appendToPane("Available command categories are: \n", Color.LIGHT_GRAY);
-		Enum<?>[] enums = command.getMetadata().getProtocolCategory().getDeclaringClass().getEnumConstants();
+		Enum<?>[] enums = ((ICommandProtocolType) command.getMetadata().getProtocolType()).getCategory().getDeclaringClass().getEnumConstants();
+
 		for (int i = 0; i < enums.length; i++)
 		{
 			terminal.appendToPane(" [", Color.LIGHT_GRAY);
