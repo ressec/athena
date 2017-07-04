@@ -310,7 +310,7 @@ public final class CommandInterpreter implements ICommandInterpreter
 
 		copy = text.trim();
 
-		ICommandMetadata definition = extractCommand();
+		ICommandMetadata definition = extractCommand(text);
 		if (definition != null)
 		{
 			List<ICommandParameter> parameters = extractParameters(definition);
@@ -341,11 +341,12 @@ public final class CommandInterpreter implements ICommandInterpreter
 	/**
 	 * Extracts the command definition.
 	 * <hr>
+	 * @param original Original text to interpret as a command.
 	 * @return Command definition or {@code null} if no command definition has been identified.
 	 * @throws CommandException Thrown in case an error occurred while extracting the command definition.
 	 */
 	@SuppressWarnings("nls")
-	protected ICommandMetadata extractCommand() throws CommandException
+	protected ICommandMetadata extractCommand(final String original) throws CommandException
 	{
 		String name = null;
 		Enum<? extends ICommandCategoryType> category = null;
@@ -360,12 +361,19 @@ public final class CommandInterpreter implements ICommandInterpreter
 			try
 			{
 				String value = matcher.group().trim();
+				
+				// A command cannot have blank characters!
+				value = value.replace(" ", "");
 				category = DefaultCommandCategoryType.fromPrefix(value.substring(0, 1));
 				name = value.substring(1, value.length());
 				definition = getCommandByCategory(category, name);
+				if (definition == null) 
+				{
+					throw new CommandException("No command definition found matching: " + original);
+				}
 				protocol = definition.getProtocolType();
 			}
-			catch (InvalidArgumentException e)
+			catch (Exception e)
 			{
 				throw new CommandException(e);
 			}
