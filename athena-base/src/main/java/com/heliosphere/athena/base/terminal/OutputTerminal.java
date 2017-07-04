@@ -101,4 +101,22 @@ public final class OutputTerminal extends AbstractTerminal
 
 		resume();
 	}
+
+	/**
+	 * Prints on the console a {@code say} message.
+	 * <hr>
+	 * @param timestamp Time stamp of the message.
+	 * @param recipient User name being the recipient of the message.
+	 * @param text Text of the message.
+	 * @param sender User name being the sender of the message.
+	 */
+	@SuppressWarnings("nls")
+	public final void printWhisper(final String timestamp, final String recipient, final String text, final String sender)
+	{
+		appendToPane(timestamp, Color.LIGHT_GRAY);
+		appendToPane(" " + sender, Color.CYAN);
+		appendToPane(" " + text + "\n", Color.WHITE);
+
+		resume();
+	}
 }
