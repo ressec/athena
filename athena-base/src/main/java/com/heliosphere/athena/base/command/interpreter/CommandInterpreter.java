@@ -52,7 +52,7 @@ public final class CommandInterpreter implements ICommandInterpreter
 	 * Command regular expression.
 	 */
 	@SuppressWarnings("nls")
-	private final String COMMAND_REGEXP = "^\\s*+((\\*|/|#|%|.)\\s*+([a-zA-Z0-9\\s]*)).*+$";
+	private final String COMMAND_REGEXP = "^\\s*+((\\*|/|#|%|.)\\s*+([a-zA-Z0-9_]*))";
 
 	/**
 	 * Collection of commands known by the command interpreter (grouped by command protocol type).
@@ -354,13 +354,16 @@ public final class CommandInterpreter implements ICommandInterpreter
 		Pattern pattern = Pattern.compile(COMMAND_REGEXP);
 		Matcher matcher = pattern.matcher(copy);
 
-		if (matcher.matches() && matcher.groupCount() > 2) // Should contain the command prefix and its name.
+		// Find the command itself ; i.e. category + command
+		if (matcher.find()) 
 		{
 			try
 			{
-				category = DefaultCommandCategoryType.fromPrefix(matcher.group(2).trim());
-				name = matcher.group(3).trim();
+				String value = matcher.group().trim();
+				category = DefaultCommandCategoryType.fromPrefix(value.substring(0, 1));
+				name = value.substring(1, value.length());
 				definition = getCommandByCategory(category, name);
+				protocol = definition.getProtocolType();
 			}
 			catch (InvalidArgumentException e)
 			{
@@ -368,9 +371,9 @@ public final class CommandInterpreter implements ICommandInterpreter
 			}
 
 			// Reduce the original text by removing the found command pattern.
-			copy = copy.replace(matcher.group(1), "");
+			copy = copy.replace(matcher.group(1).trim(), "").trim();
 		}
-
+		
 		return definition;
 	}
 
@@ -424,35 +427,51 @@ public final class CommandInterpreter implements ICommandInterpreter
 		// Get the next parameter present in the working copy of the command text.
 		for (ICommandParameterMetadata metadata : definition.getParameters())
 		{
-			// Does this parameter exist in the command text?
-			pattern = Pattern.compile(metadata.getRegExp());
-			matcher = pattern.matcher(copy);
-
-			if (matcher.find())
+			if (!metadata.getTag().isEmpty()) 
 			{
-				tag = matcher.group(1);
-				for (int index = 2; index <= matcher.groupCount(); index++)
+				// Does this parameter exist in the command text?
+				pattern = Pattern.compile(metadata.getRegExp());
+				matcher = pattern.matcher(copy);
+
+				if (matcher.find())
 				{
-					if (matcher.group(index) != null)
+					tag = matcher.group(1);
+					for (int index = 2; index <= matcher.groupCount(); index++)
 					{
-						value = matcher.group(index).trim();
+						if (matcher.group(index) != null)
+						{
+							value = matcher.group(index).trim();
+						}
 					}
 				}
-			}
 
-			if (tag != null)
-			{
-				tag = tag.replace("=", "");
-				if (tag.equals(metadata.getTag())) // We found a matching parameter!
+				if (tag != null)
 				{
-					// Let's extract set the parameter.
-					parameter = new CommandParameter(matcher.group(0), metadata, value);
-					protocol = metadata.getProtocolType();
+					tag = tag.replace("=", "");
+					if (tag.equals(metadata.getTag())) // We found a matching parameter!
+					{
+						// Let's extract set the parameter.
+						parameter = new CommandParameter(matcher.group(0), metadata, value);
+						protocol = metadata.getProtocolType();
 
-					// Remove the parameter text from the command text.
-					copy = copy.replace(matcher.group(0), "").trim();
-					return parameter;
+						// Remove the parameter text from the command text.
+						copy = copy.replace(matcher.group(0), "").trim();
+						return parameter;
+					}
+				}			
+			}
+			else
+			{
+				parameter = new CommandParameter(copy, metadata, copy);
+
+				// Remove the parameter text from the command text.
+				copy = copy.replace(copy, "").trim();
+				if (metadata.getProtocolType() != null) 
+				{
+					protocol = metadata.getProtocolType();
 				}
+				
+				return parameter;
 			}
 		}
 

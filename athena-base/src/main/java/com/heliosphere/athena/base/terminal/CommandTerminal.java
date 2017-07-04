@@ -14,6 +14,10 @@ package com.heliosphere.athena.base.terminal;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 import com.heliosphere.athena.base.command.file.xml.XmlCommandFile;
 import com.heliosphere.athena.base.command.internal.ICommand;
@@ -26,6 +30,7 @@ import com.heliosphere.athena.base.command.internal.exception.CommandNotFoundExc
 import com.heliosphere.athena.base.command.internal.interpreter.ICommandInterpreter;
 import com.heliosphere.athena.base.command.interpreter.CommandInterpreter;
 import com.heliosphere.athena.base.file.internal.FileException;
+import com.heliosphere.athena.base.message.protocol.DefaultMessageProtocol;
 
 import jline.Terminal;
 import lombok.NonNull;
@@ -61,6 +66,11 @@ public final class CommandTerminal extends AbstractTerminal
 	protected String text = null;
 
 	/**
+	 * Submitted commands.
+	 */
+	protected Queue<DefaultMessageProtocol.SubmitCommand> commands = new LinkedBlockingQueue<>(5);
+	
+	/**
 	 * Command interpreter.
 	 */
 	protected ICommandInterpreter interpreter = null;
@@ -88,6 +98,21 @@ public final class CommandTerminal extends AbstractTerminal
 		coordinator = new CommandCoordinator(this);
 	}
 
+	/**
+	 * Submits a command.
+	 * <hr>
+	 * @param text Textual representation of the command to submit.
+	 */
+	public final void submitCommand(final DefaultMessageProtocol.SubmitCommand command)
+	{
+		commands.offer(command);
+	}
+	
+	public final boolean hasCommandToSubmit()
+	{
+		return commands.size() > 0;
+	}
+	
 	/**
 	 * Returns the command interpreter used by this {@link Terminal}.
 	 * <hr>
@@ -162,6 +187,19 @@ public final class CommandTerminal extends AbstractTerminal
 		}
 	}
 
+	private final void interpretAndSubmit(final String text)
+	{
+		try
+		{
+			ICommand command = interpreter.interpret(text);
+			process(command);
+		}
+		catch (CommandException e)
+		{
+			printException(e);
+		}
+	}
+	
 	/**
 	 * Sets the new command prompt.
 	 * <hr>
@@ -176,24 +214,41 @@ public final class CommandTerminal extends AbstractTerminal
 	@Override
 	public final void run()
 	{
-		ICommand command = null;
-
 		while (status != TerminalStatusType.STOPPED)
 		{
+			if (status == TerminalStatusType.INITIALIZE) 
+			{
+				if (commands.size() > 0) 
+				{
+					DefaultMessageProtocol.SubmitCommand command = commands.poll();
+
+					if (command.getDuration() != null) 
+					{
+						try
+						{
+							Thread.sleep(command.getDuration().toMillis()); // Wait before executing the command.
+						}
+						catch (InterruptedException e)
+						{
+							getTerminal().println("Terminal interrupted!");
+						}
+					}
+
+					// Execute the command.
+					interpretAndSubmit(command.getText());
+				}
+				else 
+				{
+					status = TerminalStatusType.RUNNING;
+				}
+			}
+
 			if (status == TerminalStatusType.RUNNING)
 			{
 				io.print(prompt);
 				text = io.read(false);
 
-				try
-				{
-					command = interpreter.interpret(text);
-					process(command);
-				}
-				catch (CommandException e)
-				{
-					printException(e);
-				}
+				interpretAndSubmit(text);
 			}
 
 			try

@@ -111,8 +111,9 @@ public abstract class AbstractTerminal implements Runnable
 		if (status == TerminalStatusType.UNKNOWN || status == TerminalStatusType.STOPPED)
 		{
 			thread = new Thread(this);
-			status = TerminalStatusType.RUNNING;
+			status = TerminalStatusType.INITIALIZE;
 			thread.start();
+			getIO().getFrame().setVisible(true);
 		}
 	}
 

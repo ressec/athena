@@ -28,6 +28,11 @@ public enum TerminalStatusType
 	UNKNOWN,
 
 	/**
+	 * Terminal is initializing.
+	 */
+	INITIALIZE,
+
+	/**
 	 * Terminal is stopped.
 	 */
 	STOPPED,
