@@ -199,10 +199,10 @@ public class XmlChatCommandFileTest
 			CommandInterpreter interpreter = new CommandInterpreter();
 			interpreter.registerCommands(chatCommandfile.getContent());
 
-			ICommand command = interpreter.interpret("    /     help      -cat         ");
+			ICommand command = interpreter.interpret("    / help      -cat         ");
 			Assert.assertTrue(command != null);
 
-			command = interpreter.interpret("    /     help          ");
+			command = interpreter.interpret("    /      help          ");
 			Assert.assertTrue(command != null);
 
 			command = interpreter.interpret("    /     help      -name=help    ");
