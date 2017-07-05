@@ -33,7 +33,6 @@ import com.heliosphere.athena.base.command.internal.protocol.ICommandDomainType;
 import com.heliosphere.athena.base.command.internal.protocol.ICommandGroupType;
 import com.heliosphere.athena.base.command.internal.protocol.ICommandProtocolType;
 import com.heliosphere.athena.base.command.protocol.DefaultCommandCategoryType;
-import com.heliosphere.athena.base.exception.InvalidArgumentException;
 
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j;
@@ -68,6 +67,11 @@ public final class CommandInterpreter implements ICommandInterpreter
 	 * Command protocol.
 	 */
 	private Enum<? extends ICommandProtocolType> protocol;
+
+	/**
+	 * Collection of already consumed parameters when interpreting a command.
+	 */
+	private Map<String, ICommandParameterMetadata> consumed = new HashMap<>();
 
 	/**
 	 * Creates a new command interpreter.
@@ -356,18 +360,18 @@ public final class CommandInterpreter implements ICommandInterpreter
 		Matcher matcher = pattern.matcher(copy);
 
 		// Find the command itself ; i.e. category + command
-		if (matcher.find()) 
+		if (matcher.find())
 		{
 			try
 			{
 				String value = matcher.group().trim();
-				
+
 				// A command cannot have blank characters!
 				value = value.replace(" ", "");
 				category = DefaultCommandCategoryType.fromPrefix(value.substring(0, 1));
 				name = value.substring(1, value.length());
 				definition = getCommandByCategory(category, name);
-				if (definition == null) 
+				if (definition == null)
 				{
 					throw new CommandException("No command definition found matching: " + original);
 				}
@@ -381,7 +385,7 @@ public final class CommandInterpreter implements ICommandInterpreter
 			// Reduce the original text by removing the found command pattern.
 			copy = copy.replace(matcher.group(1).trim(), "").trim();
 		}
-		
+
 		return definition;
 	}
 
@@ -435,7 +439,7 @@ public final class CommandInterpreter implements ICommandInterpreter
 		// Get the next parameter present in the working copy of the command text.
 		for (ICommandParameterMetadata metadata : definition.getParameters())
 		{
-			if (!metadata.getTag().isEmpty()) 
+			if (!metadata.getTag().isEmpty())
 			{
 				// Does this parameter exist in the command text?
 				pattern = Pattern.compile(metadata.getRegExp());
@@ -460,13 +464,13 @@ public final class CommandInterpreter implements ICommandInterpreter
 					{
 						// Let's extract set the parameter.
 						parameter = new CommandParameter(matcher.group(0), metadata, value);
-						protocol = metadata.getProtocolType();
+						protocol = metadata.getProtocolType() != null ? metadata.getProtocolType() : protocol;
 
 						// Remove the parameter text from the command text.
 						copy = copy.replace(matcher.group(0), "").trim();
 						return parameter;
 					}
-				}			
+				}
 			}
 			else
 			{
@@ -474,11 +478,11 @@ public final class CommandInterpreter implements ICommandInterpreter
 
 				// Remove the parameter text from the command text.
 				copy = copy.replace(copy, "").trim();
-				if (metadata.getProtocolType() != null) 
+				if (metadata.getProtocolType() != null)
 				{
 					protocol = metadata.getProtocolType();
 				}
-				
+
 				return parameter;
 			}
 		}
