@@ -12,25 +12,18 @@
 package com.heliosphere.athena.base.message.internal.protocol;
 
 /**
- * Enumeration of the several possible message category types.
+ * Provides a basic behavior for message protocol domain enumerations.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public enum MessageCategoryType
+public interface IMessageProtocolDomain
 {
 	/**
-	 * Message is a request ; meaning that it will be associated with a reply message.
+	 * Creates a message protocol domain based on its string representation.
+	 * <hr>
+	 * @param value String representation.
+	 * @return Message protocol domain.
 	 */
-	REQUEST,
-
-	/**
-	 * Message is a reply ; meaning that its associated to a previously sent request message.
-	 */
-	REPLY,
-
-	/**
-	 * Message is a notification.
-	 */
-	NOTIFICATION;
+	Enum<? extends IMessageProtocolDomain> fromString(String value);
 }

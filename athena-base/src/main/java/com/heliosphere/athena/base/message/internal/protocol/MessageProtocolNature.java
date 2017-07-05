@@ -9,17 +9,28 @@
  * License can be consulted at http://www.apache.org/licenses/LICENSE-2.0
  * ---------------------------------------------------------------------------
  */
-package com.heliosphere.athena.base.message.internal;
-
-import java.io.Serializable;
+package com.heliosphere.athena.base.message.internal.protocol;
 
 /**
- * Marker interface for message protocols.
+ * Enumeration of the possible message protocol natures.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface IMessageProtocol extends Serializable
+public enum MessageProtocolNature
 {
-	// Empty.
+	/**
+	 * Message is a request (a reply is expected).
+	 */
+	REQUEST,
+
+	/**
+	 * Message is a reply (is associated to a request).
+	 */
+	REPLY,
+
+	/**
+	 * Message is a notification (fire and forget).
+	 */
+	NOTIFICATION;
 }

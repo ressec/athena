@@ -14,12 +14,12 @@ package com.heliosphere.athena.base.message;
 import com.heliosphere.athena.base.message.internal.AbstractMessage;
 import com.heliosphere.athena.base.message.internal.IMessage;
 import com.heliosphere.athena.base.message.internal.IMessageContent;
-import com.heliosphere.athena.base.message.internal.protocol.IMessageType;
-import com.heliosphere.athena.base.message.internal.protocol.MessageCategoryType;
-import com.heliosphere.athena.base.message.internal.protocol.MessageResponseType;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageProtocol;
+import com.heliosphere.athena.base.message.internal.protocol.MessageProtocolNature;
+import com.heliosphere.athena.base.message.internal.protocol.MessageResponseStatus;
 
 /**
- * Provides a concrete message implementation.
+ * Provides a concrete implementation of a {@link IMessage}.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
@@ -34,96 +34,76 @@ public class Message extends AbstractMessage
 	/**
 	 * Creates a new message.
 	 * <hr>
-	 * @param type Message type.
-	 * @param category Message category.
+	 * @param protocol Message protocol type.
 	 * @param content Message content.
+	 * @param status Response message status.
+	 * @param correlationId Message correlation identifier.
 	 */
-	public Message(Enum<? extends IMessageType> type, MessageCategoryType category, IMessageContent content)
+	public Message(final Enum<? extends IMessageProtocol> protocol, final IMessageContent content, final MessageResponseStatus status, final long correlationId)
 	{
-		super(type, category, content);
+		super(protocol, content, status, correlationId);
 	}
 
 	/**
 	 * Creates a new message.
 	 * <hr>
-	 * @param type Message type.
-	 * @param category Message category.
-	 * @param response Message response type.
-	 * @param content Message content.
+	 * @param protocol Message protocol type.
+	 * @param original Original message.
+	 * @param status Response message status.
+	 * @param correlationId Message correlation identifier.
 	 */
-	public Message(Enum<? extends IMessageType> type, MessageCategoryType category, MessageResponseType response, IMessageContent content)
+	public Message(final Enum<? extends IMessageProtocol> protocol, final IMessage original, final MessageResponseStatus status, final long correlationId)
 	{
-		super(type, category, response, content);
+		super(protocol, original, status, correlationId);
 	}
 
 	/**
-	 * Creates a new notification message.
+	 * Creates a new message.
 	 * <hr>
-	 * @param type Message type.
+	 * @param protocol Message protocol.
 	 * @param content Message content.
 	 * @return Newly created message.
 	 */
-	public final static IMessage createNotification(final Enum<? extends IMessageType> type, final IMessageContent content)
+	public final static IMessage createMessage(final Enum<? extends IMessageProtocol> protocol, final IMessageContent content)
 	{
-		return new Message(type, MessageCategoryType.NOTIFICATION, content);
+		return new Message(protocol, content, null, 0l);
 	}
 
 	/**
-	 * Creates a new request message.
+	 * Creates a new message.
 	 * <hr>
-	 * @param type Message type.
+	 * @param protocol Message protocol.
 	 * @param content Message content.
+	 * @param status Response message status.
+	 * @param correlationId Message correlation identifier.
 	 * @return Newly created message.
 	 */
-	public final static IMessage createRequest(final Enum<? extends IMessageType> type, final IMessageContent content)
+	public final static IMessage createMessage(final Enum<? extends IMessageProtocol> protocol, final IMessageContent content, final MessageResponseStatus status, final long correlationId)
 	{
-		return new Message(type, MessageCategoryType.REQUEST, content);
+		if (((IMessageProtocol) protocol).getNature() == MessageProtocolNature.REPLY)
+		{
+			return new Message(protocol, content, status, correlationId);
+		}
+
+		return new Message(protocol, content, null, correlationId);
 	}
 
 	/**
-	 * Creates a new confirmed reply message.
+	 * Creates a new message.
 	 * <hr>
-	 * @param type Message type.
-	 * @param content Message content.
+	 * @param protocol Message protocol.
+	 * @param original Original message.
+	 * @param status Response message status.
+	 * @param correlationId Message correlation identifier.
 	 * @return Newly created message.
 	 */
-	public final static IMessage createReplyConfirmed(final Enum<? extends IMessageType> type, final IMessageContent content)
+	public final static IMessage createMessage(final Enum<? extends IMessageProtocol> protocol, final IMessage original, final MessageResponseStatus status, final long correlationId)
 	{
-		return new Message(type, MessageCategoryType.REPLY, MessageResponseType.CONFIRMED, content);
-	}
+		if (((IMessageProtocol) protocol).getNature() == MessageProtocolNature.REPLY)
+		{
+			return new Message(protocol, original, status, correlationId);
+		}
 
-	/**
-	 * Creates a confirmed reply message given a request message.
-	 * <hr>
-	 * @param original Original request message.
-	 * @return Newly created message.
-	 */
-	public final static IMessage createReplyConfirmed(final IMessage original)
-	{
-		return new Message(original.getType(), MessageCategoryType.REPLY, MessageResponseType.CONFIRMED, original.getContent());
-	}
-
-	/**
-	 * Creates a confirmed reply message given a request message.
-	 * <hr>
-	 * @param original Original request message.
-	 * @param content Message content.
-	 * @return Newly created message.
-	 */
-	public final static IMessage createReplyConfirmed(final IMessage original, final IMessageContent content)
-	{
-		return new Message(original.getType(), MessageCategoryType.REPLY, MessageResponseType.CONFIRMED, content);
-	}
-
-	/**
-	 * Creates a new rejected reply message.
-	 * <hr>
-	 * @param type Message type.
-	 * @param content Message content.
-	 * @return Newly created message.
-	 */
-	public final static IMessage createReplyRejected(final Enum<? extends IMessageType> type, final IMessageContent content)
-	{
-		return new Message(type, MessageCategoryType.REPLY, MessageResponseType.REJECTED, content);
+		return new Message(protocol, original, null, correlationId);
 	}
 }

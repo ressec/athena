@@ -12,23 +12,18 @@
 package com.heliosphere.athena.base.message.internal.protocol;
 
 /**
- * Enumeration of the several possible message response types.
- * <p>
- * This is used when using message with enumeration protocols (by opposition to message protocols) and is associated
- * when the message category is of type: {@link MessageCategoryProtocol#REPLY}.
+ * Provides a basic behavior for message protocol group enumerations.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public enum MessageResponseType
+public interface IMessageProtocolGroup
 {
 	/**
-	 * Initial message request is confirmed.
+	 * Creates a message protocol group based on its string representation.
+	 * <hr>
+	 * @param value String representation.
+	 * @return Message protocol group.
 	 */
-	CONFIRMED,
-
-	/**
-	 * Initial message request is rejected.
-	 */
-	REJECTED;
+	Enum<? extends IMessageProtocolGroup> fromString(String value);
 }
