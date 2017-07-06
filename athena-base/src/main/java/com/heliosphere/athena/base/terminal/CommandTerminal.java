@@ -30,7 +30,7 @@ import com.heliosphere.athena.base.command.internal.exception.CommandNotFoundExc
 import com.heliosphere.athena.base.command.internal.interpreter.ICommandInterpreter;
 import com.heliosphere.athena.base.command.interpreter.CommandInterpreter;
 import com.heliosphere.athena.base.file.internal.FileException;
-import com.heliosphere.athena.base.message.protocol.DefaultMessageProtocol;
+import com.heliosphere.athena.base.message.protocol.DefaultMessageProtocolUsingClasses;
 
 import jline.Terminal;
 import lombok.NonNull;
@@ -68,7 +68,7 @@ public final class CommandTerminal extends AbstractTerminal
 	/**
 	 * Submitted commands.
 	 */
-	protected Queue<DefaultMessageProtocol.SubmitCommand> commands = new LinkedBlockingQueue<>(5);
+	protected Queue<DefaultMessageProtocolUsingClasses.SubmitCommand> commands = new LinkedBlockingQueue<>(5);
 	
 	/**
 	 * Command interpreter.
@@ -103,7 +103,7 @@ public final class CommandTerminal extends AbstractTerminal
 	 * <hr>
 	 * @param text Textual representation of the command to submit.
 	 */
-	public final void submitCommand(final DefaultMessageProtocol.SubmitCommand command)
+	public final void submitCommand(final DefaultMessageProtocolUsingClasses.SubmitCommand command)
 	{
 		commands.offer(command);
 	}
@@ -220,7 +220,7 @@ public final class CommandTerminal extends AbstractTerminal
 			{
 				if (commands.size() > 0) 
 				{
-					DefaultMessageProtocol.SubmitCommand command = commands.poll();
+					DefaultMessageProtocolUsingClasses.SubmitCommand command = commands.poll();
 
 					if (command.getDuration() != null) 
 					{

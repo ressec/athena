@@ -12,23 +12,31 @@
 package com.heliosphere.athena.base.message.internal.protocol;
 
 /**
- * Enumeration of the several possible message response types.
- * <p>
- * This is used when using message with enumeration protocols (by opposition to message protocols) and is associated
- * when the message category is of type: {@link MessageCategoryProtocol#REPLY}.
+ * Enumeration of the possible message protocol natures.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public enum MessageResponseType
+public enum MessageResponseStatus
 {
 	/**
-	 * Initial message request is confirmed.
+	 * Underlying request has been executed successfully.
 	 */
-	CONFIRMED,
+	STATUS_OK,
 
 	/**
-	 * Initial message request is rejected.
+	 * Underlying request has been rejected.
+	 * <p>
+	 * Additional information can be found using additional services.
+	 * @see getRejectReason()
 	 */
-	REJECTED;
+	STATUS_REJECTED,
+
+	/**
+	 * Underlying request has failed executing.
+	 * <p>
+	 * Additional information can be found using additional services.
+	 * @see getFailureReason()
+	 */
+	STATUS_FAILED;
 }

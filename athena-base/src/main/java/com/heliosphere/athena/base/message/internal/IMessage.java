@@ -14,12 +14,14 @@ package com.heliosphere.athena.base.message.internal;
 import java.io.Serializable;
 
 import com.heliosphere.athena.base.message.internal.exception.MessageException;
-import com.heliosphere.athena.base.message.internal.protocol.IMessageType;
-import com.heliosphere.athena.base.message.internal.protocol.MessageCategoryType;
-import com.heliosphere.athena.base.message.internal.protocol.MessageResponseType;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageProtocol;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageProtocolCategory;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageProtocolDomain;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageProtocolGroup;
+import com.heliosphere.athena.base.message.internal.protocol.MessageResponseStatus;
 
 /**
- * Interface providing a basic behavior for Heliosphere' messages.
+ * Interface providing a basic behavior for Heliosphere' messages with protocols using enumerations.
  * <hr>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
@@ -27,37 +29,58 @@ import com.heliosphere.athena.base.message.internal.protocol.MessageResponseType
 public interface IMessage extends Serializable
 {
 	/**
-	 * Returns the message type.
+	 * Returns the message protocol.
 	 * <hr>
-	 * @return Message type.
+	 * @return Message protocol.
 	 */
-	Enum<? extends IMessageType> getType();
+	Enum<? extends IMessageProtocol> getProtocol();
 
 	/**
-	 * Returns the message category type.
+	 * Returns the message protocol category.
 	 * <hr>
-	 * @return Message category type.
+	 * @return Message protocol category.
 	 */
-	MessageCategoryType getCategoryType();
+	Enum<? extends IMessageProtocolCategory> getCategory();
 
 	/**
-	 * Message response type.
+	 * Returns the message protocol group.
 	 * <hr>
-	 * @return Message response type.
+	 * @return Message protocol group.
 	 */
-	MessageResponseType getResponseType();
+	Enum<? extends IMessageProtocolGroup> getGroup();
+
+	/**
+	 * Returns the message protocol domain.
+	 * <hr>
+	 * @return Message protocol domain.
+	 */
+	Enum<? extends IMessageProtocolDomain> getDomain();
+
+	/**
+	 * Returns the message correlation identifier.
+	 * <hr>
+	 * @return Message correlation identifier (can be null).
+	 */
+	long getCorrelationId();
+
+	/**
+	 * Returns the message response type (only available is message is of nature: reply).
+	 * <p>
+	 * @return Message response status.
+	 */
+	MessageResponseStatus getResponseStatus();
 
 	/**
 	 * Message content.
 	 * <hr>
 	 * @return Message content.
 	 */
-	IMessageContent getContent();
+	Object getContent();
 
 	/**
 	 * Validates the message.
 	 * <hr>
-	 * @throws MessageException Thrown in case an error occurred during {@link IMessage} validation.
+	 * @throws MessageException Thrown in case an error occurred during message validation.
 	 */
 	void validate() throws MessageException;
 }

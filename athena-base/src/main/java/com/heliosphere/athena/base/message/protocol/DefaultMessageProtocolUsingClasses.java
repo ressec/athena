@@ -11,11 +11,10 @@
  */
 package com.heliosphere.athena.base.message.protocol;
 
+import java.io.Serializable;
 import java.time.Duration;
 
-import com.heliosphere.athena.base.message.internal.IMessageProtocol;
-
-public class DefaultMessageProtocol implements IMessageProtocol
+public class DefaultMessageProtocolUsingClasses implements Serializable
 {
 	/**
 	 * Default serialization identifier.
