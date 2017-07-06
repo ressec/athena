@@ -43,6 +43,11 @@ public enum TestMessageProtocolDomain implements IMessageProtocolDomain
 	USER,
 
 	/**
+	 * Conversation message domain.
+	 */
+	CONVERSATION,
+
+	/**
 	 * Message message domain.
 	 */
 	MESSAGE;

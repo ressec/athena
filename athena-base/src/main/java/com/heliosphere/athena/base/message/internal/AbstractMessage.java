@@ -13,6 +13,9 @@ package com.heliosphere.athena.base.message.internal;
 
 import com.heliosphere.athena.base.message.internal.exception.MessageException;
 import com.heliosphere.athena.base.message.internal.protocol.IMessageProtocol;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageProtocolCategory;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageProtocolDomain;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageProtocolGroup;
 import com.heliosphere.athena.base.message.internal.protocol.MessageResponseStatus;
 
 /**
@@ -42,7 +45,17 @@ public abstract class AbstractMessage implements IMessage
 	/**
 	 * Message content.
 	 */
-	private IMessageContent content;
+	private Object content;
+
+	/**
+	 * Creates a new message.
+	 * <hr>
+	 * @param protocol Message protocol.
+	 */
+	public AbstractMessage(Enum<? extends IMessageProtocol> protocol)
+	{
+		this.protocol = protocol;
+	}
 
 	/**
 	 * Creates a new message.
@@ -87,7 +100,7 @@ public abstract class AbstractMessage implements IMessage
 	}
 
 	/**
-	 * Creates a new response message.
+	 * Creates a new message.
 	 * <hr>
 	 * @param protocol Message protocol.
 	 * @param original Original message.
@@ -124,13 +137,31 @@ public abstract class AbstractMessage implements IMessage
 	}
 
 	@Override
+	public final Enum<? extends IMessageProtocolCategory> getCategory()
+	{
+		return ((IMessageProtocol) protocol).getCategory();
+	}
+
+	@Override
+	public final Enum<? extends IMessageProtocolGroup> getGroup()
+	{
+		return ((IMessageProtocol) protocol).getGroup();
+	}
+
+	@Override
+	public final Enum<? extends IMessageProtocolDomain> getDomain()
+	{
+		return ((IMessageProtocol) protocol).getDomain();
+	}
+
+	@Override
 	public final MessageResponseStatus getResponseStatus()
 	{
 		return response;
 	}
 
 	@Override
-	public final IMessageContent getContent()
+	public final Object getContent()
 	{
 		return content;
 	}

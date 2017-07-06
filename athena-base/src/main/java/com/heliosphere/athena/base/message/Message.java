@@ -35,6 +35,16 @@ public class Message extends AbstractMessage
 	 * Creates a new message.
 	 * <hr>
 	 * @param protocol Message protocol type.
+	 */
+	public Message(final Enum<? extends IMessageProtocol> protocol)
+	{
+		super(protocol);
+	}
+
+	/**
+	 * Creates a new message.
+	 * <hr>
+	 * @param protocol Message protocol type.
 	 * @param content Message content.
 	 * @param status Response message status.
 	 * @param correlationId Message correlation identifier.
@@ -55,6 +65,17 @@ public class Message extends AbstractMessage
 	public Message(final Enum<? extends IMessageProtocol> protocol, final IMessage original, final MessageResponseStatus status, final long correlationId)
 	{
 		super(protocol, original, status, correlationId);
+	}
+
+	/**
+	 * Creates a new message.
+	 * <hr>
+	 * @param protocol Message protocol.
+	 * @return Newly created message.
+	 */
+	public final static IMessage createMessage(final Enum<? extends IMessageProtocol> protocol)
+	{
+		return new Message(protocol);
 	}
 
 	/**

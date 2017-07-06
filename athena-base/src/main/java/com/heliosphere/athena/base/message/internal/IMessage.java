@@ -15,6 +15,9 @@ import java.io.Serializable;
 
 import com.heliosphere.athena.base.message.internal.exception.MessageException;
 import com.heliosphere.athena.base.message.internal.protocol.IMessageProtocol;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageProtocolCategory;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageProtocolDomain;
+import com.heliosphere.athena.base.message.internal.protocol.IMessageProtocolGroup;
 import com.heliosphere.athena.base.message.internal.protocol.MessageResponseStatus;
 
 /**
@@ -31,6 +34,27 @@ public interface IMessage extends Serializable
 	 * @return Message protocol.
 	 */
 	Enum<? extends IMessageProtocol> getProtocol();
+
+	/**
+	 * Returns the message protocol category.
+	 * <hr>
+	 * @return Message protocol category.
+	 */
+	Enum<? extends IMessageProtocolCategory> getCategory();
+
+	/**
+	 * Returns the message protocol group.
+	 * <hr>
+	 * @return Message protocol group.
+	 */
+	Enum<? extends IMessageProtocolGroup> getGroup();
+
+	/**
+	 * Returns the message protocol domain.
+	 * <hr>
+	 * @return Message protocol domain.
+	 */
+	Enum<? extends IMessageProtocolDomain> getDomain();
 
 	/**
 	 * Returns the message correlation identifier.
@@ -51,7 +75,7 @@ public interface IMessage extends Serializable
 	 * <hr>
 	 * @return Message content.
 	 */
-	IMessageContent getContent();
+	Object getContent();
 
 	/**
 	 * Validates the message.

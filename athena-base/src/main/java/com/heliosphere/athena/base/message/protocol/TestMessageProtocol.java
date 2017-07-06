@@ -22,92 +22,182 @@ public enum TestMessageProtocol implements IMessageProtocol
 	/**
 	 * Message protocol to request the creation of a lobby.
 	 */
-	LOBBY_CREATE(MessageProtocolNature.REQUEST, MessageProtocolCategory.APPLICATION, TestMessageProtocolGroup.CHAT, TestMessageProtocolDomain.LOBBY),
+	CONVERSATION_INITIATE(
+			MessageProtocolNature.REQUEST,
+			MessageProtocolCategory.APPLICATION,
+			TestMessageProtocolGroup.CHAT,
+			TestMessageProtocolDomain.CONVERSATION),
+
+	/**
+	 * Message protocol to inform a client the conversation with the server has been initiated or not.
+	 */
+	CONVERSATION_INITIATED(
+			MessageProtocolNature.REPLY,
+			MessageProtocolCategory.APPLICATION,
+			TestMessageProtocolGroup.CHAT,
+			TestMessageProtocolDomain.CONVERSATION),
+
+	/**
+	 * Message protocol to request the creation of a lobby.
+	 */
+	LOBBY_CREATE(
+			MessageProtocolNature.REQUEST,
+			MessageProtocolCategory.APPLICATION,
+			TestMessageProtocolGroup.CHAT,
+			TestMessageProtocolDomain.LOBBY),
 
 	/**
 	 * Message protocol to inform a lobby has been created or not.
 	 */
-	LOBBY_CREATED(MessageProtocolNature.REPLY, MessageProtocolCategory.APPLICATION, TestMessageProtocolGroup.CHAT, TestMessageProtocolDomain.LOBBY),
+	LOBBY_CREATED(
+			MessageProtocolNature.REPLY,
+			MessageProtocolCategory.APPLICATION,
+			TestMessageProtocolGroup.CHAT,
+			TestMessageProtocolDomain.LOBBY),
 
 	/**
 	 * Message protocol to request the deletion of a lobby.
 	 */
-	LOBBY_DELETE(MessageProtocolNature.REQUEST, MessageProtocolCategory.APPLICATION, TestMessageProtocolGroup.CHAT, TestMessageProtocolDomain.LOBBY),
+	LOBBY_DELETE(
+			MessageProtocolNature.REQUEST,
+			MessageProtocolCategory.APPLICATION,
+			TestMessageProtocolGroup.CHAT,
+			TestMessageProtocolDomain.LOBBY),
 
 	/**
 	 * Message protocol to inform of the deletion of a lobby or not.
 	 */
-	LOBBY_DELETED(MessageProtocolNature.REPLY, MessageProtocolCategory.APPLICATION, TestMessageProtocolGroup.CHAT, TestMessageProtocolDomain.LOBBY),
+	LOBBY_DELETED(
+			MessageProtocolNature.REPLY,
+			MessageProtocolCategory.APPLICATION,
+			TestMessageProtocolGroup.CHAT,
+			TestMessageProtocolDomain.LOBBY),
 
 	/**
 	 * Message protocol to request to join a lobby.
 	 */
-	LOBBY_JOIN(MessageProtocolNature.REQUEST, MessageProtocolCategory.APPLICATION, TestMessageProtocolGroup.CHAT, TestMessageProtocolDomain.LOBBY),
+	LOBBY_JOIN(
+			MessageProtocolNature.REQUEST,
+			MessageProtocolCategory.APPLICATION,
+			TestMessageProtocolGroup.CHAT,
+			TestMessageProtocolDomain.LOBBY),
 
 	/**
 	 * Message protocol to inform a user has joined a lobby or not.
 	 */
-	LOBBY_JOINED(MessageProtocolNature.REPLY, MessageProtocolCategory.APPLICATION, TestMessageProtocolGroup.CHAT, TestMessageProtocolDomain.LOBBY),
+	LOBBY_JOINED(
+			MessageProtocolNature.REPLY,
+			MessageProtocolCategory.APPLICATION,
+			TestMessageProtocolGroup.CHAT,
+			TestMessageProtocolDomain.LOBBY),
 
 	/**
 	 * Message protocol to request to leave a lobby.
 	 */
-	LOBBY_LEAVE(MessageProtocolNature.REQUEST, MessageProtocolCategory.APPLICATION, TestMessageProtocolGroup.CHAT, TestMessageProtocolDomain.LOBBY),
+	LOBBY_LEAVE(
+			MessageProtocolNature.REQUEST,
+			MessageProtocolCategory.APPLICATION,
+			TestMessageProtocolGroup.CHAT,
+			TestMessageProtocolDomain.LOBBY),
 
 	/**
 	 * Message protocol to inform a user has left a lobby or not.
 	 */
-	LOBBY_LEFT(MessageProtocolNature.REPLY, MessageProtocolCategory.APPLICATION, TestMessageProtocolGroup.CHAT, TestMessageProtocolDomain.LOBBY),
+	LOBBY_LEFT(
+			MessageProtocolNature.REPLY,
+			MessageProtocolCategory.APPLICATION,
+			TestMessageProtocolGroup.CHAT,
+			TestMessageProtocolDomain.LOBBY),
 
 	/**
 	 * Message protocol to request the list of available lobbies.
 	 */
-	LOBBY_LIST(MessageProtocolNature.REQUEST, MessageProtocolCategory.APPLICATION, TestMessageProtocolGroup.CHAT, TestMessageProtocolDomain.LOBBY),
+	LOBBY_LIST(
+			MessageProtocolNature.REQUEST,
+			MessageProtocolCategory.APPLICATION,
+			TestMessageProtocolGroup.CHAT,
+			TestMessageProtocolDomain.LOBBY),
 
 	/**
 	 * Message protocol to inform of the available lobbies or not.
 	 */
-	LOBBY_LISTED(MessageProtocolNature.REPLY, MessageProtocolCategory.APPLICATION, TestMessageProtocolGroup.CHAT, TestMessageProtocolDomain.LOBBY),
+	LOBBY_LISTED(
+			MessageProtocolNature.REPLY,
+			MessageProtocolCategory.APPLICATION,
+			TestMessageProtocolGroup.CHAT,
+			TestMessageProtocolDomain.LOBBY),
 
 	/**
 	 * Message protocol to request the registration of a user.
 	 */
-	USER_REGISTER(MessageProtocolNature.REQUEST, MessageProtocolCategory.APPLICATION, TestMessageProtocolGroup.CHAT, TestMessageProtocolDomain.USER),
+	USER_REGISTER(
+			MessageProtocolNature.REQUEST,
+			MessageProtocolCategory.APPLICATION,
+			TestMessageProtocolGroup.CHAT,
+			TestMessageProtocolDomain.USER),
 
 	/**
 	 * Message protocol to inform of the registration of a user or not.
 	 */
-	USER_REGISTERED(MessageProtocolNature.REPLY, MessageProtocolCategory.APPLICATION, TestMessageProtocolGroup.CHAT, TestMessageProtocolDomain.USER),
+	USER_REGISTERED(
+			MessageProtocolNature.REPLY,
+			MessageProtocolCategory.APPLICATION,
+			TestMessageProtocolGroup.CHAT,
+			TestMessageProtocolDomain.USER),
 
 	/**
 	 * Message protocol to request a user un-registration.
 	 */
-	USER_UNREGISTER(MessageProtocolNature.REQUEST, MessageProtocolCategory.APPLICATION, TestMessageProtocolGroup.CHAT, TestMessageProtocolDomain.USER),
+	USER_UNREGISTER(
+			MessageProtocolNature.REQUEST,
+			MessageProtocolCategory.APPLICATION,
+			TestMessageProtocolGroup.CHAT,
+			TestMessageProtocolDomain.USER),
 
 	/**
 	 * Message protocol to inform of the un-registration of a user or not.
 	 */
-	USER_UNREGISTERED(MessageProtocolNature.REPLY, MessageProtocolCategory.APPLICATION, TestMessageProtocolGroup.CHAT, TestMessageProtocolDomain.USER),
+	USER_UNREGISTERED(
+			MessageProtocolNature.REPLY,
+			MessageProtocolCategory.APPLICATION,
+			TestMessageProtocolGroup.CHAT,
+			TestMessageProtocolDomain.USER),
 
 	/**
 	 * Message protocol to notify a user is saying something to other users in the same room.
 	 */
-	MESSAGE_SAY(MessageProtocolNature.NOTIFICATION, MessageProtocolCategory.APPLICATION, TestMessageProtocolGroup.CHAT, TestMessageProtocolDomain.MESSAGE),
+	MESSAGE_SAY(
+			MessageProtocolNature.NOTIFICATION,
+			MessageProtocolCategory.APPLICATION,
+			TestMessageProtocolGroup.CHAT,
+			TestMessageProtocolDomain.MESSAGE),
 
 	/**
 	 * Message protocol to notify a user said something to all users of the same room.
 	 */
-	MESSAGE_SAID(MessageProtocolNature.NOTIFICATION, MessageProtocolCategory.APPLICATION, TestMessageProtocolGroup.CHAT, TestMessageProtocolDomain.MESSAGE),
+	MESSAGE_SAID(
+			MessageProtocolNature.NOTIFICATION,
+			MessageProtocolCategory.APPLICATION,
+			TestMessageProtocolGroup.CHAT,
+			TestMessageProtocolDomain.MESSAGE),
 
 	/**
 	 * Message protocol to notify a user is whispering something to another player in the same room.
 	 */
-	MESSAGE_WHISPER(MessageProtocolNature.NOTIFICATION, MessageProtocolCategory.APPLICATION, TestMessageProtocolGroup.CHAT, TestMessageProtocolDomain.MESSAGE),
+	MESSAGE_WHISPER(
+			MessageProtocolNature.NOTIFICATION,
+			MessageProtocolCategory.APPLICATION,
+			TestMessageProtocolGroup.CHAT,
+			TestMessageProtocolDomain.MESSAGE),
 
 	/**
 	 * Message protocol to notify a user whispered something to another player in the same room.
 	 */
-	MESSAGE_WHISPERED(MessageProtocolNature.NOTIFICATION, MessageProtocolCategory.APPLICATION, TestMessageProtocolGroup.CHAT, TestMessageProtocolDomain.MESSAGE);
+	MESSAGE_WHISPERED(
+			MessageProtocolNature.NOTIFICATION,
+			MessageProtocolCategory.APPLICATION,
+			TestMessageProtocolGroup.CHAT,
+			TestMessageProtocolDomain.MESSAGE);
 
 	/**
 	 * Message protocol nature.
