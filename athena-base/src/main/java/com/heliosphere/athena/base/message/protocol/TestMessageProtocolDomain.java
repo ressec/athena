@@ -48,9 +48,9 @@ public enum TestMessageProtocolDomain implements IMessageProtocolDomain
 	CONVERSATION,
 
 	/**
-	 * Message message domain.
+	 * Discussion message domain.
 	 */
-	MESSAGE;
+	DISCUSSION;
 
 	/**
 	 * Creates a message protocol domain enumerated value from a given string value.
