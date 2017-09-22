@@ -1,2 +1,6 @@
-/target/
-/log/
+# Ignore the whole 'target' folder.
+/target
+
+# Ignore everything in the 'log' folder except the folder name itself.
+!/log
+/log/*
